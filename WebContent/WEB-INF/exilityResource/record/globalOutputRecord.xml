@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<record xmlns="http://com.exilant.exility/schema" 
+       name="globalOutputRecord"
+       recordType="structure"
+       description="fields that are used as output in all services"
+       >
+       <!-- Add fields with fields tag here  -->
+ </record>

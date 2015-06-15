@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema" >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="internal"
+                   label="Internal"
+                   businessDescription="Used internally by the project. No meaning to business">
+            <elements>
+                <dataElement name="id"
+                             dataType="id"
+                             label="Id"
+                             />
+              <dataElement name="inactive"
+                           dataType="boolean"
+                           label="Is Active?"
+                           valueList="0,Yes;1,No"
+                           businessDescription="This field label is inverted to make it meaningful to user. inactive is a negative word, but used internally to get false as a default."
+                           />
+                <dataElement  name="bulkAction"
+                              dataType="text"
+                              label="Bulk Action "
+                              />
+                <dataElement name="actionField"
+                             dataType="entityName"
+                             label="Bulk action"
+                             businessDescription="Used by grid panel to mark the operation to be carried out on the row. It is internally managed,and will not be visible to users any where"
+                             />
+                <dataElement name="filterField"
+                             dataType="entityName"
+                             label="Filter"
+                             businessDescription="Field that is used to get the value using which a field can be matched to filter rows"
+                             />
+                <dataElement  name="fileName"
+                              dataType="entityName"         	       
+                              label="File Name"     
+                              />
+                <dataElement  name="folderName"
+                              dataType="entityName"
+                              label="Folder Name"
+                              />
+                <dataElement name="liveWithErrors"
+                             dataType="boolean"
+                             label="Do you want to live with errors in the project"
+                             />
+              <dataElement name="date"
+                           businessDescription="Generic one for any temp"
+                           dataType="date"
+                           label="Date"
+                             />
+              <dataElement name="yesNo"
+                           businessDescription="Generic one for any temp"
+                           dataType="yesNo"
+                           label="What do you say?"
+                             />
+              <dataElement name="dateTime"
+                           businessDescription="generic date with time field"
+                           dataType="dateTime"
+                           label="Date with Time"
+                           messageName="specialMessage"
+                           />
+
+            </elements>
+        </dataGroup>
+    </groups>
+</dataDictionary>

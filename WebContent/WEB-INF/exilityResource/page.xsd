@@ -1,0 +1,4633 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<xs:schema
+	id="page"
+	targetNamespace="http://com.exilant.exility/page"
+	xmlns="http://com.exilant.exility/page"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dt="http://com.exilant.exility/dataTypes"
+	elementFormDefault="qualified"
+>
+	<xs:import namespace="http://com.exilant.exility/dataTypes"></xs:import>
+	<!-- let us describe page element -->
+	<xs:element name="page">
+		<xs:complexType mixed="true">
+			<xs:all>
+				<xs:element
+					ref="pageParameters"
+					minOccurs="0"
+					maxOccurs="1" />
+				<xs:element
+					name="actions"
+					type="actionsType"
+					minOccurs="0"
+					maxOccurs="1" />
+				<xs:element
+					name="panels"
+					type="panelsType"
+					minOccurs="1"
+					maxOccurs="1" />
+				<xs:element
+					name="style"
+					type="xs:string"
+					minOccurs="0"
+					maxOccurs="1"
+				>
+					<xs:annotation>
+						<xs:documentation>Add Page Specific Styles.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element
+					name="script"
+					type="xs:string"
+					minOccurs="0"
+					maxOccurs="1"
+				>
+					<xs:annotation>
+						<xs:documentation>Add Page Specific Scripts.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute
+				name="name"
+				type="xs:ID"
+				use="required" />
+			<xs:attribute
+				name="title"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="breadCrumpTitle"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="type"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="onLoadActionNames"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="minParametersToFireOnLoad"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="width"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="popupWidth"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Width of the window if this is opened as a popup.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="popupTop"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="popupLeft"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="height"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="popupHeight"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Height of the window if this is opened as a
+						popup.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="minParameters"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="scriptsToInclude"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>any file with .css as extension is assumed to be
+						a css file, and included accordingly. Use this feature rather than
+						haspageSpecificCss attribute or style attribute.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="module"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="description"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="onModifyModeActionNames"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this page is anew/modify, then name of the
+						action that is to be used instead of onLoadActionName
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fieldsToDisableOnModifyMode"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this page is a new/modify, then name of the
+						input fields you want to disable on modify mode
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="buttonsToHideForPicker"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this page is used for normal list as well as
+						code picker, and you have some buttons that should not be
+						displayed in code picker mode, list them here
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="trackFieldChanges"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If user changes a field, should the page be
+						marked as changed. Page changed mark is used during page
+						navigation
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="reloadActionName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Suppose you had naviagated to another page with
+						retainState, and that page closed. Do you want to take some action
+						on return to this page?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="validateOnlyOnUserChange"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If you want validation to trigger for fields only
+						if they are chnaged by the user.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="formValidationFunction"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of a JavaScript function you have written
+						that you want Exility to call for additional validation at the
+						form level. If validation fials, you may raise an exception, or
+						return false.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="hasChartFields"
+				type="xs:boolean"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Mention if the page has chartFields or not.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="hotkeyFunction"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation> Mention the function that is used to handle
+						hotkeys. Apr 14 2009 : Bug 290 - Hot-keys on command buttons and
+						other elements - SAB Miller : Aravinda
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="customLabelName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation> Mention the custom label name so that its value
+						will be used for generating the labels at this page level.//Jun 22
+						2009 : Bug 508 - Page Customisation - WeaveIT : Aravinda
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="buttonsToDisable"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation> Mention the button objects which are needs to be
+						disabled, when resetFormModifiedState is set as "True" // Sep 04
+						2009 : Bug 527 - resetFormIfModified is not working. - Exility :
+						Vijay
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="buttonsToEnable"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation> Mention the button objects which are needs to be
+						Enabled, when resetFormModifiedState is set as "True"
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="enableRichTextOnAreas"
+				type="xs:string"
+				use="optional"
+				default=""
+			>
+				<xs:annotation>
+					<xs:documentation>Mention all the elements in comma separated
+						format that needs to have rich text format.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="hasPageSpecificCSS"
+				type="xs:boolean"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Deprecated. use scriptsToInclude instead.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="onFormChangeActionName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of an aciton that is to be executed when
+						user changes any field for the first time.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="onFormResetActionName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of action to be taken when the form is
+						reset.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="htmlFileName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Use this template file as the base for html.
+						Exility will generate html for panels, and insert them into the
+						template. File name is relative to respurce/page folder.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="firstFieldName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Field to focus after loading the page.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pageParameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="pageParameter"
+					maxOccurs="unbounded"
+				>
+					<xs:complexType>
+						<xs:attribute
+							name="name"
+							type="xs:NCName"
+							use="required" />
+						<xs:attribute
+							name="description"
+							type="xs:string"
+							use="optional" />
+						<xs:attribute
+							name="defaultValue"
+							type="xs:string"
+							use="optional" />
+						<xs:attribute
+							name="isRequired"
+							type="booleanType"
+							use="optional" />
+						<xs:attribute
+							name="dataElementName"
+							type="xs:NCName"
+							use="optional" />
+						<xs:attribute
+							name="setTo"
+							type="xs:NCName"
+							use="optional" />
+						<xs:attribute
+							name="isPrimaryKey"
+							type="booleanType"
+							use="optional"
+						>
+							<xs:annotation>
+								<xs:documentation>Is this field one of the key fields that
+									determine whether this page is to be used in modify mode? This
+									is applicable only if the page is used for new/modify
+								</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="dataType" type="dt:declaredDataTypes" use="optional"><xs:annotation><xs:documentation>Provide data type if the parameter is not in a data dictioary. This is netter than giving data element name</xs:documentation></xs:annotation></xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="panelsType">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="buttonPanel" />
+				<xs:element ref="displayPanel" />
+				<xs:element ref="chartPanel" />
+				<xs:element ref="gridPanel" />
+				<xs:element ref="listPanel" />
+				<xs:element ref="messagePanel" />
+				<xs:element ref="spacerPanel" />
+				<xs:element ref="subWindowPanel" />
+				<xs:element ref="tabPanel" />
+				<xs:element ref="includePanel" />
+				<xs:element ref="htmlPanel" />
+				<xs:element ref="searchPanel" />
+				<xs:element ref="xmlTreePanel" />
+				<xs:element ref="toolbarPanel" />
+				<xs:element ref="containerPanel" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="actionsType">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="localAction" />
+				<xs:element ref="dummyAction" />
+				<xs:element
+					name="serverAction"
+					type="serverActionType" />
+				<xs:element ref="navigationAction" />
+				<xs:element ref="mailToAction" />
+				<xs:element ref="closeAction" />
+				<xs:element ref="resetAction" />
+				<xs:element
+					name="UploadFileAction"
+					type="serverActionType" />
+				<xs:element
+					name="DownloadFileAction"
+					type="serverActionType" />
+				<xs:element
+					name="ReportAction"
+					type="serverActionType" />
+				<xs:element
+					name="SaveAsXlsAction"
+					type="serverActionType" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="elementsType">
+		<xs:sequence
+			minOccurs="0"
+			maxOccurs="unbounded"
+		>
+			<xs:choice maxOccurs="unbounded">
+				<!-- panels -->
+				<xs:element ref="buttonPanel" />
+				<xs:element ref="displayPanel" />
+				<xs:element ref="gridPanel" />
+				<xs:element ref="listPanel" />
+				<xs:element ref="messagePanel" />
+				<xs:element ref="spacerPanel" />
+				<xs:element ref="subWindowPanel" />
+				<xs:element ref="tabPanel" />
+				<xs:element ref="includePanel" />
+				<xs:element ref="htmlPanel" />
+				<xs:element ref="searchPanel" />
+				<xs:element ref="xmlTreePanel" />
+				<xs:element ref="toolbarPanel" />
+				<xs:element ref="containerPanel" />
+				<xs:element ref="chartPanel" />
+				<!-- fields -->
+				<xs:element ref="checkBoxField" />
+				<xs:element ref="comboBox" />
+				<xs:element ref="fileField" />
+				<xs:element ref="checkBoxGroupField" />
+				<xs:element ref="filterField" />
+				<xs:element ref="hiddenField" />
+				<xs:element ref="imageField" />
+				<xs:element ref="styleField" />
+				<xs:element ref="outputField" />
+				<xs:element ref="booleanOutputField" />
+				<xs:element ref="radioButtonField" />
+				<xs:element ref="selectionField" />
+				<xs:element ref="textAreaField" />
+				<xs:element ref="textInputField" />
+				<xs:element ref="assistedInputField" />
+				<xs:element ref="shadeOutputField" />
+				<xs:element ref="shadeInputField" />
+				<xs:element ref="chartField" />
+				<xs:element ref="pieChart" />
+				<xs:element ref="barChart" />
+				<xs:element ref="lineChart" />
+				<xs:element ref="bulletChart" />
+				<xs:element ref="sunBurstChart" />
+				<xs:element ref="sankeyChart" />
+				<xs:element ref="passwordField" />
+				<!-- elements -->
+				<xs:element ref="buttonElement" />
+				<xs:element ref="breakElement" />
+				<xs:element ref="htmlElement" />
+				<xs:element ref="spacerElement" />
+				<xs:element ref="staticImageElement" />
+				<xs:element ref="textElement" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fieldsType">
+		<xs:sequence
+			minOccurs="0"
+			maxOccurs="unbounded"
+		>
+			<xs:choice maxOccurs="unbounded">
+				<!-- fields -->
+				<xs:element ref="checkBoxField" />
+				<xs:element ref="comboBox" />
+				<xs:element ref="fileField" />
+				<xs:element ref="checkBoxGroupField" />
+				<xs:element ref="filterField" />
+				<xs:element ref="hiddenField" />
+				<xs:element ref="imageField" />
+				<xs:element ref="styleField" />
+				<xs:element ref="outputField" />
+				<xs:element ref="booleanOutputField" />
+				<xs:element ref="radioButtonField" />
+				<xs:element ref="selectionField" />
+				<xs:element ref="textAreaField" />
+				<xs:element ref="textInputField" />
+				<xs:element ref="assistedInputField" />
+				<xs:element ref="shadeOutputField" />
+				<xs:element ref="shadeInputField" />
+				<xs:element ref="chartField" />
+				<xs:element ref="pieChart" />
+				<xs:element ref="barChart" />
+				<xs:element ref="bulletChart" />
+				<xs:element ref="lineChart" />
+				<xs:element ref="sunBurstChart" />
+				<xs:element ref="sankeyChart" />
+				<xs:element ref="passwordField" />
+				<!-- elements -->
+				<xs:element ref="buttonElement" />
+				<xs:element ref="breakElement" />
+				<xs:element ref="htmlElement" />
+				<xs:element ref="spacerElement" />
+				<xs:element ref="staticImageElement" />
+				<xs:element ref="textElement" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Basic element attributes -->
+	<xs:attributeGroup name="basicAttributes">
+		<xs:attribute
+			name="description"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="label"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="labelPosition"
+			type="labelPositionType"
+			use="optional" />
+		<xs:attribute
+			name="footerLabel"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="bulkCheck"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="width"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="height"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="hidden"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="align"
+			type="alignType"
+			use="optional" />
+		<xs:attribute
+			name="hoverText"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="numberOfUnitsToUse"
+			type="xs:byte"
+			use="optional" />
+		<xs:attribute
+			name="cssClassName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="onClickActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="htmlAttributes"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="donotTrackChanges"
+			type="booleanType"
+			use="optional" />
+	</xs:attributeGroup>
+	<xs:attributeGroup name="elementAttributes">
+		<xs:attributeGroup ref="basicAttributes" />
+		<xs:attribute
+			name="name"
+			type="xs:NCName"
+			use="optional" />
+	</xs:attributeGroup>
+	<!-- Attributes of a general panel. It extends element. -->
+	<xs:attributeGroup name="panelAttributes">
+		<xs:attributeGroup ref="basicAttributes" />
+		<xs:attribute
+			name="name"
+			type="xs:NCName"
+			use="required" />
+		<xs:attribute
+			name="requiresGroupOutline"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="isCollapsible"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="tabLabel"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="columnWidths"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="repeatOnFieldName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Do you want this panel to be repeated for a set of
+					rows based on a key? Panel will be repeated for each unique values
+					of this fieldList will be repeated
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="labelFieldName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>When the panel has to repeat, what is the field
+					name whose value is to be used as label for the panel
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="slideEffect"
+			type="slideEffectType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Do you want an option to slide this panel in/ot
+					from left or right?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="tabIconImage"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If an icon image is presented, it will be
+					displayed before the label.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+			<xs:attribute
+				name="recordName"
+				type="xs:NCName"
+				use="optional"><xs:annotation><xs:documentation>Use fields from this record as reference for fields in this panel. You may use fieldsToUse, fieldsToSkip and fieldsToHide attributes to automatically add fields. If you have to define fields differently from teh default produced by record, then use elements to over ride them</xs:documentation></xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fieldsToShow"
+				type="xs:string"
+				use="optional"><xs:annotation><xs:documentation>Comma separated list of subset of feilds from record that are to be used in this panel. default is use all fields. if the fields to be used is a small subset of all fields, then use fieldsToSkip instead of fieldsToShow</xs:documentation></xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fieldsToSkip"
+				type="xs:string"
+				use="optional"><xs:annotation><xs:documentation>Use this if you need most of the fields, except for a few from the record. DO not use both fieldsToShow and fieldsToSkip. Comma separated list of field names.</xs:documentation></xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fieldsToHide"
+				type="xs:string"
+				use="optional"><xs:annotation><xs:documentation>Fields from the record that are to be hidden. Use this ONLY when elements are not specified. names in this list shoudl nto be included in fieldsToShow or fieldsToSkip. </xs:documentation></xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fieldsAreOutputByDefault"
+				type="booleanType"
+				use="optional"><xs:annotation><xs:documentation>Should teh fields from record be used as output fields? Otherwise, fields are rendered as per the inputFieldType as set in field attributes</xs:documentation></xs:annotation>
+			</xs:attribute>
+	</xs:attributeGroup>
+	<!-- Attributes of a field. It extends an element -->
+	<xs:attributeGroup name="fieldAttributes">
+		<xs:attributeGroup ref="basicAttributes" />
+		<xs:attribute
+			name="name"
+			type="xs:NCName"
+			use="required" />
+		<xs:attribute
+			name="defaultValue"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="dataElementName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="globalFieldName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the global field from which this field is
+					to take its default vaue.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="globalFieldLabelName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the global field from which the label for
+					this field is to be set.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="aliasName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>A variable with this name will also be sent to the
+					server on submit
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="isRequired"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="repeat"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="rowSum"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="rowAverage"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="columnSum"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="columnAverage"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="altKey"
+			type="charType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Alt key for this field. Chose a character. Ensue
+					that you do not choose the same key for more than one field
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="formatter"
+			type="formatterType"
+			use="optional" />
+		<xs:attribute
+			name="breakToNextLine"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you want this field to be rendered on the next
+					line, but within the same cell.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="isSortable"
+			use="optional"
+			type="booleanType"
+		>
+			<xs:annotation>
+				<xs:documentation>Not required if allColumnsAreSortable is used at
+					the panel level.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="isFilterable"
+			use="optional"
+			type="booleanType"
+		>
+			<xs:annotation>
+				<xs:documentation>Not required if allColumnsAreFilterable is used at
+					the panel level.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="rowSumFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Interface to a function to calculate row sum as
+					per application requirements.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="rowAverageFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Interface to a function to calculate row average
+					as per application requirements.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="columnSumFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Interface to a function to calculate column sum as
+					per application requirements.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="columnAverageFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Interface to a function to calculate column
+					average as per application requirements.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="validationFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of javascript function you have written in
+					your javascript that will validate supplied value to it. This
+					function should return the error text if the value fails.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+				<xs:attribute
+			name="isLocalField"
+			type="booleanType"
+			use="optional" />
+		
+	</xs:attributeGroup>
+	<xs:simpleType name="formatterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="lcase" />
+			<xs:enumeration value="ucase" />
+			<xs:enumeration value="inr">
+				<xs:annotation>
+					<xs:documentation>Amount field with separators as in indian rupees,
+						and no fraction
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="inr2">
+				<xs:annotation>
+					<xs:documentation>Amount field with separators as in indian rupees,
+						and two places of decimal.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="usd">
+				<xs:annotation>
+					<xs:documentation>Amount field with separators as in millions, and
+						no fraction
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="usd2">
+				<xs:annotation>
+					<xs:documentation>Amount field with separators as in millions, and
+						two places of decimal.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="inputFieldAttributes">
+		<xs:attributeGroup ref="fieldAttributes" />
+		<xs:attribute
+			name="onChangeActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="onFocusActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="onBlurActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="onUserChangeActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="basedOnField"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="basedOnFieldValue"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Should this field be mandatory depending on the
+					value of the basedOnField?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="copyTo"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="doNotValidate"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="dependentSelectionField"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="descServiceId"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="descFields"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="descQueryFields"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="descQueryFieldSources"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="supressDescOnLoad"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="isUniqueField"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="doNotMatchDescNames"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="validateOnlyOnUserChange"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you want validation to trigger for this field
+					only if user has changed it.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="validateQueryFields"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you want query fields to be validated before
+					making the service call.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="comboDisplayFields"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>To display a list of fields in the combo drop
+					down, set them here seperated with ';'. If this is set, the combo
+					drop down will display only the fields mentioned here. Otherwise,
+					the first 2 fields of the description service is displayed as
+					default.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="fieldToFocusAfterExecution"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>After the execution of the action, the field
+					specified here will be brought into focus
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="messageName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Custom message for this field. This over-rides the
+					default message at dataType and datElement level
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="additionalMessageName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Default additional message that will be shown in a
+					page. Over-rides attribute at data element level
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="textInputFieldAttributes">
+		<xs:attributeGroup ref="inputFieldAttributes" />
+		<xs:attribute
+			name="toField"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="fromField"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="size"
+			type="xs:integer"
+			use="optional" />
+		<xs:attribute
+			name="isProtected"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="otherField"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Filed that has to have a different value than this
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="actionAttributes">
+		<xs:attribute
+			name="name"
+			type="xs:NCName"
+			use="required" />
+		<xs:attribute
+			name="showPanels"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="hidePanels"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="enableFields"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="disableFields"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="warnIfFormIsModified"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>if trackFieldChanges=true for this page, do you
+					warn the user about the pending modification before taking this
+					action
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="resetFormModifiedState"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>if trackFieldChanges=true for this page, do you
+					want to rseset as if the form is not changed after taking this
+					action?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="fieldToFocusAfterExecution"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>After the execution of the action, the field
+					specified here will be brought into focus
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="popupPanel"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Show this panel as a popup. Rest of the areas will
+					be covered
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="popdownPanel"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Bring a popped-up panel back to normal
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="description"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Documentation about this action</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="outputFieldAttributes">
+		<xs:attributeGroup ref="fieldAttributes" />
+		<xs:attribute
+			name="maxCharacters"
+			type="xs:int"
+			use="optional" />
+		<xs:attribute
+			name="toBeSentToServer"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="allowHtmlFormattedText"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="valueList"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Use mapping between server values and text to be
+					displayed.. Like Yes/No instead of 1/0
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!-- Let us define tyoe for each of the elements -->
+	<xs:element name="spacerPanel" />
+	<xs:element name="messagePanel" />
+	<xs:element name="textElement">
+		<xs:complexType>
+			<xs:attributeGroup ref="elementAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="staticImageElement">
+		<xs:complexType>
+			<xs:attributeGroup ref="elementAttributes" />
+			<xs:attribute
+				name="src"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="border"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="displayPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="elementsType"
+					minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="elementsPerRow"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="tableName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="doNotSendInGrid"
+				type="xs:boolean"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Valid when tableName is set. Should data go back
+						in a grid or as name/value pairs
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="linkedTableName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>table name of a list panel to which this display
+						panel is linked to. This display panel acts as an editing area for
+						rows in the list panel
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="keepItSimple"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Generate a simple div tag based dom. No tables,
+						and no wrappers..
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="renderFieldDescriptions"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Special design to use descrition as notes/help text infront of fields. Used by exility ide pages to show help text against each attribute field.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="containerPanel">
+		<xs:annotation>
+			<xs:documentation>Div or Table container for other panels
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="panelsType"
+					minOccurs="1"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:attributeGroup ref="elementAttributes" />
+			<xs:attribute
+				name="useTableLayout"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Use Table-tr-td rather than just div tag
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="gridPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="fieldsType"
+					minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attributeGroup ref="commonForListAndGrid" />
+			<!-- Note that the meanig of this tableName is different from abstractElement.tableName, 
+				inTable of page.js -->
+			<xs:attribute
+				name="tableName"
+				type="xs:NCName"
+				use="required" />
+			<xs:attribute
+				name="rowsCanBeAdded"
+				type="booleanType"
+				use="required" />
+			<xs:attribute
+				name="rowsCanBeCloned"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="rowsCanBeDeleted"
+				type="booleanType"
+				use="required" />
+			<xs:attribute
+				name="labelForBulkDeleteCheckBox"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="sendAffectedRowsOnly"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="idFieldName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="keyFieldName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="actionFieldName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="uniqueColumns"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="minRows"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="maxRows"
+				type="xs:int"
+				use="optional" />
+			<!--June 19 2009 : Bug 554 DoNotDeleteAppendedRows - SAB Miller (Start) 
+				: Vijay -->
+			<xs:attribute
+				name="doNotDeleteAppendedRows"
+				type="booleanType"
+				use="optional" />
+			<!--June 19 2009 : Bug 554 DoNotDeleteAppendedRows - SAB Miller (End) 
+				: Vijay -->
+			<xs:attribute
+				name="initialNumberOfRows"
+				type="xs:int"
+				use="optional" />
+			<!--Mar 12 2009 : footer element should have option to declare CSS - SAB 
+				Miller (Start) : Venkat -->
+			<xs:attribute
+				name="columnSumCssClassName"
+				type="xs:string"
+				use="optional" />
+			<!--Mar 12 2009 : footer element should have option to declare CSS - SAB 
+				Miller (End) : Venkat -->
+			<xs:attribute
+				name="isFixedHeight"
+				type="booleanType"
+				use="optional" />
+			<xs:attributeGroup ref="repeatingColumnAttributes" />
+			<xs:attribute
+				name="elderBrother"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>For repeating panel with two grids/lists. Is this
+						the second table? then set this attribute to the name of the first
+						table.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="youngerBrother"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>For repeating panel with two grids/lists. Is this
+						the first table? Then set this attribute to the name of the second
+						table.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="repeatingPanelName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation> By default, this panel repeats, but you can
+						specify any of its parents name. This is specifically useful if
+						you have two grid panels that repeat together. Refer to
+						ElderBrother and youngerBrother.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionBeforeAddRow"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Local function to be executed before addRow is
+						executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionAfterAddRow"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Local function to be executed after addRow is
+						executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionBeforeDeleteRow"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Local function to be executed before delteRow is
+						executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionAfterDeleteRow"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Local function to be executed after deleteRow is
+						executed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="dataForNewRowToBeClonedFromFirstRow"
+				type="xs:boolean"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Flag to be set to copy the data for the new row
+						from the first row of the grid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="dataForNewRowToBeClonedFromRow"
+				type="rowType"
+				use="optional"
+				default="last"
+			>
+				<xs:annotation>
+					<xs:documentation>Flag to be set to copy the data for the new row
+						from the particular row of the grid.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="newRowColumnsNotToBePopulatedWithData"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>The name of the columns in the new row for which
+						data is not to be copied from the first row.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="labelForAddRowButton"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>The label for the Add Row Button. Default is "Add
+						a Row".
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="deleteRowsImmediately"
+				type="booleanType"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Specify if the rows in the grid are to be deleted
+						immediately.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="confirmOnRowDelete"
+				type="booleanType"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Confirm before deleting the row in the grid.//
+						Apr 07 2009 : Bug 325 - Confirmation message should be shown
+						before deletion of grid items. This should be for a grid level
+						property setting. Not necessarily for all grid. - Exis : Aravinda
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="sortableAttributes" />
+			<xs:attribute
+				name="headerGrouping"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Captures the grouping of header labels.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="mergeWithTableName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this grid is to be merged inside another
+						display panel, provide the name of the tableName of the display
+						panel.You should also use stubNameForMerging.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="stubNameForMerging"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of an empty panel you might have created in
+						the display panel where you want this grid to be merged
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="paginationLabel"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>The default is "rows selected". This can be
+						replaced with the statement of choice by the application team.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="quickSearchFieldName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>A text input field based on which rows from this
+						list will be automatically filtered. Value is tried in all columns
+						for a case-insensitive-contains match.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="rowHelpText"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Help text to be dipslayed on mouse-over on row.
+						Same as title for other elements.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="simulateClickOnFirstRow"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>After loading the list, do you want the first row
+						to be selected as if you clicked on that?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="simulateClickOnRow"
+				type="rowType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>After loading the list, do you want the row to be
+						selected as if you clicked on that?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="messageIdForUniqueColumns"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If uniqueColumns is specified, then a messageId
+						given here will display a custom message if there are unique rows.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionBeforeAutoSave"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>This function is called with (dc, rowIdx). If you
+						have to return true for save to continue.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="functionAfterAutoSave"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>this function is called after server returns from
+						an autosave with (dc, rowIdx) as arguments.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="autoSaveServiceName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Valid when you have linked panel, and you want a
+						row to be saved as and when it is modified. This service will be
+						called with a grid with teh modified row in it.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="chartPanel">
+		<xs:complexType>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="tableName"
+				type="xs:NCName"
+				use="required" />
+			<xs:attribute
+				name="chartType"
+				type="chartPanelType"
+				use="required" />
+<!--  event handlers -->			
+			<xs:attribute
+				name="onClickFunctionName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>on click event on the chart.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="onMoveFunctionName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>onmove event funciton</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+<!-- columns -->
+			<xs:attribute
+				name="xAxisColumn"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="yAxisColumn"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="helpTextColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column that has help text (tool tip) to be
+						displayed when mouse moves over this chart
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="groupHelpTextColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains help text for level 2
+						areas.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="bubbleColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bubble, then you need to use
+						this to specify the column whose value that is used to calculate
+						the radius of the bubble.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="groupByColumn"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="bulletLabelColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the label for the
+						bullet.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fromColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey, then you need to use
+						this to specify the column which contains the label for the
+						distribution source.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="toColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey, then you need to use
+						this to specify the column which contains the label for the
+						distribution target.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="distributionValueColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey or sunburst, then you
+						need to use this to specify the column which contains the
+						distribution value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="coreColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the core of
+						the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="level1Column"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the level 1
+						of the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="level2column"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the level 2
+						of the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="valueOfInterest"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="comparativeValue"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="firstQualitativeRange"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="secondQualitativeRange"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+<!--  Label related -->
+			<xs:attribute
+				name="xAxisLabel"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="yAxisLabel"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="xLabelFormatterFunction"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="yLabelFormatterFunction"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="minPercentToShowLabel"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Label for a pie in a pie chart may not look good
+						if it is too small. Provide the % value below which label is
+						suppressed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="yLabelMaxWidth"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="labelLeftMargin"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>in pixels</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="labelBottomMargin"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>in pixels</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+<!--  for scaling -->
+			<xs:attribute
+				name="minX"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="maxX"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="minY"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="maxY"
+				type="xs:string"
+				use="optional" />
+
+			<xs:attribute
+				name="bubbleRadiusDenominator"
+				type="xs:decimal"
+				use="optional"
+				default="1.0"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bubble, then you need to use
+						this to specify the value that is used to calculate the radius of
+						the bubble.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="colors"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Comma separated colors, as in css colors. Number
+						of colors need not match required number. System will use random
+						colors if required.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="childColors"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Comma separated colors, as in css colors for next level charts in sun-burst</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="shadowSize" type="xs:int" use="optional"><xs:annotation><xs:documentation>in pixels</xs:documentation></xs:annotation></xs:attribute>
+			<xs:attribute
+				name="rawDataDisplay"
+				type="rawDataDisplayValue"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Do you want the data also to be displayed as part
+						of chart. e.g. should pie chart show % ?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+<!--  legend related -->
+			<xs:attribute
+				name="hideLegend"
+				type="xs:boolean"
+				use="optional"
+				default="false"
+			>
+				<xs:annotation>
+					<xs:documentation>Should we suppress legends?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="legendNbrColumns" type="xs:int" use="optional"></xs:attribute>
+			<xs:attribute
+				name="legendLabelFormatter"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of a javascript function(label, data) that
+						returns formatted label
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="legendLabelBoxBorderColor"
+				type="xs:string"
+				use="optional"
+			></xs:attribute>
+			<xs:attribute
+				name="legendPosition"
+				type="xs:string"
+				use="optional"
+			></xs:attribute>
+			<xs:attribute
+				name="legendMargin"
+				type="xs:int"
+				use="optional"
+			></xs:attribute>
+			<xs:attribute
+				name="legendBackgroundColor"
+				type="xs:string"
+				use="optional"
+			></xs:attribute>
+			<xs:attribute
+				name="legendBackgroundOpacity"
+				type="xs:string"
+				use="optional"
+			></xs:attribute>
+
+			<xs:attribute
+				name="marginLeft"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="marginBottom"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="barLabelLeftMargin"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="barLabelBottomMargin"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="lineWidth"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="barWidth"
+				type="xs:decimal"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="gridColor"
+				type="xs:string"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="labelColor"
+				type="xs:string"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="tickColor"
+				type="xs:string"
+				use="optional"
+			/>
+			<xs:attribute
+				name="showFilledPoints"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Show filled points in line chart
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+
+			<xs:attribute
+				name="pointsRadius"
+				type="xs:int"
+				use="optional"
+			/>
+
+			<xs:attribute
+				name="pointsFillColor"
+				type="xs:string"
+				use="optional"
+			/>
+		</xs:complexType>
+	</xs:element>
+	
+	<!--  attribute groups -->
+	<xs:attributeGroup name="sortableAttributes">
+		<xs:attribute
+			name="allColumnsAreSortable"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Use this to make all columns sortable. Or you can
+					make a given column sortable by using isSortable at the field
+					level.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="headerHeight"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you specify height, then rows will scroll with
+					a fixed header. This is the height of tHeader element based on your
+					css. This MUST be set properly for the feature work across
+					browsers.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="rowHeight"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>you specify this if you have used freezeColumn,
+					except if your regualr css specifies a fixed height rather than
+					auto for data rows.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="freezeColumn"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the column after which horizontal scroll
+					bar to appear. Valid only if height is specified.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="leftPanelWidth"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If freezeColumn is specified, you MUST specify
+					widths for the laft and the right panels, even if you have
+					specified column widths.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="rightPanelWidth"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If freezeColumn is specified, you MUST specify
+					widths for the laft and the right panels, even if you have
+					specified column widths.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="allColumnsAreFilterable"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Use this to allow filterig on all coluns. Or you
+					can make a given column filterable by using isFilterable at the
+					field level.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+				<xs:attribute
+			name="additionalColumnToSort"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>When a table is sorted on a column, and that column has duplicate values, should the table be sorted further on another column, like its primary key? e.g. customerCode</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		
+	</xs:attributeGroup>
+	<xs:element name="xmlTreePanel">
+		<xs:complexType>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="fieldName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of the field which has the xml source file
+						name
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="showValues"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Should the leaf and attribute nodes be shown with
+						their values?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="expandAllOnLoad"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Should the leaf and attribute nodes be shown with
+						their values?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="childHtmlAttributes"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Other possible html attributes that will be
+						attached to each of the element in the tree. Jul 30 2009 : Bug 519
+						- XMLTree rendered using grid needed addational functions -
+						SABMiller : Aravinda
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="listPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="fieldsType"
+					minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attributeGroup ref="sortableAttributes" />
+			<xs:attributeGroup ref="commonForListAndGrid" />
+			<xs:attribute
+				name="tableName"
+				type="xs:NCName"
+				use="required" />
+			<xs:attribute
+				name="showHeader"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="pageSize"
+				type="xs:short"
+				use="optional" />
+			<xs:attribute
+				name="addSeqNo"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="actionDisabled"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="multipleSelect"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="onDblClickActionName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="idFieldName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="treeViewColumnName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="treeViewKeyColumn"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="treeViewParentKeyColumn"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="treeViewHasChildColumn"
+				type="xs:NCName"
+				use="optional" />
+			<!--Mar 12 2009 : footer element should have option to declare CSS - SAB 
+				Miller (Start) : Venkat -->
+			<xs:attribute
+				name="columnSumCssClassName"
+				type="xs:string"
+				use="optional" />
+			<!--Mar 12 2009 : footer element should have option to declare CSS - SAB 
+				Miller (End) : Venkat -->
+			<xs:attribute
+				name="isFixedHeight"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="simulateClickOnFirstRow"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>After loading the list, do you want the first row
+						to be selected as if you clicked on that?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="simulateClickOnRow"
+				type="rowType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>After loading the list, do you want the row to be
+						selected as if you clicked on that?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="messageNameOnNoData"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>When there is no data, table is hidden, and the
+						text from this messageName is displayed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="paginateButtonType"
+				type="paginateButtonTypes"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If you have opted for pagination, choose the way
+						buttons for page selection is to be displayed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attributeGroup ref="repeatingColumnAttributes" />
+			<xs:attribute
+				name="headerGrouping"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Captures the grouping of header labels.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Mar 24 2010 : Tree View Check Box -->
+			<xs:attribute
+				name="doNotShowTreeViewCheckBox"
+				type="xs:boolean"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Flag to show or hide the checkboxes in case of a
+						heirarchical list panel.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Mar 24 2010 : Tree View Check Box -->
+			<!-- May 27 2010 : Bug 983 - Issues after relogin (login to the application 
+				after session out) - Exis (Start) : Aravinda -->
+			<xs:attribute
+				name="paginationServiceName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>In case of session time out the data needs to be
+						fetched from the service for pagination. This is the place holder
+						for that service name.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="paginationServiceFieldNames"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>In case of session time out the data needs to be
+						fetched from the service for pagination. The service might need
+						certain parameters. This is the place holder for the service
+						parameter names.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="paginationServiceFieldSources"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>In case of session time out the data needs to be
+						fetched from the service for pagination. The service might need
+						certain parameters. This is the place holder for the service
+						parameter names.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- May 27 2010 : Bug 983 - Issues after relogin (login to the application 
+				after session out) - Exis (End) : Aravinda -->
+			<!-- Jan 05 2011 : Bug 1891 - List Panel : User defined function call 
+				on pagination - India Services (Start) : Aravinda -->
+			<xs:attribute
+				name="paginateCallback"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>This is the callback function to the application
+						for handling the return of the pagination service.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="paginationLabel"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>The default is "rows selected". This can be
+						replaced with the statement of choice by the application team.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Jan 05 2011 : Bug 1891 - List Panel : User defined function call 
+				on pagination - India Services (End) : Aravinda -->
+			<!-- Feb 04 2011 : Bug 2035 - Initial no of rows for list panel - Exility 
+				App (Start) : Aravinda -->
+			<xs:attribute
+				name="initialNumberOfRows"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>This is the place holder which represents how
+						many rows should be displayed initially in the list panel.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="quickSearchFieldName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>A text input field based on which rows from this
+						list will be automatically filtered. Value is tried in all columns
+						for a case-insensitive-contains match.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="rowHelpText"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Help text to be dipslayed on mouse-over on row.
+						Same as title for other elements.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="mergeWithTablename"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this grid is to be merged inside another
+						display panel, provide the name of the tableName of the display
+						panel.You should also use stubNameForMerging.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="stubNameForMerging"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of a an empty panel you might have created
+						in teh display panel where you want this grid to be merged
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="localPagination"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Do you want server to send all rows to client,
+						and paginate on client?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="commonForListAndGrid">
+		<xs:annotation>
+			<xs:documentation>set of attributes that are common between list and
+				grid panel
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute
+			name="nestedTableName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the child table that is to be nested
+					inside this table?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="nestOnColumnName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Column in this table that is the parent key for
+					the nested table
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="nestedTableColumnName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Column in the nested table that has the parent key
+					value
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="mergeOnColumnName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>valid only if you have used mergeWithTableName,
+					and repeatOnColumnName is set. Name of column in the parent table
+					that has the corresponding key value for merging.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="renderAsADisplayPanel"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Should this panel look like a repeated display
+					panel rather than a table with rows and columns?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="elementsPerRow"
+			type="xs:byte"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>if renderAsADisplayPanel is used, then you can use
+					this as in displayPanel
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="htmlFileName"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>DO not generate html for this panel, but use this
+					template. File name is relative to respurce/page folder.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="repeatingColumnAttributes">
+		<xs:attribute
+			name="repeatingColumnName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Do you have a column in your table that repeates
+					based on data in another (child) table?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="childTableName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the table in which data is received for
+					repeating colums in this panel
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="childKeysTableName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the table in which all possible keys and
+					their labels is received. This is required fr a grid, but optional
+					for a list. Grid has a header. First column is key and second is
+					label
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="paginateButtonTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="linear" />
+			<xs:enumeration value="dropDown" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Aug 10 2010 : Bug 1328 - Toolbar Functionality - Exility App (Start) 
+		: Aravinda -->
+	<xs:complexType name="toolbarElementsType">
+		<xs:sequence
+			minOccurs="0"
+			maxOccurs="unbounded"
+		>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="staticImageElement" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="toolbarPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="toolbarElementsType"
+					minOccurs="1"
+					maxOccurs="1" />
+			</xs:sequence>
+			<xs:attribute
+				name="name"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="width"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="height"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="align"
+				type="alignType"
+				use="optional" />
+			<xs:attribute
+				name="cssClassName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="htmlAttributes"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<!-- Aug 10 2010 : Bug 1328 - Toolbar Functionality - Exility App (End) 
+		: Aravinda -->
+	<xs:element name="closeAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+			<xs:attribute
+				name="functionName"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Function to be executed before the window is
+						closed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="resetAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+			<xs:attribute
+				name="fieldsToReset"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Use this only if you want to just reset fields,
+						and not restart the page. use "all" or comma separated field names
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dummyAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="localAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+			<xs:attribute
+				name="functionName"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="parameter"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="serverActionType">
+		<xs:attributeGroup ref="actionAttributes" />
+		<xs:attribute
+			name="serviceId"
+			type="xs:string"
+			use="required" />
+		<xs:attribute
+			name="queryFieldNames"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="queryFieldSources"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="callBackActionName"
+			type="xs:NCName"
+			use="optional" />
+		<xs:attribute
+			name="waitForResponse"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="submitFields"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>You can submit a subset of the form. Provide comma
+					separated fields and/or panels
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="callBackEvenOnError"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Should the call back action happen even if server
+					resturns with errors?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="submitForm"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="disableForm"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="toRefreshPage"
+			type="refreshPageType"
+			default="beforeMyAction"
+			use="optional" />
+		<xs:attribute
+			name="atLeastOneFieldIsRequired"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Should at least one field be entered for you to
+					take this action?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="reloadActionName"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you navigate to another page with retain state,
+					and that page closes, would you like to take an action?
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="validateQueryFields"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you want query fields to be validated before
+					making the service call.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="reportName"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the report which needs to be downloaded.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="submitInNewWindow"
+			type="xs:boolean"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Specify if the submit form happens in a new Window
+					or the same one.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<!-- Oct 14 2009 : Bug ID 721 - Upload File - Parameterization - Nirmanith 
+			(Start) : Vijay -->
+		<xs:attribute
+			name="closeWindow"
+			type="xs:boolean"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If you want to close window after upload set true
+					else set false
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<!-- // Oct 14 2009 : Bug ID 721 - Upload File - Parameterization - Nirmanith 
+			(End) : Vijay -->
+	</xs:complexType>
+	<xs:element name="navigationAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+			<xs:attribute
+				name="pageToGo"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="substituteValueFrom"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="windowToGo"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="queryFieldNames"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="queryFieldSources"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="windowDisposal"
+				type="windowDisposalType"
+				use="required" />
+			<xs:attribute
+				name="passDc"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Do you want the dc that was returned from server
+						to the next window? This option is valid only if the action is
+						used as a call back action for another serverAction
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="windowName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name by which you would like to refer to this
+						window from other windows.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="validateQueryFields"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If you want query fields to be validated before
+						making the service call.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="serviceId"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If you want a service to be called in the called
+						aspx, it will be passed here as a query field.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="windowDisposalType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="replace" />
+			<xs:enumeration value="popup" />
+			<xs:enumeration value="retainState" />
+			<xs:enumeration value="reset" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="mailToAction">
+		<xs:complexType>
+			<xs:attributeGroup ref="actionAttributes" />
+			<xs:attribute
+				name="mailTo"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="substituteValueFrom"
+				type="xs:NCName"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="buttonPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					minOccurs="1"
+					maxOccurs="1"
+				>
+					<xs:complexType>
+						<xs:sequence
+							minOccurs="1"
+							maxOccurs="unbounded"
+						>
+							<xs:element ref="buttonElement" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute
+				name="buttonLabel"
+				type="xs:string" />
+			<!--Dec 21 2009 : BugID 829 - GO Button label is in Uppercase when using 
+				renderingOption="inADropDownList" - Exis: Venkat -->
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="tableName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the buttons are to be enabled/disabled based
+						on data that is fetched at run time, use a table
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="renderingOption"
+				type="buttonRenderingType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Buttons are rendered next to each other by
+						default. but you can change that
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="buttonRenderingType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="nextToEachOther" />
+			<xs:enumeration value="inADropDownList" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="tabPanel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element
+					name="elements"
+					type="panelsType" />
+			</xs:sequence>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="tabAreaHeight"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="tabAreaWidth"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="includePanel">
+		<xs:complexType>
+			<xs:attribute
+				name="name"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name with which you want to use the panel in this
+						page. Name attribute of the read panel will be replaced with this
+						value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="panelNameToBeIncluded"
+				type="xs:string"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of the .xml file from where this panel is to
+						be read.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="htmlPanel">
+		<xs:complexType>
+			<xs:attribute
+				name="name"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Name with which you want to use the panel in this
+						page.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fileName"
+				type="xs:string"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Name of the file to be included into the html.
+						File name shoud include folder name as well as extension if any.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subWindowPanel">
+		<xs:complexType>
+			<xs:attributeGroup ref="panelAttributes" />
+			<xs:attribute
+				name="src"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchPanel">
+		<xs:complexType>
+			<xs:attribute
+				name="name"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="targetPanelName"
+				type="xs:string"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="buttonElement">
+		<xs:complexType>
+			<xs:attributeGroup ref="elementAttributes" />
+			<xs:attribute
+				name="imageName"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="isDefaultButton"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="whatToDoOnFormChange"
+				type="whatToDoOnFormChangeType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Do you want this button to be enabled/disabled
+						when user changes any field on the form? Default is no.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Mar 23 2010 : Bug 986 - Implementation of the Celebrus GUI - India 
+				Services (Start) : Aravinda -->
+			<xs:attribute
+				name="iconImage"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If an icon image is presented, it will be
+						displayed before the label.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<!-- Mar 23 2010 : Bug 986 - Implementation of the Celebrus GUI - India 
+				Services (End) : Aravinda -->
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="whatToDoOnFormChangeType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="leaveMeAlone" />
+			<xs:enumeration value="enable" />
+			<xs:enumeration value="disable" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="checkBoxField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="checkedValueIsTheDefault"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="checkedValue"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="uncheckedValue"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="selectionField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="listServiceId"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldNames"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldSources"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="keyValue"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="blankOption"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="noAutoLoad"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="valueList"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="size"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="multipleSelection"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="sameListForAllRows"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If noAutoLoad is true, list will be fetched on
+						some event. Such a list will be assigned, by default, to only the
+						object that triggered it, but not the ones in other rows. If you
+						want this list to be used to populate all rows, use this
+						attribute.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="selectionValueType"
+				type="SelectionValueType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this is multipleSeletion, how should the
+						values be sent/recd
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="selectFirstOption"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="otherField"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Field that has to have a different value than
+						this
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="showMoreFunctionName"
+				type="xs:NCName"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Show More option is shown as the last option, and
+						on click, this funciton is called.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="SelectionValueType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="text">
+				<xs:annotation>
+					<xs:documentation>Selected values as a comma separated string
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="list">
+				<xs:annotation>
+					<xs:documentation>List(array) of selected values</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="grid">
+				<xs:annotation>
+					<xs:documentation>Grid with a header row, with first column with
+						value and second column boolean indicating whether it is selected
+						or not
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="spacerElement">
+		<xs:complexType>
+			<xs:attribute
+				name="numberOfUnitsToUse"
+				type="xs:byte" />
+			<xs:attribute
+				name="spacerImage"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="width"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="radioButtonField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="valueList"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="textAreaField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="numberOfRows"
+				type="xs:byte"
+				use="required" />
+			<xs:attribute
+				name="numberOfCharactersPerRow"
+				type="xs:int"
+				use="required" />
+			<xs:attribute
+				name="isProtected"
+				type="booleanType"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="checkBoxGroupField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="listServiceId"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldNames"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldSources"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="keyValue"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="noAutoLoad"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="valueList"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="sameListForAllRows"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If noAutoLoad is true, list will be fetched on
+						some event. Such a list will be assigned, by default, to only the
+						object that triggered it, but not the ones in other rows. If you
+						want this list to be used to populate all rows, use this
+						attribute.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="selectionValueType"
+				type="SelectionValueType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>How should the values be sent/recd
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="minSelections"
+				type="xs:byte"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Is there a min number of selections user has to
+						make?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="maxSelections"
+				type="xs:byte"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Is there a limit on maximum number of selections
+						user can make?
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fileField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="isMultiple"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Can user choose multiple files to be uploaded
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="imageField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="border"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="baseSrc"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="imageExtension"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="toBeSentToServer"
+				type="booleanType"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="styleField">
+		<xs:annotation>
+			<xs:documentation>A field that creates just a div element, and
+				changes its class as field value
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="defaultCss"
+				type="xs:string"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>css name to be used when no value is set for this
+						field
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="toBeSentToServer"
+				type="booleanType"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="outputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="outputFieldAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="booleanOutputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="outputFieldAttributes" />
+			<xs:attribute
+				name="trueValue"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="falseValue"
+				type="xs:string"
+				use="required" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hiddenField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="textInputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="textInputFieldAttributes" />
+			<xs:attribute
+				name="codePickerSrc"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="minCharsToTriggerService"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="maxRowsToDisplay"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="codePickerImage"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="codePickerLeft"
+				type="xs:int"
+				use="optional" />
+			<xs:attribute
+				name="codePickerTop"
+				type="xs:int"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="assistedInputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="textInputFieldAttributes" />
+			<xs:attribute
+				name="suggestionServiceId"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="suggestionServiceFields"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="suggestionServiceFieldSources"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="suggestAfterMinChars"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="columnIndexesToShow"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If you want to display more than one columns as a
+						nice table, use this comma separated, zero-based column indexes.
+						You have to mane the appearance with your css settings.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="suggestionCss"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>this will be the css class assigned to the div
+						that houses suggestions.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="listServiceId"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldNames"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="listServiceQueryFieldSources"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="keyValue"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Parameter to be sent to server along with
+						listServiceId always. Like, if thsi is always list of states for
+						india, you would set keyValue=in
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="blankOption"
+				type="xs:string"
+				use="optional" />
+			<xs:attribute
+				name="noAutoLoad"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="valueList"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>fixed list of values can be given like
+						1,One;2,Two;....
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="multipleSelections"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="sameListForAllRows"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If noAutoLoad is true, list will be fetched on
+						some event. Such a list will be assigned, by default, to only the
+						object that triggered it, but not the ones in other rows. If you
+						want this list to be used to populate all rows, use this
+						attribute.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="selectionValueType"
+				type="SelectionValueType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If this is multipleSeletion, how should the
+						values be sent/recd
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="selectFirstOption"
+				type="booleanType"
+				use="optional" />
+			<xs:attribute
+				name="matchStartingChars"
+				type="booleanType"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Should we show rows that start with the typed
+						characters or the typed characters can be anywhere in the row
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="minCharsToSuggest"
+				type="xs:byte"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>When shoudl you start suggestiing? 0 is not
+						valid, because, in that case, you can go in for listService rather
+						than suggestionService
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="passwordField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="size"
+				type="xs:byte"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="comboBox">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="toField"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="fromField"
+				type="xs:NCName"
+				use="optional" />
+			<xs:attribute
+				name="size"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="minCharsToTriggerService"
+				type="xs:byte"
+				use="optional" />
+			<xs:attribute
+				name="maxRowsToDisplay"
+				type="xs:byte"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="showIfType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*:.*(,.*)+" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- tanmay: filterField was not working properly -->
+	<xs:element name="filterField">
+		<xs:complexType>
+			<xs:attributeGroup ref="inputFieldAttributes" />
+			<xs:attribute
+				name="defaultComparisonType"
+				type="comparisonTypes"
+				use="optional" />
+			<xs:attribute
+				name="size"
+				type="xs:byte"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="breakElement" />
+	<xs:element name="shadeOutputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="defaultColor"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="shadeInputField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attribute
+				name="defaultColor"
+				type="xs:string"
+				use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pieChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="barChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="lineChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="bulletChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+			<xs:attribute
+				name="valueOfInterest"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="firstQualitativeRange"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="secondQualitativeRange"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="comparativeValue"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+			<xs:attribute
+				name="bulletlabelcolumn"
+				type="xs:string"
+				use="optional"
+			>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sunBurstChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+			<xs:attribute
+				name="corecolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the core of
+						the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="distributionvaluecolumn"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="level1column"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the level 1
+						of the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="level2column"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for the level 2
+						of the org.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="groupHelpTextColumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains help text for level 2
+						areas.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sankeyChart">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+			<xs:attribute
+				name="distributionvaluecolumn"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fromcolumn"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for left side
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="tocolumn"
+				type="xs:NCName"
+				use="required"
+			>
+				<xs:annotation>
+					<xs:documentation>Column which contains the label for right side.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="highlightColor"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>When user clicks on a label, what color should be
+						used to highlight relevant part of the chart. Existing color is
+						the default
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="chartField">
+		<xs:complexType>
+			<xs:attributeGroup ref="fieldAttributes" />
+			<xs:attributeGroup ref="commonChartAttributes" />
+			<xs:attribute
+				name="chartType"
+				type="chartType"
+				use="required" />
+			<!-- Mar 25 2010 : Bug 1004 - Bubble Chart feature - Exility App : Aravinda -->
+			<xs:attribute
+				name="bubblecolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bubble, then you need to use
+						this to specify the column whose value that is used to calculate
+						the radius of the bubble.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="bubbleradiusdenominator"
+				type="xs:decimal"
+				use="optional"
+				default="1.0"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bubble, then you need to use
+						this to specify the value that is used to calculate the radius of
+						the bubble.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="invoicecolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the invoice data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="commitedcolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the commited data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="plannedcolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the planned data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="adjustedcolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the adjusted data.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="bulletlabelcolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is bullet, then you need to use
+						this to specify the column which contains the label for the
+						bullet.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="distributionvaluecolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey or sunburst, then you
+						need to use this to specify the column which contains the
+						distribution value.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="fromcolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey, then you need to use
+						this to specify the column which contains the label for the
+						distribution source.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="tocolumn"
+				type="xs:string"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>If the chart type is sankey, then you need to use
+						this to specify the column which contains the label for the
+						distribution target.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute
+				name="minPercentToShowLabel"
+				type="xs:int"
+				use="optional"
+			>
+				<xs:annotation>
+					<xs:documentation>Label for a pie in a pie chart may not look good
+						if it is too small. Provide the % value below which label is
+						suppressed.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="commonChartAttributes">
+		<xs:attribute
+			name="reportServiceId"
+			type="xs:NCName"
+			use="required" />
+		<xs:attribute
+			name="xaxiscolumn"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="helpTextColumn"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Column that has help text (tool tip) to be
+					displayed when mouse moves over this chart
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="yaxiscolumn"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="isMultiDataSet"
+			type="xs:boolean"
+			use="optional" />
+		<xs:attribute
+			name="groupbycolumn"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="xaxislabel"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="yaxislabel"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="xaxislabels"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="yaxislabels"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="minx"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="maxx"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="miny"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="maxy"
+			type="xs:string"
+			use="optional" />
+		<xs:attribute
+			name="noAutoLoad"
+			type="booleanType"
+			use="optional" />
+		<xs:attribute
+			name="showLegend"
+			type="xs:boolean"
+			use="optional"
+			default="true"
+		>
+			<xs:annotation>
+				<xs:documentation>Flag that tells if Legend needs to be displayed on
+					a chart or not.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="onClickFunctionName"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>on click event on the chart.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="onMoveFunctionName"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>onmove event funciton</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="yaxislabelformatterid"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If the yaxis labels are to be formatted, set this
+					to 'inr', 'usd' or 'dem'.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="colors"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Comma separated colors, as in css colors. Number
+					of colors need not match required number. System will use random
+					colors if required.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="labelColor"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Color to be used to for printing labels
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="rawDataDisplay"
+			type="rawDataDisplayValue"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Do you want the data also to be displayed as part
+					of chart. e.g. should pie chart show % ?</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendLabelFormatter"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of a javascript function(label, data) that
+					returns foaramtted label
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendNbrColumns"
+			type="xs:byte"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Number of legends to display per row
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendContainer"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Name of the div element to be created to display
+					legends. a div with this id is created with className as
+					chartlegendcontainer. all legends are rendered inside this
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendLabelBoxBorderColor"
+			type="xs:NCName"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Border color of box of color that is rendered
+					before legend label
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendPosition"
+			type="legendPositions"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>If legend is to be rendered within the chart area,
+					specify the position. Valid only if legendContainer is NOT
+					specified.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendMargin"
+			type="xs:byte"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>margin for legend area in pixels
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendBackgroundColor"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Background color. Valid color as in css color
+					value
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendBackgroundOpacity"
+			type="xs:decimal"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>opacity as a fraction e.g. 0.5</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="showFilledPoints"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation>Show filled points in line chart
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="direction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="marginLeft"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="marginBottom"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="xLabelFormatterFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="yLabelFormatterFunction"
+			type="xs:string"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="yLabelMaxWidth"
+			type="xs:int"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="legendHighlight"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute
+			name="stacking"
+			type="booleanType"
+			use="optional"
+		>
+			<xs:annotation>
+				<xs:documentation></xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:simpleType name="chartType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEFAULT" />
+			<xs:enumeration value="PIE" />
+			<xs:enumeration value="SPEEDOMETER" />
+			<xs:enumeration value="BAR" />
+			<xs:enumeration value="RADAR" />
+			<!-- Mar 25 2010 : Bug 1004 - Bubble Chart feature - Exility App : Aravinda -->
+			<xs:enumeration value="SCATTER" />
+			<xs:enumeration value="BUBBLE" />
+			<!-- Mar 25 2010 : Bug 1004 - Bubble Chart feature - Exility App : Aravinda -->
+			<!-- Apr 12 2010 : Bug 1107 - Horizontal & Vertical Stacked bar char - 
+				Exility App (Start) : Aravinda -->
+			<xs:enumeration value="HORIZONTALBAR" />
+			<xs:enumeration value="STACKED" />
+			<xs:enumeration value="HORIZONTALSTACKED" />
+			<!-- Apr 12 2010 : Bug 1107 - Horizontal & Vertical Stacked bar char - 
+				Exility App (End) : Aravinda -->
+			<!-- Apr 14 2010 : Bug 1108 - Bug 1108 - Run Chart (Start) : Aravinda -->
+			<xs:enumeration value="RUNCHART" />
+			<!-- Apr 14 2010 : Bug 1108 - Bug 1108 - Run Chart (End) : Aravinda -->
+			<xs:enumeration value="BULLET" />
+			<xs:enumeration value="SUNBURST" />
+			<xs:enumeration value="SANKEY" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="chartPanelType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="bar" />
+			<xs:enumeration value="multipleBar" />
+			<xs:enumeration value="stackedBar" />
+			<xs:enumeration value="horizontalBar" />
+			<xs:enumeration value="horizontalStackedBar" />
+			<xs:enumeration value="line" />
+			<xs:enumeration value="multipleLine" />
+			<xs:enumeration value="lineAndBar" />
+			<xs:enumeration value="scatter" />
+			<xs:enumeration value="pie" />
+			<xs:enumeration value="speedometer" />
+			<xs:enumeration value="radar" />
+			<xs:enumeration value="bubble" />
+			<xs:enumeration value="run" />
+			<xs:enumeration value="bullet" />
+			<xs:enumeration value="sunBurst" />
+			<xs:enumeration value="sankey" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="htmlElement">
+		<xs:complexType>
+			<xs:attribute
+				name="htmlText"
+				type="xs:string"
+				use="required" />
+			<xs:attribute
+				name="name"
+				type="xs:string"
+			>
+				<xs:annotation>
+					<xs:documentation> name of html element
+					</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="filterTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="text" />
+			<xs:enumeration value="number" />
+			<xs:enumeration value="date" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="comparisonTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="equals" />
+			<xs:enumeration value="startsWith" />
+			<xs:enumeration value="contains" />
+			<xs:enumeration value="lessThan" />
+			<xs:enumeration value="greaterThan" />
+			<xs:enumeration value="between" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="labelPositionType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="left" />
+			<xs:enumeration value="top" />
+			<xs:enumeration value="merge" />
+			<xs:enumeration value="hide" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="booleanType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="true" />
+			<xs:enumeration value="false" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="alignType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="left" />
+			<xs:enumeration value="right" />
+			<xs:enumeration value="center" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="slideEffectType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="fromLeft" />
+			<xs:enumeration value="fromRight" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="refreshPageType">
+		<xs:annotation>
+			<xs:documentation>Should the data received from server be pushed to
+				page?
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="beforeMyAction">
+				<xs:annotation>
+					<xs:documentation>push data to page BEFORE invoking callBackAction
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="afterMyAction">
+				<xs:annotation>
+					<xs:documentation>push data to page AFTER invoking callBackAction
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="none">
+				<xs:annotation>
+					<xs:documentation>Do NOT push data to page</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="charType">
+		<xs:restriction base="xs:string">
+			<xs:length
+				fixed="true"
+				value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="rowType">
+		<xs:annotation>
+			<xs:documentation>Which row should be selected when the list is
+				refreshed
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none">
+				<xs:annotation>
+					<xs:documentation>Do not select any rows when the list is refreshed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="first">
+				<xs:annotation>
+					<xs:documentation>Select the first row when the list is refreshed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="current">
+				<xs:annotation>
+					<xs:documentation>After refresh, select the same row in the list
+						which was selected before refresh
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="next">
+				<xs:annotation>
+					<xs:documentation>After refresh, select in the list the row next to
+						the row which was selected before refresh
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="last">
+				<xs:annotation>
+					<xs:documentation>Select the last row when the list is refreshed
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="legendPositions">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nw">
+				<xs:annotation>
+					<xs:documentation>Top Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ne">
+				<xs:annotation>
+					<xs:documentation>Top Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="sw">
+				<xs:annotation>
+					<xs:documentation>Bottom Left</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="se">
+				<xs:annotation>
+					<xs:documentation>Bottom Right</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="rawDataDisplayValue">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="percent">
+				<xs:annotation>
+					<xs:documentation>Show %</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="value">
+				<xs:annotation>
+					<xs:documentation>Show Value</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

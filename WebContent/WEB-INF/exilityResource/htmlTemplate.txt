@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link rel="stylesheet" href="../../css/home/ezDefault.css" type="text/css" />
+    <script type="text/javascript" src="../../js/api/exilityLoader.js"></script>
+    @script@
+</head>
+<body onload="exilPageLoad();" style="display: none;" onunload="exilPageUnload();"
+    onscroll="adjustFrameHeightToBodyHeight();">
+    <form id="form1" onsubmit="if(event.preventDefault) event.preventDefault(); else event.returnValue= false; return false;" autocomplete="off" action="" accept-charset="UTF-8">
+    <div class="page">
+        @panels@
+    </div>
+    </form>
+</body>
+</html>

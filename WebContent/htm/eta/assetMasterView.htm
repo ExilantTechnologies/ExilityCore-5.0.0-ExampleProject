@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link rel="stylesheet" href="../../css/home/default.css" type="text/css" />
+    <script type="text/javascript" src="../../exilityClient/js/api/exilityLoader.js"></script>
+    
+<script type="text/javascript" src="assetMasterView.metadata.js" ></script> 
+</head>
+<body onload="exilPageLoad();" style="display: none;" onunload="exilPageUnload();"
+    onscroll="adjustFrameHeightToBodyHeight();">
+    <form id="form1" onsubmit="if(event.preventDefault) event.preventDefault(); else event.returnValue= false; return false;" action="" accept-charset="UTF-8">
+    <div class="page">
+        <div id="pageTitle"></div>
+        <div class="expandedfieldset" id="assetAttributesTop" >
+<div class="displayPanel" id="assetAttributes" >  <table class="fieldsTable"  id="assetAttributesFieldsTable" >
+<col id="assetAttributesCol1" /><col id="assetAttributesCol2" /><col id="assetAttributesCol3" /><col id="assetAttributesCol4" /><col id="assetAttributesCol5" /><col id="assetAttributesCol6" /><tr>
+<td class="labelCell" id="assetNameLabelCell" ><div class="label" id="assetNameLabel"  >Asset Name</div></td><td class="fieldCell" id="assetNameFieldCell" ><div class="field"  id="assetName" >&nbsp;</div>&nbsp;
+<input type="hidden"  id="id"  onchange="P2.fieldChanged(this, 'id');" /></td>
+<td class="labelCell" id="assetGroupIdLabelCell" ><div class="label" id="assetGroupIdLabel"  >Asset Group</div></td><td class="fieldCell" id="assetGroupIdFieldCell" ><div class="field"  id="assetGroupId" >&nbsp;</div></td>
+<td class="labelCell" id="modelIdLabelCell" ><div class="label" id="modelIdLabel"  >Model Id</div></td><td class="fieldCell" id="modelIdFieldCell" ><div class="field"  id="modelId" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="manufacturerPartNoLabelCell" ><div class="label" id="manufacturerPartNoLabel"  >Manuf Part No</div></td><td class="fieldCell" id="manufacturerPartNoFieldCell" ><div class="field"  id="manufacturerPartNo" >&nbsp;</div></td>
+<td class="labelCell" id="locationMasterIdLabelCell" ><div class="label" id="locationMasterIdLabel"  >Location</div></td><td class="fieldCell" id="locationMasterIdFieldCell" ><div class="field"  id="locationMasterId" >&nbsp;</div></td>
+<td class="labelCell" id="purchaseDateLabelCell" ><div class="label" id="purchaseDateLabel"  >Purchased On</div></td><td class="fieldCell" id="purchaseDateFieldCell" ><div class="field"  id="purchaseDate" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="priceLabelCell" ><div class="label" id="priceLabel"  >Price</div></td><td class="fieldCell" id="priceFieldCell" ><div class="field"  id="price" >&nbsp;</div></td>
+<td class="labelCell" id="poNumberLabelCell" ><div class="label" id="poNumberLabel"  >Purchase Order No</div></td><td class="fieldCell" id="poNumberFieldCell" ><div class="field"  id="poNumber" >&nbsp;</div></td>
+<td class="labelCell" id="invoiceNumberLabelCell" ><div class="label" id="invoiceNumberLabel"  >Invoice No</div></td><td class="fieldCell" id="invoiceNumberFieldCell" ><div class="field"  id="invoiceNumber" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="insuredLabelCell" ><div class="label" id="insuredLabel"  >Insurance Reference</div></td><td class="fieldCell" id="insuredFieldCell" ><div class="field"  id="insured" >&nbsp;</div></td>
+<td class="labelCell" id="retirementDateLabelCell" ><div class="label" id="retirementDateLabel"  >To be Retired on</div></td><td class="fieldCell" id="retirementDateFieldCell" ><div class="field"  id="retirementDate" >&nbsp;</div></td>
+<td class="labelCell" id="isRetiredLabelCell" ><div class="label" id="isRetiredLabel"  >Retired?</div></td><td class="fieldCell" id="isRetiredFieldCell" ><div class="field"  id="isRetired" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="retiredOnLabelCell" ><div class="label" id="retiredOnLabel"  >Retired On</div></td><td class="fieldCell" id="retiredOnFieldCell" ><div class="field"  id="retiredOn" >&nbsp;</div></td>
+<td class="labelCell" id="systemSerialNoLabelCell" ><div class="label" id="systemSerialNoLabel"  >System Sl No</div></td><td class="fieldCell" id="systemSerialNoFieldCell" ><div class="field"  id="systemSerialNo" >&nbsp;</div></td>
+<td class="labelCell" id="osidLabelCell" ><div class="label" id="osidLabel"  >OS Id</div></td><td class="fieldCell" id="osidFieldCell" ><div class="field"  id="osid" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="monitorSerialNoLabelCell" ><div class="label" id="monitorSerialNoLabel"  >Monitor Sl No</div></td><td class="fieldCell" id="monitorSerialNoFieldCell" ><div class="field"  id="monitorSerialNo" >&nbsp;</div></td>
+<td class="labelCell" id="ramIdLabelCell" ><div class="label" id="ramIdLabel"  >Ram Id</div></td><td class="fieldCell" id="ramIdFieldCell" ><div class="field"  id="ramId" >&nbsp;</div></td>
+<td class="labelCell" id="processorIdLabelCell" ><div class="label" id="processorIdLabel"  >Processor Id</div></td><td class="fieldCell" id="processorIdFieldCell" ><div class="field"  id="processorId" >&nbsp;</div></td></tr><tr>
+<td class="labelCell" id="hardDiskIdLabelCell" ><div class="label" id="hardDiskIdLabel"  >Hard Disk Id</div></td><td class="fieldCell" id="hardDiskIdFieldCell" ><div class="field"  id="hardDiskId" >&nbsp;</div></td>
+<td class="labelCell" id="adapterSerialNoLabelCell" ><div class="label" id="adapterSerialNoLabel"  >Adapter Sl No</div></td><td class="fieldCell" id="adapterSerialNoFieldCell" ><div class="field"  id="adapterSerialNo" >&nbsp;</div></td>
+<td class="labelCell" id="accessoriesLabelCell" ><div class="label" id="accessoriesLabel"  >Accessories</div></td><td class="fieldCell" id="accessoriesFieldCell" ><div class="field"  id="accessories" >&nbsp;</div>&nbsp;
+<input type="hidden"  id="createdBy"  onchange="P2.fieldChanged(this, 'createdBy');" />&nbsp;
+<input type="hidden"  id="createdOn"  onchange="P2.fieldChanged(this, 'createdOn');" />&nbsp;
+<input type="hidden"  id="modifiedBy"  onchange="P2.fieldChanged(this, 'modifiedBy');" />&nbsp;
+<input type="hidden"  id="modifiedOn"  onchange="P2.fieldChanged(this, 'modifiedOn');" />&nbsp;
+<input type="hidden"  id="companyId"  onchange="P2.fieldChanged(this, 'companyId');" value="1" />&nbsp;
+<input type="hidden"  id="oldId"  onchange="P2.fieldChanged(this, 'oldId');" /></td></tr> </table>  </div></div><div class="expandedfieldset" id="allocationdetailsTop" >
+<div class="listPanel" id="allocationdetails" >
+<table id="allocations" class="listtable" ><col id="allocationsCol1"  /><col id="allocationsCol2"  /><col id="allocationsCol3"  /><col id="allocationsCol4"  /><col id="allocationsCol5"  /><col id="allocationsCol6"  /><thead><tr ><th class="right" id="allocations_personCodeLabel" ><div>&nbsp;Person</div></th><th class="left" id="allocations_identificationNumberLabel" ><div>&nbsp;Id Number</div></th><th class="left" id="allocations_fromDateLabel" ><div>&nbsp;Allocate From</div></th><th class="left" id="allocations_toDateLabel" ><div>&nbsp;Allcoated Till</div></th><th class="left" id="allocations_isDeallocatedLabel" ><div>&nbsp;Deallocated ?</div></th><th class="left" id="allocations_deallocationDateLabel" ><div>&nbsp;Deallocated On</div></th></tr></thead><tbody ><tr onclick="P2.listClicked(this, 'allocations', event);" onmouseover="P2.listMouseOver(this, 'allocations', event);" onmouseout="P2.listMouseOut(this, 'allocations', event);" ><td class="right" ><div class="field"  id="allocations_personCode" >&nbsp;</div>
+<input type="hidden"  id="allocations_companyId"  onchange="P2.fieldChanged(this, 'allocations_companyId');"  onkeydown="P2.handleGridNav(this, 'allocations_companyId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_companyId');" />
+<input type="hidden"  id="allocations_id"  onchange="P2.fieldChanged(this, 'allocations_id');"  onkeydown="P2.handleGridNav(this, 'allocations_id', event);"  onfocus="P2.fieldFocussed(this, 'allocations_id');" /></td><td class="left" ><div class="field"  id="allocations_identificationNumber" >&nbsp;</div>
+<input type="hidden"  id="allocations_assetId"  onchange="P2.fieldChanged(this, 'allocations_assetId');"  onkeydown="P2.handleGridNav(this, 'allocations_assetId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_assetId');" /></td><td class="left" ><div class="field"  id="allocations_fromDate" >&nbsp;</div></td><td class="left" ><div class="field"  id="allocations_toDate" >&nbsp;</div></td><td class="left" ><div class="field"  id="allocations_isDeallocated" >&nbsp;</div></td><td class="left" ><div class="field"  id="allocations_deallocationDate" >&nbsp;</div>
+<input type="hidden"  id="allocations_createdBy"  onchange="P2.fieldChanged(this, 'allocations_createdBy');"  onkeydown="P2.handleGridNav(this, 'allocations_createdBy', event);"  onfocus="P2.fieldFocussed(this, 'allocations_createdBy');" />
+<input type="hidden"  id="allocations_createdOn"  onchange="P2.fieldChanged(this, 'allocations_createdOn');"  onkeydown="P2.handleGridNav(this, 'allocations_createdOn', event);"  onfocus="P2.fieldFocussed(this, 'allocations_createdOn');" />
+<input type="hidden"  id="allocations_modifiedBy"  onchange="P2.fieldChanged(this, 'allocations_modifiedBy');"  onkeydown="P2.handleGridNav(this, 'allocations_modifiedBy', event);"  onfocus="P2.fieldFocussed(this, 'allocations_modifiedBy');" />
+<input type="hidden"  id="allocations_modifiedOn"  onchange="P2.fieldChanged(this, 'allocations_modifiedOn');"  onkeydown="P2.handleGridNav(this, 'allocations_modifiedOn', event);"  onfocus="P2.fieldFocussed(this, 'allocations_modifiedOn');" />
+<input type="hidden"  id="allocations_oldId"  onchange="P2.fieldChanged(this, 'allocations_oldId');"  onkeydown="P2.handleGridNav(this, 'allocations_oldId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_oldId');" value="1" /></td></tr></tbody></table></div></div><div class="expandedfieldset" id="actionButtonsTop" >
+<div class="buttonpanel" id="actionButtons" >
+<input type="button" value="Edit" id="edit" onclick="P2.act(this, 'edit', 'edit', event);" style="cursor:pointer;"  />
+<input type="button" value="New Asset" id="new" onclick="P2.act(this, 'new', 'new', event);" style="cursor:pointer;"  />
+<input type="button" value="Close" id="close" onclick="P2.act(this, 'close', 'close', event);" style="cursor:pointer;"  /></div></div>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,686 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+/*
+Following css names are used by exility page generator.
+button - form button <input type=button>
+imagebutton - form button <input type=image>
+label - <span> label of a a field
+field - outputField <span>
+headerpanel - not used any more. Used to be a header panel<div>
+pageheader - header of the page inside a fieldset <legend>
+expandedfieldset - fieldset used to produce outline, when it is expanded <fieldset>
+collapsedfieldset - fieldset used to produce outline, when it is collapsed. lower border with .. looks   good <fieldset>
+twister - text of the twister for a collapsible panel <legend> if outline is used, <span> otherwise
+tablelabel - label of a panel if no twistie <span>
+buttonpanel - earlier called tools, for button panel <div>
+displaypanel - earlier called inputpanel <div>
+fieldstable - table insode display panel <table>
+gridpanel - outer div of gridpanel <div>
+gridtable - table of grid <table>
+listpanel - outer div of listpanel <div>
+listtable - table of list <table>
+spacerpanel - div inside a table that takes 100% <div>
+subwindowpanel - outerpanel <div> 
+tabnav - outermost panel of tabbed panel (group)
+activetablabel - label of the tab that is active <span>
+passivetablabel - label of a tab that is not visible <span>
+tabs = a common div for all the tab divs in a tabbed panel <div>
+row1 - first row of list/grid <tr>
+row2 - second row of list/grid <tr>
+*/
+html, body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset 
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+html
+{
+    background-color: #C8C8C8;
+}
+
+body 
+{
+    font-size: small;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color:  #666666;
+    min-height: 400px;
+    width:100%;
+    padding-top: 5px;
+	background-color: white;
+}
+
+/*15 px gap on all side of data area  */
+form
+{
+    padding:5px 15px 15px 15px;
+}    
+
+/* we need to put buttons on the same line as title. Hence title is made absolute, and buttons will be right aligned */
+#pageTitle
+{
+    position:absolute;
+    top:15px;
+    left:17px;
+    z-index:1;
+    color: #000000;
+    font: 120% Helvetica,Verdana,"Lucida Grande",Georgia,"Times New Roman",Times,serif;
+    margin-left: 20px;
+    font-size:16px;
+}
+
+/* top buttons to be right aligned to share the same horizontal space with page title */
+div#topButtons
+{
+    width:100%;
+    overflow:auto;
+    height: 30px;
+}
+div#topButtons *
+{
+    float:right;
+}
+
+/* normal display panel */
+div.tabs, div.displayPanel
+{
+    background-color: #EBEBEB;
+    border-color: #D6D6D6 #D6D6D6 #C2C2C2 #D6D6D6;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px 1px 2px 1px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+/* group of fields to be rendered as if there is no panel around them */
+div.notAPanel
+{
+    margin-top: 5px;
+    padding: 5px;
+}
+
+/* when panels are enclosed, only the outer one should have borders. Also, no padding or margin. Individual pages to add if required */
+div.displayPanel div.displayPanel, div.tabs div.displayPanel
+{
+    border-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* width is to be  set in individual page for centering the tab labels. That would be some of all labels + 2px per each of them for their borders */
+div.tabnav 
+{
+    margin:0px auto -18px auto;
+}
+
+/* we do not want rounded corner for tabs, except for the edges 
+.passivetablabelLeft, .passivetablabelRight, .activetablabelLeft, .activetablabelRight
+{
+    display:none;
+}
+*/
+/* a default width of 150px is provied here. Individual pages have to override this to suit their labels */
+.passivetablabel, .activetablabel
+{
+    border: 1px solid #B1B1B1;
+    border-left:none;
+    height: 18px;
+    margin-top:-3px;
+    padding: 2px 0 ;
+    text-align: center;
+    color: #000000;
+    cursor: pointer;
+    width:140px;
+    display:inline-block;
+}
+
+.passivetablabel
+{
+    background: transparent url("../../../resources/images/tabBgGrey.png") repeat scroll 5px 0 ;
+}
+
+.activetablabel
+{
+    background: url("../../../resources/images/tabBgBlue.png") repeat scroll 0px 0px transparent;
+}
+
+/*rounded corner for first and last  */
+.passivetablabel:first-child, .activetablabel:first-child
+{
+    border-radius:8px 0 0 8px;
+    border-left: 1px solid #B1B1B1;
+
+}
+.passivetablabel:last-child, .activetablabel:last-child
+{
+    border-radius: 0 8px 8px 0;
+}
+/* labels in a display panel are rendered as <td.labelCell><div.label>label</div></td>   */
+td.labelCell
+{
+    text-align:right;
+}
+
+div.label, div.requiredLabel
+{
+    display:inline;
+    width:100%;
+    font-family: "Lucida Grande",Arial,Helvetica,Verdana,SunSans-Regular,sans-serif;
+    color: #333333;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    margin: 10px 4px 4px 0;
+}
+
+div.requiredLabel:after
+{
+	content:" *";
+	color:Red;
+}
+
+/* typpically used as explaination text infront of fields */
+.note, .fieldHelp
+{
+    font-family:Verdana;
+    font-size:11px;
+    font-style: italic;
+}
+
+input.button
+{
+    background: -moz-linear-gradient(center top , #FFFFFF, #BFBBBB) repeat scroll 0 0 transparent;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    font-size: 0.8em;
+    margin: 4px 2px 5px 1px;
+    outline: medium none;
+    padding: 2px 8px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    cursor:pointer;
+}
+input.button:focus
+{
+    background-color:red;
+}
+input.button:disabled
+{
+    cursor:default;
+}
+
+select
+{
+    font-family: "Lucida Grande",Arial,Verdana,SunSans-Regular,sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+    height: 20px;
+    margin-top: 3px;
+    padding:1px 1px 1px 3px;
+}
+span.field
+{
+    font-size:1em;
+    font-family: "Lucida Grande",Arial,Helvetica,Verdana,SunSans-Regular,sans-serif;
+}
+
+input[type=text], select
+{
+    border: solid 1px #D6D6D6;
+    font-family: "Lucida Grande",Arial,Verdana,SunSans-Regular,sans-serif;
+    font-size: 0.9em;
+    font-weight: normal;
+    height: 18px;
+    margin-top: 3px;
+    padding-left:3px;
+    border-radius: 5px;
+}
+
+/* we are making almost all input fields look alike. And number fields need not be aligned in a  */
+listtable .intdecinputfield, gridtable .intdecinputfield
+{
+    text-align: right;
+}
+
+
+input[readonly]
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color:#09038c;
+    background-color:#F4F4F4;
+    border-style:outset;
+    border-color:#C7D5E0;
+    border-right-style:inset;
+    border-bottom-style:inset;
+   
+}
+
+
+textarea[readonly]
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color:#09038c;
+    background-color:#F4F4F4;
+    border-style:outset;
+    border-color:#C7D5E0;
+    border-right-style:inset;
+    border-bottom-style:inset;
+   
+}
+
+.pageLabel
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color:#09038c;
+}
+
+.tablelabel
+{
+    font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 18px;
+  	/* color:#0396fe; */
+    color: #696969;
+}
+/********************* list/grid panel *****************************/
+.listPanel, .gridPanel
+{
+    margin:7px 0 7px 0;   
+}
+.listtable, .listTable, .gridTable, .gridtable
+{
+    border: 1px solid #D6D6D6;
+    border-radius:4px;
+    border-collapse:collapse;
+}
+
+
+th
+{
+    background:url('../../../resources/images/headerBg19.png') repeat-x;
+    color: black;
+    height:16px;
+    padding:0px 0px 2px 3px;
+    text-align:left;
+    font: 85%/1.2 "Lucida Grande",Georgia,"Times New Roman",Times,serif;
+    border-left:solid 1px #AAAAAA;
+}
+th:first-child
+{
+    border-left:none;
+}
+
+
+.listtable tr, .gridtable tr
+{
+	border-top: 1px solid #ECECEC;
+	font-size:1em;
+}
+
+.listtable tr:first-child, .gridtable tr:first-child
+{
+	border-top:none;
+}
+.listtable tr.row1, .gridtable tr.row1
+{
+    background-color:#EEF1F7;
+}
+
+tr.deletedrow
+{
+    text-decoration:line-through;
+    background-color:#FFBBBB;
+}
+
+.listtable td, .gridtable td
+{
+    padding:2px 4px;
+    font-size:0.95em;
+    font: 85%/1.2 "Lucida Grande",Georgia,"Times New Roman",Times,serif;
+}
+
+/* table inside which all display panel fields are rendered */
+table.fieldstable, table.fieldsTable
+{
+    width:100%;
+}
+
+/*************************** field error panel ********************************
+<div#fieldErrorDisplayMain>
+    <div#fieldErrorCollapse/>
+    <div#fieldErrorExpand/>
+    <div#fieldErrorDisplayEle>
+      <div.fieldErrorEle> (for each display)
+          <div.fieldErrorClose/>
+          <div.fieldErrorText>erro text</div>
+      </div>
+    </div>
+</div>
+***********************************************************************/
+#fieldErrorDisplayMain
+{
+    border:solid 1px #DDDDDD;
+    border-radius:5px;
+    background-color:#DDDDDD;
+    position:fixed;
+    top:5px;
+    left:5px;
+    background-image:url("../../../resources/images/attention.gif");
+    background-repeat:no-repeat;
+    min-width:60px;
+    min-height:20px;
+    z-index:100;
+    display:none;
+}
+
+#fieldErrorCollapse, #fieldErrorExpand 
+{
+    width:15px;
+    height:15px;
+    display:inline-block;
+    cursor:pointer;
+    float:right;
+}
+
+#fieldErrorCollapse
+{
+    background-image:url('../../../resources/images/collapse.png');
+}
+
+#fieldErrorExpand
+{
+    background-image:url('../../../resources/images/expand.png');
+}
+
+#fieldErrorDisplayEle
+{
+    margin:15px 10px 0 25px;
+    display:inline-block;
+}
+div.fieldErrorEle
+{
+    border-radius : 4px;
+    border:solid 1px #444444;
+    background-color: #CCCCCC;
+    width:700px;
+    margin:3px;
+    padding: 2px;
+}
+div.fieldErrorRemove
+{
+    width:10px;
+    height:10px;
+    display:inline-block;
+    cursor:pointer;
+    background-image:url('../../../../resources/resources/images/tinyDelete.jpg');
+}
+
+div.fieldErrorText
+{
+   font-size:0.9em;
+   font-family:Tahoma;
+   display:inline-block;
+   padding-left:6px;
+}
+
+.quickSearchField
+{
+  border-radius:10px;
+  border: 1px solid #777777;
+  padding-left:7px;
+  background-image:url('../../images/searchField.jpg');
+  background-position:right center;
+  background-repeat:no-repeat;
+}
+
+/* input Assistant */
+ul.ia
+{
+    border:solid 1px Gray;
+    background-color:#EEEEEE;
+    padding-left:2px;
+    width:200px;
+    max-height:200px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    z-index:1;
+}
+ul.ia li
+{
+    list-style-type:none;
+    white-space:nowrap;
+    text-align:left;
+    cursor:pointer;
+}
+
+li.hilited
+{
+    background-color:Olive;
+    color:White;
+}
+li.selected
+{
+    background-color:Blue;
+    color:White;
+}
+
+.inerror
+{
+    background-color:Purple;
+}
+
+.selectedlistrow
+{
+    cursor:default;
+    background-color:#EEEEEE;
+}
+
+/* linked display panel that is showing a deleted row */
+table.deletedTable
+{
+    text-decoration:line-through;
+}
+
+/********************** for date assistant **********************/
+div.cal
+{
+    background-color:#eeeeee;
+    border:solid 1px #D6D6D6;
+    border-radius:5px;
+}
+#cal_prev
+{
+    display:inline-block;
+    width: 15px;
+    height:15px;
+    background-image:url('../../../resources/images/collapse.png');
+}
+
+#cal_year
+{
+    display:inline-block;
+}
+
+#cal_next
+{
+    display:inline-block;
+    width: 15px;
+    height:15px;
+    background-image:url('../../../resources/images/expand.png');
+}
+
+#cal_month_div
+{
+    display:inline-block;
+}
+
+.ok
+{
+    cursor:pointer;
+}
+.nok
+{
+    text-decoration:line-through;
+}
+.sel
+{
+    cursor:pointer;
+    border:1px solid #cccccc;
+    border-radius:5px;
+    background:#dddddd;
+    font-weight:200;
+}
+
+/*** list assistant ***/
+#list_assistant
+{
+    background-color:#eeeeee;
+    border:solid 1px #D6D6D6;
+    border-radius:0 0 5px 5px;
+    max-height:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+#list_assistant div
+{
+    white-space:nowrap;
+    overflow:hidden;
+    cursor:pointer;
+    padding-left:4px;
+}
+
+#list_assistant div:hover, #list_assistant div.selected
+{
+    background-color:#aaaaff;
+    color:White;
+}
+
+/* twisters and expand/collapse
+structure when the panel is visible. note that expandedfeildset is all lowercase, while others are camelCase
+<div.expandedfieldset#yourPanelNameTop>
+    <div.expandedTwister#yourPanelNameTwister><div.panelLabel#yourPanelNameLabel>Your Label </div></div>
+    <div#yourPanelName> this is your panel </div>
+</div>
+when twister is clicked, class of top div changes to collapsedfieldset and that of twister changes to collapsedTwister
+ */
+div.expandedTwister, div.collapsedTwister
+{
+    padding-left:20px; /* space for the twister image */
+    cursor:pointer;
+    background-repeat:no-repeat;
+}
+
+div.expandedTwister
+{
+    background-image:url("../../../resources/images/expanded.gif");
+}
+
+div.collapsedTwister
+{
+    background-image:url("../../../resources/images/collapsed.gif");
+}
+
+/* hide the panel next to the twister */
+div.collapsedTwister+div
+{
+    display:none;
+}
+
+div.panelLabel
+{
+    display:inline-block;
+    width:100%;
+    font-family: "Lucida Grande",Arial,Helvetica,Verdana,SunSans-Regular,sans-serif;
+    color: #333333;
+    font-size: 12px;
+}
+
+/********chart css**********/
+
+.chartfield {
+	position: relative;
+	background: white;
+	border: 1px solid #f1f1f1;
+}
+
+.chartlegendcontainer {
+	background: inactiveborder;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; /* Firefox */
+	width: 100%;
+	border: solid 1px #f1f1f1;
+}
+
+.chartlegendcontainer tr {
+	display: inline-block;
+}
+
+.chartlegendcontainer table {
+	margin: 0 auto;
+}
+
+.chartfieldcontainer {
+	width: 100%;
+	height: 400px;
+}
+
+.chartfieldcontainer,.chartfieldlabelholder,.chartfieldyaxislabelholder,.chartfieldxaxislabelholder
+{
+	background: white;
+	z-index: 10
+}
+
+.chartfieldxaxislabelholder {
+	position: absolute;
+	bottom: 0px;
+	text-align: center;
+	padding-bottom: 5px;
+	left: 40%;
+}
+
+.chartfieldlabelholder {
+	text-align: center;
+	padding-top: 5px;
+}
+
+.chartfieldyaxislabelholder {
+	position: absolute;
+	padding-left: 10px;
+	top: 20%;
+}

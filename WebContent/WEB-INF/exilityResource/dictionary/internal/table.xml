@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema" >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="table"
+                   label="Table"
+                   businessDescription="table and column attributes">
+            <elements>
+                <dataElement name="tableName"
+                             dataType="entityName"
+                             businessDescription="RDBMS table name. defaults to name, but this mapping can be used to allow different naming conventions for db and app. For example camelCase is not viable for RDBMS as the specification requires it to be case insensitive by default. You may use '_' for db and camel case for app. "
+                             label="Table Name"
+                             />
+                <dataElement name="okToDelete"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Can rows be deleted?"
+                             />
+                <dataElement name="keyToBeGenerated"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Key To be generated?"
+                             />
+                <dataElement name="createdTimestampName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedAt field name"
+                             />
+                <dataElement name="modifiedTimestampName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifedAt field name"
+                             />
+                <dataElement name="createdUserName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy field name"
+                             />
+                <dataElement name="modifiedUserName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy field name"
+                             />
+                <dataElement name="createdTimestampCOlumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedAt column name"
+                             />
+                <dataElement name="modifiedTimestampColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifedAt column name"
+                             />
+                <dataElement name="createdUserColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy column name"
+                             />
+                <dataElement name="modifiedUserColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifiedBy column name"
+                             />
+                <dataElement name="tableType" 
+                			 label="Table Type" 
+                			 dataType="entityName"
+                			 businessDescription="As defined in the data base. Either table or view."
+                			 />
+                <dataElement name="columnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Column Name"
+                             />
+                <dataElement name="dataElementName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Data Element Name"
+                             />
+                <dataElement name="isOptional"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Can value be omitted?"
+                             />
+                <dataElement name="defaultValue"
+                             dataType="text"
+                             businessDescription="true"
+                             label="Default Value"
+                             />
+                <dataElement name="isKeyColumn"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Is this a Key Column?"
+                             />
+                <dataElement name="listServiceName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="List Service Name"
+                             />
+                <dataElement name="dependantOnColumnName"
+                             dataType="entityName"
+                             businessDescription="Some times, two columns go hand in hand. If one column value is specified, then the other one shoudl also be specified. If this column is dependent column of one such pair, provide the name of the other column."
+                             label="Depends on Column"
+                             />
+                <dataElement name="dependantOnColumnValue"
+                             dataType="text"
+                             businessDescription="Relevant only if dependantOnColumnName is specified. This is a further restriciton on the pair, that this column is required only if the other column has this specific value. For example if employeeType = 'contractor' then contractingCompany is required."
+                             label="Dependend Column Vallue"
+                             />
+                <dataElement name="sqlDataType"
+                             dataType="description"
+                             label="Data Type"
+                             businessDescription="As defined in the db"
+                             />
+                <dataElement name="precision"
+                             dataType="number"
+                             businessDescription="Total number of digits in this number, including the digits after decimal point if any"
+                             label="Precision"
+                             />
+                <dataElement name="scale"
+                             dataType="number"
+                             businessDescription="Number of digits to be stored after the decimal point. Thearetically, negative scale is valid, but we do not provide that feature at this time. For example, scale of -3 means the numebrs are in thousands."
+                             label="scale"
+                             />
+                <dataElement name="isNullable"
+                             dataType="boolean"
+                             businessDescription="In the database, is this column nullable? We strongly recommend not using this feature, except for date fields at times."
+                             label="nullable in DB?"
+                             />
+                             
+                <dataElement name="keyFromtable"
+                             dataType="entityName"
+                             businessDescription="name of the table in which this column is teh primary key. We generally recommend that the column name shoudl be same as that in the othe rtable, but you may reasons for this to be different."
+                             label="nullable in DB?"
+                             />
+                             
+            </elements>
+        </dataGroup>
+
+    </groups>
+</dataDictionary>

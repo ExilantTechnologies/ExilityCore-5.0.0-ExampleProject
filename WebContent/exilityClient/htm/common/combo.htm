@@ -1,0 +1,565 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="combo.css" type="text/css" />
+
+    <script type="text/javascript">
+    
+/***** PENDING ISSUE : 
+    1. What happens to existing focus/blur/change/keyup events ?? Generator will handle this. 
+    2. IE comes-up with horizonatal scroll whenever there is a vertical scroll-bar.
+*****/
+var COMBO_MAX_ROWS = 40;
+var COMBO_MAX_HEIGHT = 200;
+var MAX_CHARS = 150;
+var COMBO_POLL_INTERVAL = 200; //in milliseconds. If set t zero, no polling
+//callback object is where we store the object with details of hmlHTTPObject and releveant info
+var callBackObjects = new Object();
+var nextIndexToUse = 0;
+var currentFieldName = null;
+var currentMinChars = 0;
+var comboDiv = null; //html div element that has combo rows as children
+var frameStyle = null; // this window is an iframe in the paren doc. frameStyle is the styele of tha tdom element
+var intervalTimer; // poller that watches as user types in. Not enabled yet. Will be enabled onbly after current one stabilizes
+var comboRows = new Array(); //contains all rows. Avoids a call to document.getElementById();
+//state of current combo
+var scrollIsActive = false;
+var currentRow = null;
+var currentNbrRows = 0;
+var currentInputEle, currentWindow, currentValue, currentMinWidth, currentTypedValue, lastSelctedValue, currentDisplayFields;
+var baseData, baseValue;
+
+var comboIsInited = false;
+var comboWasClicked = false;
+
+var urlFunction = function()
+{
+    alert('urlFunctin is not set by the caller. Combo will not work'); 
+    comboEnd();
+    return null;
+}
+
+var focusOutTimer = null; 
+//on load of this document
+function loaded()
+{
+    comboDiv = document.getElementById('comboDiv');
+    var tb = comboDiv.tBodies[0];
+    frameStyle = window.parent.document.getElementById(window.name).style;
+    
+    //add max rows. Idea is to avoid changing dom at run time. We may hide rows that are not required
+    var row = document.getElementById('row1');
+    row.rowId = 1; //xref with documents[] array index
+    row.removeAttribute('id');
+    comboRows[1] = row;
+    //note that we are using comboRows as if it is 1-based for convinience. (data grid has first row as header..)
+    for(var i = 2; i <= COMBO_MAX_ROWS; i++)
+    {
+        row = row.cloneNode(true);
+        row.rowId = i;
+        //comboDiv.appendChild(row);
+        tb.appendChild(row);
+        comboRows[i] = row;
+    }
+    
+    window.onscroll = bodyClicked;
+}
+
+// one of the three APIs to be used by the calling window. To be called when input receives focus 
+function inputFocusIn(obj, win, fieldName, minChars)
+{
+	debug('combo initialized');
+    currentInputEle = obj;
+    currentFieldName = fieldName;
+    currentMinChars = minChars;
+    currentWindow = win;
+    currentDisplayFields = currentWindow.P2.fields[fieldName].comboDisplayFields;
+    if(!intervalTimer)
+        intervalTimer = window.setInterval('comboCall();',COMBO_POLL_INTERVAL);
+}
+
+function inputFocusOut()
+{
+    focusOutTimer = window.setTimeout('comboEnd()',100);
+}
+//to be called when input looses focus
+function comboEnd()
+{
+	debug('combo ended ' );
+	if(intervalTimer)
+	{
+        window.clearInterval(intervalTimer);
+	    intervalTimer = null;
+	}
+    frameStyle.display = 'none';
+    baseData = null;
+    currentNbrRows = 0;
+    comboIsInited = false;
+    currentInputEle = null;
+    currentValue = null;
+    baseValue = null;
+}
+
+//API - to be called on key-up on the field. up/down to move thru the combo options, alt-up/down to trigger combo
+function inputKeyUp(obj, e, win, fieldName)
+{
+    var keycode = e.keyCode || e.which;
+    var up;
+    
+    if (keycode == 40 && !e.altKey)// Jan 07 2009 :  Bug 509 - grid row navigation - WeaveIT: Aravinda
+        up = false;
+    else if(keycode == 38 && !e.altKey)// Jan 07 2009 :  Bug 509 - grid row navigation - WeaveIT: Aravinda
+	    up = true;
+	else
+	    return;
+    if(!currentInputEle)
+        inputFocusIn(obj, win, fieldName);
+	if(e.altKey || !currentNbrRows)
+	{
+	    comboCall();
+	    return;
+	}
+    if(currentNbrRows)comboMove(up);
+}
+
+//possible API - If user page has an icon to click to trigger...
+function comboCall()
+{
+    var val = currentInputEle.value;
+    if(!val)
+    {
+        currentValue = val;
+        comboNoData();
+        return;
+    }
+    if(val == currentValue || val == lastSelctedValue) return;
+    if (baseValue && val.indexOf(baseValue) == 0)//value is more specific.. 
+    {
+        debug('going to reduce options for val = ' + val + ' from data that was fetched for value = ' + baseValue );
+        compressOptions(val);
+        return;
+    }
+    
+    //if this is part of Exility, call will be thru Exility...
+    if(currentWindow.P2)
+    {
+        currentWindow.P2.comboCall(currentInputEle, currentFieldName, val);
+        return;
+    }
+    
+    //non Exility
+    debug('going to call server for val = ' + val );
+	var ho = null;	
+	if (typeof XMLHttpRequest == 'undefined')
+		ho = new ActiveXObject("Microsoft.XMLHTTP");
+	else 
+		ho = new XMLHttpRequest();
+    ho.onreadystatechange = new Function('comboReturned(' + nextIndexToUse + ');');
+    //wrap all relevant info into an object and push it to the gloabl variable
+    var obj = new Object();
+    obj.val = val;
+    obj.ele = currentInputEle;
+    obj.ho = ho;
+    obj.st = new Date();
+    callBackObjects[nextIndexToUse] = obj;
+    var url;
+    if(currentWindow.P2)
+        url = currentWindow.P2.getComboUrl(obj, val, currentFieldName)
+    else
+        url = urlFunction(obj, val, currentFieldName);
+    if(!url) return;
+
+    ho.open('GET', url, true);
+    ho.send(null);
+    //set the timer to clean-up the array if this call does not return..
+    obj.timer = window.setTimeout('comboTimeout(' + nextIndexToUse + ');', 10000);
+    nextIndexToUse++;
+}
+
+function comboTimeout(idx)
+{
+    var obj = callBackObjects[idx];
+    if(!obj) return;
+    debug('call back for value ' + obj.val + ' timed out after ' + (new Date() - obj.st) + ' milliseconds');
+    delete callBackObjects[idx];
+}
+//functions from here are on are internal to this utility..
+
+function comboNoData()
+{
+	frameStyle.display = 'none';
+	currentNbrRows = 0;
+	return;
+}
+//request for data has returned. process it.
+function comboReturned(idx)
+{
+    obj = callBackObjects[idx];
+    if(!obj)
+    {
+        debug('Time out triggered before teh actual call back for index ' + idx + ' returned.');
+        return;
+    }
+    if(obj.ho.readyState != 4) return; //if you do not know this, please ready about XMLHttpRequest
+    delete callBackObjects[idx];
+    window.clearTimeout(obj.timer);
+    try
+    {
+        //passedValue is for local data. Local data .js file can make use of this variable to set data=
+        var passedValue = obj.val;
+        eval(obj.ho.responseText);
+    }
+    catch(e)
+    {
+        debug('error while Evaluating data returned by server. ' + e.toString());
+        debug(obj.ho.responseText);
+        return;
+    }
+    comboProcess(data, obj.ele, obj.val);
+}
+
+//Exility calls this function back on getting data from server
+function comboProcess(data, ele, val)
+{ 
+    if(!currentInputEle || ele !== currentInputEle)
+    {
+        debug('call returned for ' + ele.id + ' tooooo late');
+        return;
+    }
+
+    if(currentInputEle.value != val )
+    {
+        debug('By the time call returned for val= ' + val + ' user has changed the value to ' + currentInputEle.value);
+        return;
+    }
+    baseData = data;
+    currentValue = baseValue = val; //once in a while I like to play like this :-)
+    comboBuild(data);
+}
+
+//build the rows in the combo as per data. data has two columns with first row beiing header. header is ignored
+function comboBuild(data)
+{
+    if(!comboIsInited)
+        comboInitialBuild();
+        
+    currentRow = null;
+    currentNbrRows = data ? data.length - 1 : 0;
+    if(currentNbrRows == 0)
+	{
+	    comboNoData();
+		return;
+	}
+			
+    if(currentNbrRows > COMBO_MAX_ROWS)
+        currentNbrRows = COMBO_MAX_ROWS;
+    var colsToSelect = new Array();
+    if(currentDisplayFields)
+    {
+        for(var dispFieldCtr = 0; dispFieldCtr < currentDisplayFields.length; dispFieldCtr++)
+        {
+            for(var gridCtr = 0; gridCtr < data[0].length; gridCtr++)
+            {
+                if(currentDisplayFields[dispFieldCtr] == data[0][gridCtr])
+                {
+                    colsToSelect[colsToSelect.length] = gridCtr;
+                    break;
+                }
+                
+            }
+        }
+        if(colsToSelect.length <= 0)
+        {
+            colsToSelect[0] = 0;
+            colsToSelect[1] = 1;
+        }
+    }
+    else
+    {
+        colsToSelect[0] = 0;
+        colsToSelect[1] = 1;
+    }
+    
+    var i = 1; //declared outside, so that its vaue is retained after the loop
+    comboDiv.style.width = 'auto';
+    for(; i <= currentNbrRows; i++)
+    {
+        var key = data[i][colsToSelect[0]];
+        var val = "";
+        for(var colCtr = 1; colCtr < colsToSelect.length; colCtr++)
+        {
+            if(val == "")
+                val = data[i][colsToSelect[colCtr]];
+            else
+                val += ", " + data[i][colsToSelect[colCtr]];
+        }
+        if(val == "") val = key;
+        else val = key + '-' + val;
+        var row = comboRows[i]
+        row.keyValue = key;
+        if(val.length > MAX_CHARS )
+        {
+            row.title = val;
+            val = val.substr(0,MAX_CHARS);
+        }
+        else
+            row.title = '';
+        row.style.display = '';
+        row.className = 'combolow';
+        // May 31 2010 : Bug 1135 - Combo service - WeaveIT (Start) : Aravinda
+        //row.innerHTML = val ;
+        //row.firstChild.innerHTML = val;
+        var curValIndex = val.toLowerCase().indexOf(currentValue.toLowerCase());
+        var curValLength = val.length;
+        var uVal = val.substr(0, curValIndex) + '<u>' + val.substr(curValIndex, currentValue.length) + '</u>' + val.substr(curValIndex+currentValue.length);
+        row.firstChild.innerHTML = uVal;
+        // May 31 2010 : Bug 1135 - Combo service - WeaveIT (End) : Aravinda
+    }
+    debug ('enabled ' + (i - 1) + ' rows. Going to disble the rest up to ' + COMBO_MAX_ROWS);
+    for(; i <= COMBO_MAX_ROWS; i++)
+        comboRows[i].style.display = 'none';
+
+    frameStyle.display = '';
+    var provision = 2; //for border
+    var hite = comboDiv.offsetHeight + 5;
+    if(hite > COMBO_MAX_HEIGHT)
+    {
+		hite = COMBO_MAX_HEIGHT;
+        provision += 17; //for scroling
+        scrollIsActive = true;
+    }
+    else
+        scrollIsActive = false;
+    var maxWidth = currentInputEle.offsetWidth - provision;
+    var wd = comboDiv.scrollWidth;
+    if(wd < maxWidth)
+    {
+		wd = maxWidth;
+		comboDiv.style.width = wd + 'px';
+	}
+    frameStyle.height = hite + 'px';
+    wd += provision;
+    frameStyle.width = wd + 'px';
+    debug(' height set to ' + hite + ' and width to ' + wd);
+    //and let us select the first row
+    //comboSelectRow(comboRows[1]);
+}
+
+//get subset of matching rows from
+function compressOptions(val)
+{
+    var newData = new Array();
+    newData.push(baseData[0]);
+    for(var i = 1; i < baseData.length; i++)
+    {
+        var row = baseData[i];
+        // May 31 2010 : Bug 1135 - Combo service - WeaveIT (Start) : Aravinda
+        for(var j = 0; j < row.length; j++)
+        {
+            if(row[j].toLowerCase().indexOf(val.toLowerCase()) >= 0)
+            {
+                newData.push(row);
+                break;
+            }
+        }
+        /*
+        debug("Number of columns : '" + row.length + "'");
+        if(row[0].toLowerCase().indexOf(val.toLowerCase()) == 0) // Mar 24 2010 : Bug 980 - descservice with out server validation - WeaveIT : Aravinda
+            newData.push(row);
+        */
+        // May 31 2010 : Bug 1135 - Combo service - WeaveIT (End) : Aravinda
+    }
+    currentValue = val;
+    comboBuild(newData);
+}
+
+// one-time display for a given obj/inputElement. move it to the right place 
+function comboInitialBuild()
+{
+	var obj = currentInputEle;
+    var a = findXY(obj);
+    var top = a.y + obj.offsetHeight;
+    var left = a.x;
+    if (obj.clientLeft) left += obj.clientLeft;
+    if (window.parent != currentWindow)
+    {
+        var winEle = currentWindow.parent.document.getElementById(currentWindow.name);
+        if(!winEle)
+            debug('Cound not get element reference for ' + win.name);
+        else
+        {
+            var b = findXY(winEle);
+            top += b.y;
+            left += b.x;
+        }
+    }
+    currentMinWidth = obj.comboWidth || obj.offsetWidth;
+    frameStyle.top = top + 'px';
+    frameStyle.left = left + 'px';
+    comboIsInited = true;
+}
+
+// Apr 28 2010 : Bug 998 - Combo window value seected through mouse - WeaveIT : Aravinda
+function comboSelectRow(row, fromMouseClick, toSelect)
+{
+    if(currentRow)
+        currentRow.className = 'combolow';
+    if(!row)
+    {
+        currentInputEle.value = currentValue;
+        currentRow = null;
+    }
+    else
+    {
+        currentInputEle.value = row.keyValue;
+        row.className = 'comboselected';
+        currentRow = row;
+        if(toSelect)
+            selectRange();
+    }
+    lastSelctedValue = currentInputEle.value;
+    
+    // Apr 28 2010 : Bug 998 - Combo window value seected through mouse - WeaveIT : Aravinda
+    if(row && scrollIsActive && !fromMouseClick)
+        row.scrollIntoView();
+}
+
+function selectRange()
+{
+    if(currentInputEle.createTextRange)
+    {
+        currentRange = currentInputEle.createTextRange();
+        range.moveStart("character", currentTypedValue.length);
+        range.moveEnd("character", currentInputEle.value.length);
+        range.select();
+        currentInputEle.focus();
+    }
+    else if(currentInputEle.setSelectionRange)
+    {
+        var range = currentInputEle.setSelectionRange(currentTypedValue.length, currentInputEle.value.length);
+        currentInputEle.focus();
+    }
+    else
+        currentTypedValue = currentInputEle.value;
+}
+
+function comboHiLight(row, cls)
+{
+    if(row.className != 'comboselected')
+        row.className = cls;
+}
+
+function comboMove(up)
+{
+    var idx;
+    if(currentRow)
+    {
+        idx = parseInt(currentRow.rowId, 10);
+        if(up) 
+            idx = idx - 1;
+        else
+            idx = ( idx == currentNbrRows ) ?  0 : idx + 1;
+    }
+    else
+        idx = up ? currentNbrRows : 1;
+    if(idx)
+        comboSelectRow(comboRows[idx], false); // Apr 28 2010 : Bug 998 - Combo window value seected through mouse - WeaveIT : Aravinda
+    else
+        comboSelectRow(null, false); // Apr 28 2010 : Bug 998 - Combo window value seected through mouse - WeaveIT : Aravinda
+}
+
+function comboUrl()
+{
+    alert('Calling window has not called setUrlFunction(function). Combo will not work');
+    return null;
+}
+/**** followiing will be needed to integrate this with Exility
+var callComboService = function(obj, field)
+{
+    debug('going to call combo service for ' + obj.id);
+    field.keyValue = obj.value; // callback function uses field.keyValue.
+    var dc = new DataCollection();
+    fillDcFromQueryFields(dc, field.descQueryFields, field.descQueryFieldSources);
+    var se = new ServiceEntry(field.descServiceId, dc, false, comboServiceReturned, obj, field.name, ServerAction.NONE)
+    this.win.serverStub.callService(se);
+}
+
+// callBack function, to be invoked upon list service response.
+var comboServiceReturned = function(obj, fieldName, se)
+{
+    debug('comboServiceReturned() for object=' + obj + ' with field name ' + fieldName);  
+    var P2 = se.win.P2;
+    var field = P2.getField(fieldName);
+    if (field.keyValue != obj.value)
+        return;
+        
+    var grid = se.dc.grids[field.descServiceId];
+    debug('comboServiceReturned with grid with ' + (grid && grid.length ) + ' rows.');  
+    if (!grid || grid.length < 2)
+        comboHide()
+    else
+        comboStart(obj, grid);
+}
+*/
+
+//copied from exility..
+var findXY = function(obj)
+{
+//debug('got object ' + obj + ' with id=' + obj.id + ' with its offset parent=' + typeof obj.offsetParent);
+	var y = 0;
+	var x = 0;
+	if(obj.offsetParent)
+	{
+		while(1)
+		{
+		  x += obj.offsetLeft;
+		  y += obj.offsetTop;
+		  if(!obj.offsetParent)
+			break;
+		  obj = obj.offsetParent;
+		}
+	}
+	var a = new Object();
+	a.x = x;
+	a.y = y;
+	//alert(' I found x= ' + x + ' and y=' + y + ' while scrollTop=' + obj.ownerDocument.body.scrollTop + ' and scrollLeft=' + obj.ownerDocument.body.scrollLeft );
+	return a;
+}
+
+function bodyClicked()
+{
+    if(focusOutTimer)
+    {
+        debug('timer silenced');
+        clearTimeout(focusOutTimer);
+        focusOutTimer = null;
+    }
+    else
+        debug('body focussed');
+}
+
+function debug(text)
+{
+    if(window.parent.debug)
+        window.parent.debug(text);
+   //alert(text);
+}
+    </script>
+
+</head>
+<body onfocus="bodyClicked();" onload="loaded();" onclick="bodyClicked();" ondragstart="bodyClicked();" onscroll="bodyClicked();">
+<!--
+    <div id="comboDiv" class="combodiv">
+        <span id="row1" class="combolow" onmouseover="comboHiLight(this, 'combohigh');" onmouseout="comboHiLight(this, 'combolow');"
+            onmousedown="comboSelectRow(this); comboEnd();"></span>
+    </div>
+    -->
+    <table id="comboDiv" cellpadding="0" cellspacing="0" class="combodiv"><tbody>
+        <!-- Apr 28 2010 : Bug 998 - Combo window value seected through mouse - WeaveIT : Aravinda -->
+        <tr id="row1" class="combolow" onmouseover="comboHiLight(this, 'combohigh');" onmouseout="comboHiLight(this, 'combolow');"
+            onmousedown="comboSelectRow(this, true); comboEnd();"><td nowrap="nowrap"style="overflow:hidden;"></td>
+        </tr></tbody>
+    </table>
+</body>
+</html>

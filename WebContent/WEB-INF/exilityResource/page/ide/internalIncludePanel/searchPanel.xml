@@ -1,0 +1,24 @@
+
+<displayPanel name="searchPanel" elementsPerRow="1">
+	<elements>
+		<assistedInputField name="fileName" isRequired="true"
+							listServiceId="files" 
+							noAutoLoad="true" 
+							selectFirstOption="true"
+							donotTrackChanges="true" 
+							defaultValue="testService" />
+
+		<assistedInputField name="folderName"  
+							isRequired="true"							
+							onChangeActionName="getService"
+							defaultValue="test" 
+							onBlurActionName="getService"
+							listServiceId="getFolders" />				
+		
+
+		<!-- onChangeActionName="getService" -->
+		<hiddenField name="resourceType" description="used as parameter for getFiles"
+			defaultValue="service" />
+
+	</elements>
+</displayPanel>	

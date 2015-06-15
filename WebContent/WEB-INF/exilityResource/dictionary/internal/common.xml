@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema"
+				>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="common"    label="Common"  >
+            <elements>
+                <dataElement name="id"
+                             dataType="id"
+                             label="Id"
+                             />
+              <dataElement name="inactive"
+                           dataType="boolean"
+                           label="Is Active?"
+                           valueList="0,Yes;1,No"
+                           businessDescription="This field label is inverted to make it meaningful to user. inactive is a negative word, but used internally to get false as a default."
+                           />
+                <dataElement  name="fileName"
+                              dataType="entityName"         	       
+                              label="File Name"     
+                              />
+                <dataElement  name="folderName"
+                              dataType="entityName"
+                              label="Folder Name"
+                              />
+                <dataElement  name="description"
+                              dataType="description"
+                              label="Description"
+                              />
+                <dataElement  name="bulkAction"
+                              dataType="text"
+                              label="Bulk Action "
+                              />
+                <dataElement  name="rowSum"                            
+                              dataType="decimal"              	       
+                              label="sum"     
+                              />
+                <dataElement  name="rowAverage"                            
+                              dataType="decimal"              	       
+                              label="Average"     
+                              />
+                              
+                <dataElement name="label"
+			                 dataType="text"
+			                 label="Step Label"/>
+			                 
+                <dataElement name="_type"
+                              dataType="text"
+                              label="sub type"/>    
+                              
+                <dataElement name="skipOnMessageIds"
+                label="Message Ids to Skip On"
+			                 dataType="text"
+			                 />
+			                 
+                <dataElement name="executeOnMessageIds"
+                              dataType="text"
+                              label="Execute On message ids"
+                             />   
+                             
+                <dataElement name="executeOnCondition"
+			                 dataType="text"
+			                 label="Execute on condition"
+			                 />
+			                 
+                <dataElement name="markedAsComment"
+                              dataType="yesNo"
+                              label="Disabled?"
+                             />           
+                             
+                 <dataElement name="stepType"
+                              dataType="text"
+                              label="Step type"
+                             />   
+                             
+                  <dataElement name="stepSubType"
+                              dataType="text"
+                              label="Step sub-type"
+                             />                                 
+                                                  
+                <dataElement name="techNotes"
+                              dataType="text"
+                              label="Description"
+                             />   
+                             
+                 <dataElement name="gridName"
+                 label="Grid Name"
+                              dataType="text"
+                             />                                 
+                                                  
+                <dataElement name="expression"
+                			label="Expression"
+                              dataType="text"
+                             />   
+                             
+                <dataElement name="commonTextField"
+                				label="Common Text Field"
+                              dataType="text"
+                             />               
+                                          
+                <dataElement name="language"
+                				label="Language"
+                				businessDescription="Different languages in which this applicaiton is accessible"
+                                dataType="text"
+                             />               
+                <dataElement name="number" 
+                			label="Number" 
+                			dataType="number" 
+                />                  
+				<dataElement name="text" 
+							label="Text"
+							dataType="text"
+							/>                                                                     
+            </elements>
+        </dataGroup>
+    </groups>
+</dataDictionary>

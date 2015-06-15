@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema" >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="dataType"
+                   label="Data Type">
+            <elements>
+            	<dataElement name="name"
+            				 referenceGroup="common"
+            				 />
+                <dataElement name="messageName"
+            				 referenceGroup="common"
+                             />
+            	<dataElement name="description"
+            				 referenceGroup="common"
+            				 />
+                <dataElement name="formatter"
+                             dataType="text"
+                             label="Formatter"
+                             businessDescription="Used by client side to format the value while rendering in output-only mode. Like commas in amounts. Name of the formatter mentioned here has to be impkemented on the client side as function."
+                             />
+                <dataElement name="sqlType"
+                             dataType="text"
+                             label="SQL Data Type"
+                             businessDescription="If this data element is to be included in a script like create table, what would be the sql type. This must be validated by rdbms adminsistrator"
+                             />
+                <dataElement name="regex"
+                             dataType="text"
+                             label="Regex"
+                             businessDescription="Regular expression that this value has to conform to."
+                             />
+                <dataElement name="minLength"
+                             dataType="number"
+                             label="Min length"
+                             businessDescription="minmum number of characters expected"
+                             />
+                <dataElement name="maxLength"
+                             dataType="number"
+                             label="Max length"
+                             businessDescription="maximum number of characters allowed"
+                             />
+                <dataElement name="minValue"
+                             dataType="maxValue"
+                             label="Min value"
+                             businessDescription="minimum expected value"
+                             />
+                <dataElement name="maxValue"
+                             dataType="maxValue"
+                             label="Max value"
+                             businessDescription="maximum allowed value"
+                             />
+                <dataElement name="allowNegativeValue"
+                             dataType="yesNo"
+                             label="Allow negative?"
+                             businessDescription="can the number be negative?"
+                             />
+                <dataElement name="numberOfDecimals"
+                             dataType="number"
+                             label="Nbr fracitonal digits"
+                             businessDescription="how many fractional digits are required for this number?"
+                             />
+                <dataElement name="maxDaysBeforeToday"
+                             dataType="number"
+                             label="Max days into past"
+                             businessDescription="how many days into the past from today can this value go back to? to put a min date in the future, use negative number as the value here"
+                             />
+                <dataElement name="maxDaysAfterToday"
+                             dataType="number"
+                             label="Max days into future"
+                             businessDescription="how many days from today can this date go into the future? to put a max date in the past, use negative number as the value here"
+                             />
+                <dataElement name="includesTime"
+                             dataType="boolean"
+                             label="Includes time?"
+                             businessDescription="Does this field require tracking actual time also. If this is no, then time part is saved as 0 for date, so that teh dates match on comparison"
+                             />
+                <dataElement name="trueValue"
+                             dataType="text"
+                             label="Text when true"
+                             businessDescription="What is the value of this field, as seen by users when internal value is true"
+                             />
+                <dataElement name="falseValue"
+                             dataType="text"
+                             label="Text when false"
+                             businessDescription="what is the value as seen by users when in ternal value is false"
+                             />
+                <dataElement name="baseDataType"
+                             dataType="entityName"
+                             label="Base data type"
+                             businessDescription="List data type typically woudl be a list of another field value. Use the data type of that field as base data type, so that the entries can be validated agains that data type"
+                             />
+                <dataElement name="minCount"
+                             dataType="number"
+                             label="Min counte"
+                             businessDescription="minimum number of entries exoected in th elist"
+                             />
+                <dataElement name="maxCount"
+                             dataType="number"
+                             label="Max count"
+                             businessDescription="maximum number of expected entries. Come one. Don't tell us it is unlimited. Always put a practical limit to avoid programming exceotions."
+                             />
+
+            </elements>
+        </dataGroup>
+    </groups>
+</dataDictionary>

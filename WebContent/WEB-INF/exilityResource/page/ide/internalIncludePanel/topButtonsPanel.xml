@@ -1,0 +1,12 @@
+<buttonPanel name="topButtons" cssClassName="topButtons">
+	<elements>
+		<buttonElement name="Save" hoverText="Save" imageName="saveIcon.png"
+		   onClickActionName="setDcBeforeSave"
+			 /><!-- onClickActionName="setTableDataBeforeSave" -->
+		<buttonElement name="reload" hoverText="Reload"
+			imageName="reloadIcon.png" onClickActionName="reload" />
+		<buttonElement name="close" hoverText="Close" imageName="closeIcon.png"
+			onClickActionName="close" />
+	</elements>
+</buttonPanel>
+		

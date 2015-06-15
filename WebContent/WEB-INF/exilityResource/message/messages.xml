@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<messages _type="Messages">
+  <fileContents _type="HashMap"/>
+  <messages _type="HashMap">
+    <message _type="Message"
+             name="exilNoColum"
+             severity="WARNING"
+             text="Invalid Column Name Supplied"/>
+    <message _type="Message"
+             name="exilNoTaskType"
+             severity="ERROR"
+             text="Task type @1 is not a known task type. Please check job and job step definition."/>
+    <message _type="Message"
+             name="exilNoRowsAffected"
+             severity="ERROR"
+             text="Update/Insert operation did not go through."/>
+    <message _type="Message"
+             name="exilNoColumns"
+             severity="ERROR"
+             text="Table @1 has no column definitions."/>
+    <message _type="Message"
+             name="exilParameterMismatch"
+             severity="ERROR"
+             text="SQL Template @1 does not contain @@2 symbol for the corresponding parameter."/>
+    <message _type="Message"
+             name="exilDBException"
+             severity="ERROR"
+             text="Could not connect to DB"/>
+    <message _type="Message"
+             name="exilInvalidField"
+             severity="ERROR"
+             text="Value '@3' provided in field name @4 is not valid for column @2 in table @1."/>
+    <message _type="Message"
+             name="exilNoClass"
+             severity="ERROR"
+             text="User defined class @1 is not found."/>
+    <message _type="Message"
+             name="exilNothingToInsert"
+             severity="ERROR"
+             text="No values supplied for insert operation into table @1."/>
+    <message _type="Message"
+             name="exilDeleteNotAllowed"
+             severity="ERROR"
+             text="Delete operation not allowed for table @1."/>
+    <message _type="Message"
+             name="exilBracesNotFound"
+             severity="ERROR"
+             text="SQL Template @1 does not have braces for parameter @2. Since this parameter is optionsal, you MUST provide braces around the text to be removed if the parameter is not specified."/>
+    <message _type="Message"
+             name="exilNothingToUpdate"
+             severity="ERROR"
+             text="No values supplied for update operation into table @1."/>
+    <message _type="Message"
+             name="exilError"
+             severity="ERROR"
+             text="@1"/>
+    <message _type="Message"
+             name="exilNoValuesToInsert"
+             severity="ERROR"
+             text="No columns defined for table @1."/>
+    <message _type="Message"
+             name="exilNoTimeStamp"
+             severity="ERROR"
+             text="Table @1 requires a timestamp field @2 to be matched against the field @3 in the grid. This field is not available in the grid."/>
+    <message _type="Message"
+             name="exilUnmatchedBraces"
+             severity="ERROR"
+             text="SQL Template @1 has unmatched braces when no parameters are specified."/>
+    <message _type="Message"
+             name="exilNoSuchService"
+             severity="ERROR"
+             text="Service with name=@1 is not defined "/>
+    <message _type="Message"
+             name="exilInvalidBulkAction"
+             severity="ERROR"
+             text="Action @2 is not a valid bulk action code for table @1."/>
+    <message _type="Message"
+             name="exilServerError"
+             severity="ERROR"
+             text="Error on the server. @1"/>
+    <message _type="Message"
+             name="exilNoServiceId"
+             severity="ERROR"
+             text="Client page that requested the service did not specify a value for ServiceID."/>
+    <message _type="Message"
+             name="exilInvalidBoolean"
+             severity="ERROR"
+             text="Field @1 has a value of @2. This is not valid. Value should be 0 or 1"/>
+    <message _type="Message"
+             name="exilNoKeyForUpdate"
+             severity="ERROR"
+             text="Table @1 has a key field @2. Value is not supplied for this field through @3."/>
+    <message _type="Message"
+             name="exilFieldIsRequired"
+             severity="ERROR"
+             text="No value is supplied in field @3. This is required for column @2 in table @1."/>
+    <message _type="Message"
+             name="exilInvalidDate"
+             severity="ERROR"
+             text="Field1 @1 has a value of @2. This is not valid. Please enter a date in the format dd-mmm-yyyy"/>
+    <message _type="Message"
+             name="exilNoJobSteps"
+             severity="ERROR"
+             text="Job '@1' has no job steps."/>
+    <message _type="Message"
+             name="exilNoData"
+             severity="ERROR"
+             text="No data found. Sql being tried is @1."/>
+    <!-- Client side messages-->
+    <message _type="Message"
+             name="exilColumnIsRequired"
+             severity="ERROR"
+             text="Value for column @2 is required in table @1."/>
+    <message _type="Message"
+             name="exilValueRequired"
+             severity="ERROR"
+             text="Please enter value "/>
+    <message _type="Message"
+             name="exilValidateDependencyFailed"
+             severity="ERROR"
+             text="Dependeant field missing"/>
+    <message _type="Message"
+             name="exilFromToDataTypeMismatch"
+             severity="ERROR"
+             text="Dependeant field missing"/>
+    <message _type="Message"
+             name="exilFromToValidationError"
+             severity="ERROR"
+             text="Dependeant field missing"/>
+    <message _type="Message"
+             name="exilInvalidFromTo"
+             severity="ERROR"
+             text="Dependeant field missing"/>
+    <message _type="Message"
+             name="exilValidateUniqueColumnsFailed"
+             severity="ERROR"
+             text="Unique Column Validation failed as there are @1 ."/>
+    <message _type="Message"
+             name="exilInfo"
+             severity="INFO"
+             text="@1"/>
+    <message _type="Message"
+             name="exilWarning"
+             severity="WARNING"
+             text="@1"/>
+    
+  </messages>
+</messages>

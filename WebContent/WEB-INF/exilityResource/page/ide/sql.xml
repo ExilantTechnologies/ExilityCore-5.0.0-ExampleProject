@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<page xmlns="http://com.exilant.exility/page"
+      name="sql"
+      module="ide"
+      description="manage SQL templates"
+      title="Sql Template"
+      trackFieldChanges="true"
+      onLoadActionNames="getFolders,checkForPageParameters"
+      scriptsToInclude="../../js/ide/sql.js,../../css/ide/sql.css"
+      onFormChangeActionName="formChanged"
+      onFormResetActionName="formReset"
+      >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+
+  <pageParameters>
+    <pageParameter name="resourceName"
+                   description="if this is passed, we have to hide the panel meant for selecting folder/file "
+                   setTo="fileName"/>
+  </pageParameters>
+  
+  <actions>
+    <serverAction name="getFolders"
+                  description="get all folders that contain sql.xmls. Note that these are leaf-folders in case folders contain other folders..."
+                  serviceId="ide.getFolders"
+                  queryFieldNames="resourceType"
+                  disableForm="true"
+                     />
+    <serverAction name="getSqls"
+                  description="get all sqls in the given folder"
+                  serviceId="ide.getFiles"
+                  disableForm="true"
+                  queryFieldNames="resourceType,folderName"
+                />
+    <serverAction name="getSql"
+                  description="get all attributes of selected sql"
+                  serviceId="ide.getSql"
+                  disableForm="true"
+                  queryFieldNames="folderName,fileName"
+                  fieldToFocusAfterExecution="description"
+                  disableFields="name"
+                />
+    <serverAction name="save"
+                  description="save edited/added sql"
+                  serviceId="ide.saveSql"
+                  disableForm="true"
+                  submitForm="true"
+                  callBackActionName="reselectSql"
+                  resetFormModifiedState="true"
+                />
+    <serverAction name="delete"
+                  description="delete this sql"
+                  serviceId="ide.deleteSql"
+                  disableForm="true"
+                  queryFieldNames="name"
+                  callBackActionName="getSqls"
+                  resetFormModifiedState="true"
+                />
+                
+    <localAction name="checkForPageParameters"
+                 functionName="checkForPageParameters"/>   
+                             
+    <localAction name="reselectSql"
+                 description="after sql is saved, we get it back from server"
+                 functionName="reselectSql"/>
+
+    <localAction name="hideOrShowSql"
+                 functionName="hideOrShowSql"/>
+
+    <localAction name="newSql"
+                 functionName="newSql"
+                 enableFields="name"
+                 showPanels="sqlAttributes"
+                 fieldToFocusAfterExecution="name"/>
+
+    <dummyAction name="formChanged"
+                 disableFields="folderName,fileName,new,delete"
+                 />
+
+    <dummyAction name="formReset"
+                 disableFields="folderName,fileName,new,delete"
+                 />
+
+    <closeAction name="close"/>
+    <resetAction name="reload"/>
+  </actions>
+
+  <panels>
+    <buttonPanel name="topButtons"
+                 cssClassName="topButtons"
+                     >
+      <elements>
+        <buttonElement name="save"
+                       hoverText="Save"
+                       imageName="saveIcon.png"
+                       onClickActionName="save"
+                               />
+        <buttonElement name="reload"
+                       hoverText="Reload"
+                       imageName="reloadIcon.png"
+                       onClickActionName="reload"
+                               />
+        <buttonElement name="close"
+                       hoverText="Close"
+                       imageName="closeIcon.png"
+                       onClickActionName="close"
+                               />
+      </elements>
+    </buttonPanel>
+    <displayPanel name="selection"
+                  elementsPerRow="4"
+                      >
+      <elements>
+      
+      <displayPanel name="searchPanel" elementsPerRow="2">      
+       <elements>
+      
+      	 <assistedInputField name="folderName"
+                            isRequired="true"
+                            listServiceId="folders"
+                            noAutoLoad="true"
+                            selectFirstOption="true"
+                            onChangeActionName="getSqls"
+                            width="250px"
+                            donotTrackChanges="true"
+                            doNotValidate="true"
+                                />
+        <assistedInputField name="fileName"
+                            label="Sql Name"
+                            listServiceId="files"
+                            noAutoLoad="true"
+                            width="250px"
+                            onChangeActionName="getSql"
+                            isRequired="true"
+                            donotTrackChanges="true"
+                            selectFirstOption="true"
+                                />
+        <hiddenField name="resourceType"
+                     description="getFolders uses this"
+                     defaultValue="sql"/>
+                     
+       </elements>
+      </displayPanel>
+    
+     <displayPanel name="btnPanel" elementsPerRow="2">
+     
+     <elements>
+     
+     <buttonElement name="new"
+                       label="New Sql"
+                       onClickActionName="newSql"
+                               />
+      <buttonElement name="delete"
+                       label="Delete this Sql"
+                       onClickActionName="delete"
+                               />
+     </elements>
+     </displayPanel>
+
+        
+      </elements>
+    </displayPanel>
+    <tabPanel name="sqlDetails"
+              description="Instead of showing all attributes one below the other, we have decided to show them in tabs."
+              tabAreaHeight="450px"
+                  >
+      <elements>
+        <displayPanel name="sqlAttributes"
+                      description="all attributes of sql, other than input/output parameters"
+                      elementsPerRow="2"
+                      tabLabel="Attributes"
+                      >
+          <elements>
+            <assistedInputField name="name"
+                                isRequired="true"
+                                size="50"
+                                numberOfUnitsToUse="2"
+                                />
+            <hiddenField name="module"
+                         description="this was used before we allowed proper folder structure "
+                                />
+            <textInputField name="description"
+                            size="150"
+                            numberOfUnitsToUse="2"/>
+            <assistedInputField name="sqlType"
+                                valueList="dynamicSql,Sql;preparedStatement,Prepared Statement;storedProcedure,Stored Procedure"
+                                selectFirstOption="true"
+                                isRequired="true"
+                                onChangeActionName="hideOrShowSql"/>
+            <textElement cssClassName="note"
+                         label="Original design was only for dynamic sql. It is now extended stored procedures and prepared statements."/>
+            <assistedInputField name="toBeExecuted"
+                                description="Exility has coined attributes with false as a good default for ease of use with xmls being edited with xsd. 
+                                We can do better job with better label."
+                                label="Data Extracted?"
+                                valueList="0,Yes;1,No."
+                                />
+            <textElement cssClassName="note"
+                         label="Is this SQl/stored procedure expected to return data, or is it just expected to manipulate data (DML). 
+                         If you say yes, Exility runs this sql and extracts data from the result. 
+                         If you say no, Exility executes this sql and returns number of rows affected.
+                         This meaning applies to stored proecure as well. 
+                         Also, note that jdbc expects you to use SET NOCOUNT ON in your pl/sql if you have more than one sqls inside that."/>
+            <textInputField name="storedProcedureName"
+                                />
+            <textElement name="commentOnSp"
+                         cssClassName="note"
+                         label="Name of stored procedure. Provide only the name. 
+                         We will use input and output parameters in the other tab to invoke the stored procedure with the right parameters.
+                         We do not provide syntax to define in-out paramaters."/>
+            <textElement name="commentOnSql"
+                         cssClassName="note"
+                         numberOfUnitsToUse="2"
+                         label="We recommend that you develop the SQL using the development tool provided by your RDBMS, like SQL developer.
+                         Ensure that it is properly formatted. Copy-paste that here and replace constancts with @1 etc.. 
+                         Rememeber to provide {} around parameters that are optional."/>
+            <textAreaField name="sql"
+                           numberOfCharactersPerRow="118"
+                           numberOfRows="20"
+                           label=""
+                           labelPosition="merge"
+                           numberOfUnitsToUse="2"
+                           />
+          </elements>
+        </displayPanel>
+        <displayPanel name="inputParams"
+                      description="for input parameters and notes associated with that."
+                      tabLabel="Input Params"
+                      >
+          <elements>
+            <displayPanel name="minParamsAea"
+                          elementsPerRow="2">
+              <elements>
+                <assistedInputField name="minParameters"
+                                    size="2"/>
+                <textElement cssClassName="notes"
+                             label="Of the total input parameters you have defined, does your design require a minimum number of parameters to have values at run time?"/>
+                <textElement cssClassName="note"
+                             numberOfUnitsToUse="2"
+                             label="Provide name of fields in which value is expected for all variables you have used in yor sql. 
+                             Ensure that the parameters are in the right order. That is first parameter should correspond to @1 etc.. 
+                             If this is a stored procedure, then specify the input parameters for the stored procedure here.
+                             Use output tab for specifying out params."
+                             />
+              </elements>
+            </displayPanel>
+            <displayPanel name="inLeftAndRight"
+                          description="Left and rigt panel for input parameters"
+                          requiresGroupOutline="false"
+                          elementsPerRow="2"
+                          >
+              <elements>
+
+                <gridPanel name="inParms"
+                           description="this is displayed as if it is a list panel and editing happens thru a linked display panel"
+                           tableName="inputParameters"
+                           cssClassName="listPanel"
+                           tabLabel="Input Parameters"
+                           rowsCanBeAdded="false"
+                           rowsCanBeDeleted="false"
+                           uniqueColumns="name"
+                           rowHelpText="click to edit this parameter"
+                           simulateClickOnFirstRow="true"
+                           >
+                  <elements>
+                    <outputField name="name"
+                                 toBeSentToServer="true"
+                                 maxCharacters="25"/>
+                    <hiddenField name="_type"
+                                 defaultValue="SqlParameter"/>
+                    <hiddenField name="description"/>
+                    <hiddenField name="label"/>
+                    <hiddenField name="isOptional"/>
+                    <hiddenField name="defaultValue"/>
+                    <hiddenField name="dataElementName"/>
+                    <hiddenField name="parameterType"/>
+                    <hiddenField name="index"/>
+                    <hiddenField name="toUpper"/>
+                    <hiddenField name="gridName"/>
+                    <hiddenField name="basedOnColumnName"/>
+                    <hiddenField name="doNotFormat"/>
+                    <hiddenField name="justLeaveMeAlone"/>
+                  </elements>
+                </gridPanel>
+                <displayPanel name="inParmsRightPanel"
+                              description="editing area (right panel) for input parameters.">
+                  <elements>
+                    <buttonPanel name="inputNavigaitons"
+                                 description="linked navigaiton buttons for input parameters">
+                      <elements>
+                        <buttonElement name="inputParametersMoveFirst"
+                                       label="First"
+                                                        />
+                        <buttonElement name="inputParametersMovePrev"
+                                       label="Prev"
+                                                        />
+                        <buttonElement name="inputParametersMoveNext"
+                                       label="Next"
+                                                        />
+                        <buttonElement name="inputParametersMoveLast"
+                                       label="Last"
+                                                        />
+                        <buttonElement name="inputParametersNewRow"
+                                       label="New Data Type"
+                                                       />
+                        <buttonElement name="inputParametersDeleteRow"
+                                       label="Delete This Data Type"
+                                                       />
+                      </elements>
+                    </buttonPanel>
+                    <displayPanel name="inputEditPanel"
+                                  description="area where fields of an input parameter are edited"
+                                  linkedTableName="inputParameters"
+                                  tableName="inputEdits"
+                                  elementsPerRow="2"
+                              >
+                      <elements>
+                        <assistedInputField name="name"
+                                            description="we do not treat this as primary key. User can change name."
+                                            isRequired="true"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="Name of the field in which value is supplied for this paremeter in dc or grid."
+                                 />
+                        <assistedInputField name="parameterType"
+                                            isRequired="true"
+                                            valueList="normal,normal;list,list;filter,filter;combined,combined"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="normal - @1 is replaced with the value found in this field in dc, formatted properly for a sql.
+                                        list   - @1 is replaced with a comma separated values in the list, so that you can use it in a sql like IN (...).
+                                        filter - @1 is repalced with a condition like name like 'abcd%'. This is normally used in conjunction with a client side filterField.
+                                        combined- similar to filter, but teh value of teh field itself has the comparison operator. e.g. '> 20'. Not used anymore.
+                                        "
+                                 />
+                        <assistedInputField name="description"
+                                            numberOfUnitsToUse="2"
+                                            size="150"
+                                        />
+                                 
+                        <assistedInputField name="isOptional"
+                                            valueList="0,Optional;1,Mandatory"
+                                            isRequired="true"
+                                        />
+                        <textElement cssClassName="text"
+                                     label="Remember to put braces around @1 if 1st parameter is optional, and not do it if it is mandatory."
+                                 />
+                        <assistedInputField name="defaultValue"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="If value is not found at run time, this value is used. Note that if you use default value, it does not make sense to mark this as optional, because you will end up having value always, and you would have put a pair of braces around this @x which will always be removed."
+                                 />
+                        <assistedInputField name="dataElementName"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="If the parameter name is not put into dictionary, use a dataElement that best fits this parameter. Not recommended. We encourage you to add every name that you use into dictionary."
+                                 />
+                        <assistedInputField name="gridName"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="If this parameter is inside a grid, specify the grid name. If the parameter is list, then we use the correspondiing column. If it is a normal field, then you have to specify the row index (0 based) as well."
+                                 />
+                        <assistedInputField name="index"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="If grid name is used for a non-list parameter, then we need to know the row number from which to take the value. Generally, it woudl be 0, as you would use this feature only if the grid is likley to have one and only one row."
+                                 />
+                        <assistedInputField name="toUpper"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="If you want to use the upper cased value always. I haev seen most users using Sql command instead. It is definitely a better idea to use this feature, than burdening db server."
+                                 />
+                        <assistedInputField name="basedOnColumnName"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="Very advanced concept. Relevant if you are using list from a grid. And you do not want all the values in the column. If you want to select values in this column, only if value of another column matches a value, use this and next field."
+                                 />
+                        <assistedInputField name="basedOnColumnValue"
+                                            basedOnField="basedOnColumnName"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="basedOnColumn should have this value for the row to be used. Else the row is dropped while preparing list of values of this parameter."
+                                 />
+                        <assistedInputField name="doNotFormat"
+                                            valueList="0,Format this value as per SQL;1,Do not format for SQL"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="Text fields are put inside a pair of single quotes etc. You can avoid it with this option. NOTE that single quotes are still escaped with anotehr single quote inside text fields."
+                                 />
+                        <assistedInputField name="justLeaveMeAlone"
+                                            valueList="0,Use Formattingt;1,Already formatted"
+                                        />
+                        <textElement cssClassName="note"
+                                     label="Some projects do some formatting on the client and send it to server. In such case, it may have single quotes that should not be escaped. Use this option to leave the value as it is with no change whatsoever."
+                                 />
+                      </elements>
+                    </displayPanel>
+                  </elements>
+                </displayPanel>
+              </elements>
+            </displayPanel>
+          </elements>
+        </displayPanel>
+        <displayPanel name="outputParams"
+                      description="for output parameters and notes associated with that."
+                      elementsPerRow="2"
+                      tabLabel="Output Parameters"
+                      >
+          <elements>
+            <textElement cssClassName="notes"
+                         label="We recommend that your sql extracts data with right column name. Exility will pick-up these from meta data, and automatically add output parameters. Specify output parameters"
+                         numberOfUnitsToUse="2"/>
+            <gridPanel name="outParms"
+                       description="this is displayed as if it is a list panel and editing happens thru a linked display panel"
+                       tableName="outputParameters"
+                       cssClassName="listPanel"
+                       tabLabel="Output Parameters"
+                       rowsCanBeAdded="false"
+                       rowsCanBeDeleted="false"
+                       uniqueColumns="name"
+                       rowHelpText="click to edit this parameter"
+                       simulateClickOnFirstRow="true"
+                           >
+              <elements>
+                <outputField name="name"
+                             toBeSentToServer="true"
+                             maxCharacters="25"/>
+                <hiddenField name="_type"
+                             defaultValue="Parameter"/>
+                <hiddenField name="description"/>
+                <hiddenField name="label"/>
+                <hiddenField name="defaultValue"/>
+                <hiddenField name="dataElementName"/>
+              </elements>
+            </gridPanel>
+            <displayPanel name="inputParameterDetails"
+                          description="editing area (right panel) for output parameters.">
+              <elements>
+                <buttonPanel name="outputNavigaitons"
+                             description="linked navigation buttons for output parameters">
+                  <elements>
+                    <buttonElement name="outputParametersMoveFirst"
+                                   label="First"
+                                   />
+                    <buttonElement name="outputParametersMovePrev"
+                                   label="Prev"
+                                   />
+                    <buttonElement name="outputParametersMoveNext"
+                                   label="Next"
+                                   />
+                    <buttonElement name="outputParametersMoveLast"
+                                   label="Last"
+                                   />
+                    <buttonElement name="outputParametersNewRow"
+                                   label="New Parameter"
+                                   />
+                    <buttonElement name="outputParametersDeleteRow"
+                                   label="Delete This Parameter"
+                                   />
+                  </elements>
+                </buttonPanel>
+                  <displayPanel name="outputEditPanel"
+                              description="area where fields of an input parameter are edited"
+                              linkedTableName="outputParameters"
+                              tableName="outputEdits"
+                              elementsPerRow="2"
+                              >
+                  <elements>
+                    <assistedInputField name="name"
+                                        description="We do not treat this as primary key. User can change name."
+                                        isRequired="true"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="Name of the field/column that is used to put this value in data collection."
+                                 />
+                    <assistedInputField name="label"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="Label is used while generating UI components to render this field (for testing etc..)."
+                                 />
+                    <assistedInputField name="description"
+                                        size="120"
+                                        numberOfUnitsToUse="2"
+                                        />
+                    <assistedInputField name="defaultValue"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="if sql does not return a value, this default value is used as output"
+                                 />
+                    <assistedInputField name="dataElementName"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="If the parameter name is not put into dictionary, use a dataElement that best fits this parameter. Not recommended. We encourage you to add every name that you use into dictionary."
+                                 />
+                  </elements>
+                </displayPanel>
+              </elements>
+            </displayPanel>
+          </elements>
+        </displayPanel>
+      </elements>
+    </tabPanel>
+  </panels>
+</page>
+

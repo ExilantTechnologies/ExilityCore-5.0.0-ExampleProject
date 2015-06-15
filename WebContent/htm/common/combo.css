@@ -1,0 +1,30 @@
+body
+{
+    border:solid 1px blue;
+    border-top:none;
+    padding:0px;
+    margin:0px;
+    width:auto;
+}
+.combodiv
+{
+    cursor:pointer;
+}
+.combohigh
+{
+    background-color:blue;
+    color:white;
+    font: normal 11px Arial,Helvetica,sans-serif;
+    
+}
+.combolow
+{
+    background-color:#dddddd;
+    font: normal 11px Arial,Helvetica,sans-serif;
+}
+.comboselected
+{
+    background-color:blue;
+    width:100%;
+    font: normal 11px Arial,Helvetica,sans-serif;
+}

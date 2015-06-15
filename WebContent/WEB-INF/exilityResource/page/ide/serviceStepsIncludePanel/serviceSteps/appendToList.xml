@@ -1,0 +1,23 @@
+
+<displayPanel name="appendToList" description="steps for append to list feature"
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="appendToListName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="List Name:" />
+
+
+		<textElement cssClassName="note"
+			label="Zero might look like a good min, but most likely it is not. In business, 0 probably means optional, and hence you may live with 1 as min. And if you want to allow negative, restrict to a max of 15 digits" />
+
+		<assistedInputField name="appendToListCondition"
+			dataElementName="subType" label="Condition:" />
+		<textElement cssClassName="note"
+			label="Don't say sky is the limit. Fifteen digits is just too much, and you shold set max to that value, at most." />
+
+		<assistedInputField name="appendToListExpression"
+			dataElementName="subType" label="Expression:" />
+		<textElement cssClassName="note"
+			label="MaxIf user types a value different from this. we still accept it and round-it to these many places. Also, when the field is output, it is formatted to these many places." />
+	</elements>
+</displayPanel>

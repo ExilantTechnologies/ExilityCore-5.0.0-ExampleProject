@@ -1,0 +1,16 @@
+<displayPanel name="actionBtnPanel" numberOfUnitsToUse="2">
+	<elements>
+		<buttonPanel name="navActions"
+			description="Navigation buttons assciated with dataTypes. We have to follow the right naming convention">
+			<elements>
+				<buttonElement name="dataTypesMoveFirst" label="First" />
+				<buttonElement name="dataTypesMovePrev" label="Prev" />
+				<buttonElement name="dataTypesMoveNext" label="Next" />
+				<buttonElement name="dataTypesMoveLast" label="Last" />
+				<buttonElement name="dataTypesNewRow" label="New Service" />
+				<buttonElement name="dataTypesDeleteRow" label="Delete This Service" />
+				<buttonElement name="dataTypesUndeleteRow" label="Undelete Service" />
+			</elements>
+		</buttonPanel>
+	</elements>
+</displayPanel>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<dataTypes xmlns="http://com.exilant.exility/schema">
+  <dataTypes>
+  
+  <!-- 
+  
+  First, refer to the data types defined in exilityRecource/dataType. They are all available to you.
+  Define additional data types required for your project in this file. Though you can create several files, we recommend that you keep it in one.
+  
+  -->
+  
+  	<textDataType name="price" 
+  				  maxLength="20"
+  				  messageName="invalidPrice"
+  				  description="Price can have up to two decimal palces. Optionally you may specify the currency after the amount. Example '34.56 USD' "
+  				  regex="^\d+(\.\d\d?)?(\sw*)?"
+  				  />
+  	<textDataType name="code" 
+  				  maxLength="20" 
+  				  messageName="invalidCode"
+  				  description="alphanumeric and these special characters -._ And nothing else for a max of 20 characters"
+  				  regex="^[\d\w\.\-_]{0,20}"
+  				  />
+  	<textDataType name="yn" 
+  				  maxLength="1" 
+  				  messageName="invalidYn"
+  				  description="Y for true/yes N for false/No"
+  				  regex="[01yYnN]"
+  				  />
+  </dataTypes>
+</dataTypes>

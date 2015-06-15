@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema" >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="applicationParameters"
+                   label="Application parameters"
+                   >
+            <elements>
+                <dataElement name="useQuotesInSql"
+                             dataType="boolean"
+                             label="Use quotes in sql"
+                             businessDescription="Not used any more. This was created to handle certain naming convention related issue wth postgre sql in a specific project."
+                             />
+                <dataElement name="cachePaginationDataOnClient"
+                             dataType="boolean"
+                             label="Cache pagination on client"
+                             businessDescription="Not used any more. Pagination by default is to happen on the client. This is definitely not a good practice, and hence we do not want to give such an option any more."
+                             />
+                <dataElement name="loggedInUserDataTypeIsInteger"
+                             dataType="boolean"
+                             label="User id is integer"
+                             businessDescription="Exility needs to handle userId and it assumes it to be text by default. Override it here. We intend to get this from data dictioanry in the future."
+                             />
+                <dataElement name="systemDateFunction"
+                             dataType="description"
+                             label="System date function"
+                             businessDescription="function to be used to get system date in a sql. This is used by the database utility to get current date. In the future, we intend to populate this based on the selected rdbms system (like if postgre is used this should be set to CURRENT_DATE )"
+                             />
+                <dataElement name="definitionsToBeCached"
+                             dataType="boolean"
+                             label="Cache xmls?"
+                             businessDescription="to be set to true in produciton, and false during development. When false, every resourece is loaded from disk each time, there by ensuring that the latest resource as saved the devloper is executed. However, in production we cache these to avoid over head of repeated reads from disk. we intend to move this parameter to web.xml, so that deployments are smoother."
+                             />
+                <dataElement name="cachePrimaryKeys"
+                             dataType="boolean"
+                             label="Cache primary keys?"
+                             businessDescription="Not used any more because of the possibel damaze when not set properly. If there is always exactly one server aplication that is running, primary keys canbe cached, there by improving performance of key generation. However, if peopel forget to set this properly in a muti-server environment, this will lead to duplicate primary key generation."
+                             />
+                <dataElement name="trace"
+                             dataType="boolean"
+                             label="Produce trace?"
+                             businessDescription="Whether server should sent trace data to client. True during development, and possible debugging. false in produciton to improve performance. we will move this to web.xml"
+                             />
+                <dataElement name="securityEnabled"
+                             dataType="boolean"
+                             label="Enable security?"
+                             businessDescription="not used any more due to security threat in case somme one forgets this. We have provided single-signon utility to take care of login issues during testing"
+                             />
+                <dataElement name="useNullForEmptyString"
+                             dataType="boolean"
+                             label="NULL for empty string?"
+                             businessDescription="Oracle has issue with storing empty string as valid value in varchar field. It treats it as null.  If you set this to true, exility uses NULL instead of empty string as value of a empty text field while generating sqls at run time."
+                             />
+                <dataElement name="uniqueNamesAcrossGroups"
+                             dataType="boolean"
+                             label="Data elements unique across groups?"
+                             businessDescription="Object oriented approach assumes context of an object for every attribute, and hence people get used to attributes like name, rather than customerName. Exility tried to accomodate both convention by allowing just name as attribute, but insisting on qualifying that always with group. This has not gone well, and hence we just do not allow that any more."
+                             />
+                <dataElement name="licenceValidation"
+                             dataType="boolean"
+                             label="Licensed Instance?"
+                             businessDescription="discontinued. licencing utilities are decoupled from exility."
+                             />
+                <dataElement name="enableAuditForAll"
+                             dataType="boolean"
+                             label="Audit all tables?"
+                             businessDescription="by default all database modifications using tabel utitlities will be logged to audit tables as well. Not desirable. You should be selective in writing audit trials using toBAudited attribute at the table level"
+                             />
+                <dataElement name="isSeparateAuditSchema"
+                             dataType="boolean"
+                             label="Separate schema for audit?"
+                             businessDescription="It is a good practice to use separate schema for audit tables."
+                             />
+                <dataElement name="alignPanels"
+                             dataType="boolean"
+                             label="Align panels?"
+                             businessDescription="Not used any more. Used for formatting page in a certain way for a specific project"
+                             />
+                <dataElement name="httpNoCacheTagRequires"
+                             dataType="boolean"
+                             label="Http no-cache for page?"
+                             businessDescription="Not used any more. This should be handled in web server setting."
+                             />
+                <dataElement name="spanForButtonPanelRequires"
+                             dataType="boolean"
+                             label="Span for button panel?"
+                             businessDescription="not used any more. Page generation issue for a specific project"
+                             />
+                <dataElement name="showRequiredLabelinGrid"
+                             dataType="boolean"
+                             label="* for grid column?"
+                             businessDescription="not used any more. Page generation issue for a specific project"
+                             />
+                <dataElement name="assumeTextForMissingDataElement"
+                             dataType="boolean"
+                             label="Live with undefined elemens?"
+                             businessDescription="Not recommended. Temporarary arrangement in a project to take care of some mass change issues."
+                             />
+              <dataElement name="showIamgeForDeleteOption"
+                             dataType="boolean"
+                             label="Show delete image?"
+                             businessDescription="How delete row has to be handled in a grid. It can be either an image or we generate a simple check box."
+                             />
+                <dataElement name="showDeleteOptionAtEnd"
+                             dataType="boolean"
+                             label="Common delete at end?"
+                             businessDescription="not used any more. Page generation issue for a specific project"
+                             />
+                <dataElement name="lastKeyEventTrigger"
+                             dataType="boolean"
+                             label="Auto add-row on tab key?"
+                             businessDescription="whether a new row has to be added automatically when user presses tab button on the last field. Like in a word processor"
+                             />
+                <dataElement name="auditConnectionString"
+                             dataType="description"
+                             label="Audit connection string"
+                             businessDescription="not recommended. use data source instead."
+                             />
+                <dataElement name="globalServerDataNames"
+                             dataType="description"
+                             label="Global fields"
+                             businessDescription="fields that are required across all services for a logged in session. These fields are cached into session after a login service. This means that the login service should get values for these fields. This approach is to be used instead of setCookies attribute."
+                             />
+                <dataElement name="loginServiceId"
+                             dataType="description"
+                             label="Login service name"
+                             businessDescription="server needs to allow logi service to go thru without authentication"
+                             />
+                <dataElement name="logoutServiceId"
+                             dataType="description"
+                             label="Logout service name"
+                             businessDescription="server will remove all session related cached data once this servise is executed."
+                             />
+                <dataElement name="commonPrimaryKeyColumnName"
+                             dataType="description"
+                             label="Default primary keycolumn name"
+                             businessDescription="like id. Not used anymore though."
+                             />
+                <dataElement name="imageFilePrefix"
+                             dataType="description"
+                             label="Image file prefix"
+                             businessDescription="Used by generator to set src attribute for img tag. Should be the path of the image folder relative to a page.html e.g.  ../../images/exilityImages"
+                             />
+                <dataElement name="commonFolderPrefix"
+                             dataType="description"
+                             label="Common folder prefix"
+                             businessDescription="not used any more. Used by page generater to include default.css and other common fiels to be included in all pages."
+                             />
+                <dataElement name="exilityFolderPrefix"
+                             dataType="description"
+                             label="Exility folder prefix"
+                             businessDescription="not used any more. Used by page generater to include standard exility scripts."
+                             />
+                <dataElement name="pageLayoutType"
+                             dataType="description"
+                             label="Page layout type"
+                             businessDescription="Determines the conventions for page gernator. css is the new standard, and all other values are only for existing projects"
+                             />
+                <dataElement name="paginateButtonType"
+                             dataType="description"
+                             label="Pagination button type"
+                             businessDescription="when exility is handling pagination, how should the buttons for navigations be managed? We have created copule of variants. Please come back with more if you need."
+                             />
+                <dataElement name="setCookies"
+                             dataType="description"
+                             label="Cookie names"
+                             businessDescription="Should not be used. cookies are visible to clients and subject to misuse. Use global fields instead."
+                             />
+                <dataElement name="fileUploadMeans"
+                             dataType="description"
+                             label="File upload means"
+                             businessDescription="Not used sny more"
+                             />
+                <dataElement name="projectName"
+                             dataType="description"
+                             label="Project name"
+                             businessDescription="For documentaion. Not used, except for celebrus! Page gernator has a hard coded logic for that!"
+                             />
+                <dataElement name="dateFormattingPrefix"
+                             dataType="description"
+                             label="Date formatting prefix"
+                             businessDescription="How to format date constants. use prefix and postfix as per dbms being used. we intend to do this automatically in the future, ut as of now you should be carefu in setting this."
+                             />
+                <dataElement name="dateFormattingPostfix"
+                             dataType="description"
+                             label="Date formatting postfix"
+                             businessDescription="How to format date constants. use prefix and postfix as per dbms being used. we intend to do this automatically in the future, ut as of now you should be carefu in setting this."
+                             />
+                <dataElement name="dateTimeFormattingPrefix"
+                             dataType="description"
+                             label="Date and time formatting prefix"
+                             businessDescription="How to format date-tme constants. use prefix and postfix as per dbms being used. we intend to do this automatically in the future, ut as of now you should be carefu in setting this."
+                             />
+                <dataElement name="dateTimeFormattingPostfix"
+                             dataType="description"
+                             label="Date and formatting postfix"
+                             businessDescription="How to format date-tme constants. use prefix and postfix as per dbms being used. we intend to do this automatically in the future, ut as of now you should be carefu in setting this."
+                             />
+                <dataElement name="loggedInUserFieldName"
+                             dataType="description"
+                             label="Fieldname for loggedin user"
+                             businessDescription="this is autmatically used as the value for logging and other contexts"
+                             />
+                <dataElement name="dbDriver"
+                             dataType="description"
+                             label="Database driver"
+                             businessDescription="like oracle, posgre, or sqlServer"
+                             />
+                <dataElement name="dataElementSeparator"
+                             dataType="description"
+                             label="Data element separator"
+                             businessDescription="If we choose to have names not unique across groups, we use groupName+this separator+element name as qualified name."
+                             />
+                <dataElement name="defaultPageHeight"
+                             dataType="number"
+                             label="Default page height"
+                             businessDescription="page height to be used for generated pages. Not used in css mode."
+                             />
+                <dataElement name="defaultPageWidth"
+                             dataType="number"
+                             label="Default page width"
+                             businessDescription="page width to be used for generated pages. Not used in css mode."
+                             />
+                <dataElement name="defaultPaginationSize"
+                             dataType="number"
+                             label="Number of rows per pagination"
+                             businessDescription="If you provide this number, all list panels, by default, will be paginated with these many rows per page."
+                             />
+                <dataElement name="filePath"
+                             dataType="description"
+                             label="Path for uploading files"
+                             businessDescription="folder path from web root where all uploaded files are saved."
+                             />
+                <dataElement name="cleanserName"
+                             dataType="description"
+                             label="Cleanser name"
+                             businessDescription="cleanser is the java code that is called before and after invoking every resource. "
+                             />
+                <dataElement name="excelFilePath"
+                             dataType="description"
+                             label="Path for excel files"
+                             businessDescription="folder path from web root where all xl files are saved."
+                             />
+                <dataElement name="ExcelTemplatesPath"
+                             dataType="description"
+                             label="Path for excel templates"
+                             businessDescription="folder path from web root where all xl report templates are available."
+                             />
+                <dataElement name="excelReportFileSavePath"
+                             dataType="description"
+                             label="Path for excel reports"
+                             businessDescription="folder path from web root where all xl reports are to be saved."
+                             />
+                <dataElement name="eMailFromUserId"
+                             dataType="description"
+                             label="Email userid"
+                             businessDescription="exility uses a fairly primitive email utility. You are encouraged to ask for more. This is the user id to be used to login to the mail server"
+                             />
+                <dataElement name="eMailFromPassword"
+                             dataType="description"
+                             label="Email password"
+                             businessDescription="exility uses a fairly primitive email utility. You are encouraged to ask for more. This is the password to be used to login to mail server"
+                             />
+                <dataElement name="eMailBody"
+                             dataType="description"
+                             label="Email pody"
+                             businessDescription="exility uses a fairly primitive email utility. You are encouraged to ask for more. This is body of the mail to be sent"
+                             />
+                <dataElement name="eMailHost"
+                             dataType="description"
+                             label="Email host"
+                             businessDescription="exility uses a fairly primitive email utility. You are encouraged to ask for more. This is the host name"
+                             />
+                <dataElement name="eMailPort"
+                             dataType="description"
+                             label="Email port"
+                             businessDescription="exility uses a fairly primitive email utility. You are encouraged to ask for more. This is the port"
+                             />
+                <dataElement name="cleanserNameSpace"
+                             dataType="description"
+                             label="Cleanser namespace"
+                             businessDescription="cleanser is the java code that is called before and after invoking every resource. "
+                             />
+                <dataElement name="cleanserAssemblyName"
+                             dataType="description"
+                             label="Cleanser assembly name"
+                             businessDescription="cleanser is the java code that is called before and after invoking every resource. "
+                             />
+                <dataElement name="commandTimeOutTime"
+                             dataType="description"
+                             label="SQL command timeout"
+                             businessDescription="Use this to change the default time out set for the database instance. exility issues this commend to a connection session."
+                             />
+                <dataElement name="audittableSuffix"
+                             dataType="description"
+                             label="Audit table suffix"
+                             businessDescription="suffix to be used to the table name to get the name of table that is used as audit table. example you may use customer_audit for customer, in which case suffux would be _audit"
+                             />
+                <dataElement name="htmlRootRelativeToResourcePath"
+                             dataType="description"
+                             label="Relative path of html from root"
+                             businessDescription="Page generator uses this path to save generated htmls"
+                             />
+                <dataElement name="connectionString"
+                             dataType="description"
+                             label="Database connection string"
+                             businessDescription="discouraged. use data source instead."
+                             />
+                <dataElement name="batchConnectionString"
+                             dataType="description"
+                             label="Connection string for batch"
+                             businessDescription="discouraged. use data source instead."
+                             />
+                <dataElement name="generateColTags"
+                             dataType="boolean"
+                             label="Generate COL tags for table"
+                             businessDescription="Defaults to true in pagetype css. earlier versions can make use of col tags for table so that the columns can be styled thru css."
+                             />
+                <dataElement name="okToSave"
+                             businessDescription="Whether the parameters can be saved"
+                             dataType="boolean"
+                             label="OK to Save"
+                             />
+                <dataElement name="starForRequiredField"
+                             dataType="number"
+                             label="Where do we put * for mandatory field?"
+                             businessDescription="Not recommended. Should be handled thru css. none, before and after are options."
+                             />
+                <dataElement name="quietResetAction"
+                             dataType="boolean"
+                             label="No need to warn when reset button is clicked"
+                             businessDescription="Not recommended. Exility tracks changes to pages, and warns if user is leavinig page without saving. This can be controlled thru attribues at page level as well as at field level. However a project wanted this short cut."
+                             />
+                <dataElement name="nlsDateFormat"
+                             dataType="description"
+                             label="Oracle nls_dateformat"
+                             businessDescription="If you are using oracle data base, you must ensure that the default date format is yyyy-mm-dd. If the blobal setting is different from this, use this attribute to change it for the connection session"
+                             />
+                <dataElement name="dataSource"
+                             dataType="description"
+                             label="Datasource for db connection"
+                             businessDescription="preferred way of managing database connection, instead of connection string"
+                             />
+                <dataElement name="auditdataSource"
+                             dataType="description"
+                             label="Datasource for audit"
+                             businessDescription="preferred way of managing database connection, instead of connection string"
+                             />
+                <dataElement name="getCookies"
+                             dataType="description"
+                             label="Cookies to be extracted"
+                             businessDescription="not used any more. cookies are subjetc to client side manipulation. use globalServerDataNames instead."
+                             />
+            </elements>
+        </dataGroup>
+        <dataGroup name="dataType"
+                   label="Data Type">
+            <elements>
+            <!--  abstract data type -->
+            	<dataElement name="name"
+            				 referenceGroup="common"
+            				 />
+                <dataElement name="messageName"
+            				 referenceGroup="common"
+                             />
+            	<dataElement name="description"
+            				 referenceGroup="common"
+            				 />
+                <dataElement name="formatter"
+                             dataType="text"
+                             label="Formatter"
+                             businessDescription="Used by client side to format the value while rendering in output-only mode. Like commas in amounts. Name of the formatter mentioned here has to be impkemented on the client side as function."
+                             />
+                <dataElement name="sqlType"
+                             dataType="text"
+                             label="SQL Data Type"
+                             businessDescription="If this data element is to be included in a script like create table, what would be the sql type. This must be validated by rdbms adminsistrator"
+                             />
+                <dataElement name="regex"
+                             dataType="text"
+                             label="Regex"
+                             businessDescription="Regular expression that this value has to conform to."
+                             />
+                <dataElement name="minLength"
+                             dataType="number"
+                             label="Min length"
+                             businessDescription="minmum number of characters expected"
+                             />
+                <dataElement name="maxLength"
+                             dataType="number"
+                             label="Max length"
+                             businessDescription="maximum number of characters allowed"
+                             />
+                <dataElement name="minValue"
+                             dataType="maxValue"
+                             label="Min value"
+                             businessDescription="minimum expected value"
+                             />
+                <dataElement name="maxValue"
+                             dataType="maxValue"
+                             label="Max value"
+                             businessDescription="maximum allowed value"
+                             />
+                <dataElement name="allowNegativeValue"
+                             dataType="yesNo"
+                             label="Allow negative?"
+                             businessDescription="can the number be negative?"
+                             />
+                <dataElement name="numberOfDecimals"
+                             dataType="number"
+                             label="Nbr fracitonal digits"
+                             businessDescription="how many fractional digits are required for this number?"
+                             />
+                <dataElement name="maxDaysBeforeToday"
+                             dataType="number"
+                             label="Max days into past"
+                             businessDescription="how many days into the past from today can this value go back to? to put a min date in the future, use negative number as the value here"
+                             />
+                <dataElement name="maxDaysAfterToday"
+                             dataType="number"
+                             label="Max days into future"
+                             businessDescription="how many days from today can this date go into the future? to put a max date in the past, use negative number as the value here"
+                             />
+                <dataElement name="includesTime"
+                             dataType="boolean"
+                             label="Includes time?"
+                             businessDescription="Does this field require tracking actual time also. If this is no, then time part is saved as 0 for date, so that teh dates match on comparison"
+                             />
+                <dataElement name="trueValue"
+                             dataType="text"
+                             label="Text when true"
+                             businessDescription="What is the value of this field, as seen by users when internal value is true"
+                             />
+                <dataElement name="falseValue"
+                             dataType="text"
+                             label="Text when false"
+                             businessDescription="what is the value as seen by users when in ternal value is false"
+                             />
+                <dataElement name="baseDataType"
+                             dataType="entityName"
+                             label="Base data type"
+                             businessDescription="List data type typically woudl be a list of another field value. Use the data type of that field as base data type, so that the entries can be validated agains that data type"
+                             />
+                <dataElement name="minCount"
+                             dataType="number"
+                             label="Min counte"
+                             businessDescription="minimum number of entries exoected in th elist"
+                             />
+                <dataElement name="maxCount"
+                             dataType="number"
+                             label="Max count"
+                             businessDescription="maximum number of expected entries. Come one. Don't tell us it is unlimited. Always put a practical limit to avoid programming exceotions."
+                             />
+            </elements>
+        </dataGroup> 
+        
+        <dataGroup name="common"    label="common"  >
+            <elements>
+                <dataElement name="name"
+                             dataType="entityName"
+                             label="Name"
+                             businessDescription="Commonly used for various attributes"
+                             />
+                <dataElement name="label"
+                             dataType="text"
+                             label="Label"
+                             businessDescription="label"
+                             />
+                <dataElement  name="description"
+                              dataType="description"
+                              label="Description"
+                              />
+                <dataElement  name="messageName"
+                              dataType="entityName"
+                              label="Message Name"
+                              businessDescription="Used to show message on th eclient. Must be defined in messages.xml"
+                              />
+                <dataElement  name="text"
+                              dataType="text"
+                              label="Text"
+                              businessDescription="text"
+                              />
+                <dataElement  name="rowSum"                            
+                              dataType="decimal"              	       
+                              label="sum"     
+                              />
+                <dataElement  name="rowAverage"                            
+                              dataType="decimal"              	       
+                              label="Average"     
+                              />
+                                       
+                <dataElement name="_type"
+                              dataType="text"
+                              label="sub type"/>    
+                              
+                <dataElement name="skipOnMessageIds"
+                label="Message Ids to Skip On"
+			                 dataType="text"
+			                 />
+			                 
+                <dataElement name="executeOnMessageIds"
+                              dataType="text"
+                              label="Execute On message ids"
+                             />   
+                             
+                <dataElement name="executeOnCondition"
+			                 dataType="text"
+			                 label="Execute on condition"
+			                 />
+			                 
+                <dataElement name="markedAsComment"
+                              dataType="yesNo"
+                              label="Disabled?"
+                             />           
+                             
+                 <dataElement name="stepType"
+                              dataType="text"
+                              label="Step type"
+                             />   
+                             
+                  <dataElement name="stepSubType"
+                              dataType="text"
+                              label="Step sub-type"
+                             />                                 
+                                                  
+                <dataElement name="techNotes"
+                              dataType="text"
+                              label="Description"
+                             />   
+                             
+                 <dataElement name="gridName"
+                 label="Grid Name"
+                              dataType="text"
+                             />                                 
+                                                  
+                <dataElement name="expression"
+                			label="Expression"
+                              dataType="text"
+                             />   
+                             
+                <dataElement name="commonTextField"
+                				label="Common Text Field"
+                              dataType="text"
+                             />               
+                                          
+                <dataElement name="language"
+                				label="Language"
+                				businessDescription="Different languages in which this applicaiton is accessible"
+                              dataType="text"
+                             />               
+                                          
+                                                                     
+            </elements>
+        </dataGroup>
+        
+        
+        <dataGroup name="internal"
+                   label="Internal"
+                   businessDescription="Used internally by the project. No meaning to business">
+            <elements>
+                <dataElement name="id"
+                             dataType="id"
+                             label="Id"
+                             />
+              <dataElement name="inactive"
+                           dataType="boolean"
+                           label="Is Active?"
+                           valueList="0,Yes;1,No"
+                           businessDescription="This field label is inverted to make it meaningful to user. inactive is a negative word, but used internally to get false as a default."
+                           />
+                <dataElement  name="bulkAction"
+                              dataType="text"
+                              label="Bulk Action "
+                              />
+                <dataElement name="actionField"
+                             dataType="entityName"
+                             label="Bulk action"
+                             businessDescription="Used by grid panel to mark the operation to be carried out on the row. It is internally managed,and will not be visible to users any where"
+                             />
+                <dataElement name="filterField"
+                             dataType="entityName"
+                             label="Filter"
+                             businessDescription="Field that is used to get the value using which a field can be matched to filter rows"
+                             />
+                <dataElement  name="fileName"
+                              dataType="entityName"         	       
+                              label="File Name"     
+                              />
+                <dataElement  name="folderName"
+                              dataType="entityName"
+                              label="Folder Name"
+                              />
+                <dataElement name="liveWithErrors"
+                             dataType="boolean"
+                             label="Do you want to live with errors in the project"
+                             />
+              <dataElement name="date"
+                           businessDescription="Generic one for any temp"
+                           dataType="date"
+                           label="Date"
+                             />
+              <dataElement name="yesNo"
+                           businessDescription="Generic one for any temp"
+                           dataType="yesNo"
+                           label="What do you say?"
+                             />
+              <dataElement name="dateTime"
+                           businessDescription="generic date with time field"
+                           dataType="dateTime"
+                           label="Date with Time"
+                           messageName="specialMessage"
+                           />
+            </elements>
+        </dataGroup> 
+ 
+        <dataGroup name="message"
+                   label="Message">
+            <elements>
+                <dataElement name="text"
+                             referenceGroup="common"
+                             />
+                <dataElement name="severity"
+                             dataType="entityName"
+                             label="Severity"
+                             businessDescription="one of ignore, info, warning or error"
+                             />
+              <dataElement name="forClient"
+                           dataType="boolean"
+                           label="Usage"
+                           businessDescription="true"
+                        valueList="0,Server Only;1,For Client"       
+                             />
+            </elements>
+        </dataGroup>
+		
+    <dataGroup name="notification"
+               label="Notifications"  >
+      <elements>
+        <dataElement  name="notificationId"
+                      dataType="id"
+                      label="Internal Id"
+                      businessDescription="Internally generated. Unique across all types of notifications"
+                      />
+        <dataElement name="requiresAction"
+                     dataType="boolean"
+                     label="Requires Action"
+                     businessDescription="Is it for the user to take some action"
+                     />
+        <dataElement name="possibleActions"
+                     dataType="text"
+                     label="PossibleActions"
+                     businessDescription="all the actions that the user can take on this item. Coded as actionName1=label1;actionName2=label2..."
+                     />
+        <dataElement name="documentType"
+                     dataType="entityName"
+                     label="Document Type"
+                     businessDescription="Document that the notification is about"
+                      />
+      </elements>
+    </dataGroup>
+		
+		
+		<dataGroup name="resource"
+                   label="Resource"
+                   businessDescription="Used by pages that manage Exility resources."
+                   >
+            <elements>
+                <dataElement name="resourceType"
+                             dataType="entityName"
+                             label="Resource type"
+                             businessDescription="One of valid resource types like service,page etc.."
+                             />
+                <dataElement name="resourceName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Name"
+                             />
+                <dataElement name="module"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Module"
+                             />
+                <dataElement name="subModule"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Sub module"
+                             />
+                <dataElement name="name"
+                             dataType="entityName"
+                             label="Name"
+                             businessDescription="name should be used only as a dataElement, and not directly used as a name of an element. 'name' is not a good name. Any name shoudl be qualified."
+                             />
+                <dataElement name="folderName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Folder name"
+                             />
+                <dataElement name="nbrGenerated"
+                             dataType="number"
+                             businessDescription="true"
+                             label="Nbr pages generated"
+                             />
+
+                <dataElement name="toRecurse"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="All refrred resources?"
+                             />
+                <dataElement name="saveAction"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Action"
+                             />
+                <dataElement name="_type"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Type"
+                             />
+            </elements>
+        </dataGroup>
+
+        <dataGroup name="service"
+                   label="Service">
+            <elements>
+                <dataElement name="subType"
+                             dataType="entityName"
+                             label="sub type"/>
+                             
+                 <dataElement name="regTest"
+                             dataType="description"
+                             label="sub type"/>
+                             <dataElement name="step" label="Step" dataType="description"></dataElement>
+            </elements>
+        </dataGroup>
+
+        <dataGroup name="serviceEntry"
+                   label="Service Entry">
+            <elements>
+                <dataElement name="serviceEntry"
+                             dataType="entityName"
+                             label="service Entry"
+                             />
+            </elements>
+        </dataGroup>
+
+    <dataGroup name="sql"
+               label="sql"  >
+      <elements>
+      
+        <dataElement  name="toBeExecuted"
+                      dataType="boolean"
+                      label="To be Executed?"
+                              />
+        <dataElement name="sqlType"
+                     dataType="entityName"
+                     label="Sql type"
+                             />
+        <dataElement name="sql"
+                     dataType="text"
+                     label="SQL"
+                             />
+        <dataElement name="storedProcedureName"
+                     dataType="entityName"
+                     label="Stored prodedure name"
+                             />
+        <dataElement name="minParameters"
+                     dataType="number"
+                     label="Min parameters"
+                     />
+        <dataElement name="parameterType"
+                     dataType="entityName"
+                     label="Parameter type"
+                     />
+        <dataElement name="index"
+                     dataType="number"
+                     label="Row number"
+                     />
+        <dataElement name="toUpper"
+                     dataType="boolean"
+                     label="Convert to UPPER CASE"
+                     />
+        <dataElement name="gridName"
+                     dataType="entityName"
+                     label="Grid name"
+                     />
+        <dataElement name="basedOnColumnName"
+                     dataType="entityName"
+                     label="Filter column name"
+                     />
+        <dataElement name="basedOnColumnValue"
+                     dataType="text"
+                     label="Value to match"
+                     />
+        <dataElement name="doNotFormat"
+                     dataType="boolean"
+                     label="Format for SQL"
+                     />
+        <dataElement name="justLeaveMeAlone"
+                     dataType="boolean"
+                     label="Escape single quotes"
+                     />
+      </elements>
+    </dataGroup>
+
+        <dataGroup name="table"
+                   label="Table"
+                   businessDescription="table and column attributes">
+            <elements>
+                <dataElement name="tableName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Table Name"
+                             />
+                <dataElement name="okToDelete"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Can rows be deleted?"
+                             />
+                <dataElement name="keyToBeGenerated"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Key To be generated?"
+                             />
+                <dataElement name="createdTimestampName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedAt field name"
+                             />
+                <dataElement name="modifiedTimestampName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifedAt field name"
+                             />
+                <dataElement name="createdUserName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy field name"
+                             />
+                <dataElement name="modifiedUserName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy field name"
+                             />
+                <dataElement name="createdTimestampCOlumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedAt column name"
+                             />
+                <dataElement name="modifiedTimestampColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifedAt column name"
+                             />
+                <dataElement name="createdUserColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="CreatedBy column name"
+                             />
+                <dataElement name="modifiedUserColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="ModifiedBy column name"
+                             />
+                <dataElement name="tableType" 
+                			 label="Table Type" 
+                			 dataType="entityName"
+                			 businessDescription="As defined in the data base. Either table or view."
+                			 />
+                <dataElement name="columnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Column Name"
+                             />
+                <dataElement name="dataElementName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Data Element Name"
+                             />
+                <dataElement name="isOptional"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Can value be omitted?"
+                             />
+                <dataElement name="defaultValue"
+                             dataType="text"
+                             businessDescription="true"
+                             label="Default Value"
+                             />
+                <dataElement name="isKeyColumn"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Is this a Key Column?"
+                             />
+                <dataElement name="listServiceName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="List Service Name"
+                             />
+                <dataElement name="enumeration"
+                             dataType="text"
+                             businessDescription="true"
+                             label="Value List"
+                             />
+                <dataElement name="enumerationType"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Type of enumeraiton"
+                             />
+                <dataElement name="dependantOnColumnName"
+                             dataType="entityName"
+                             businessDescription="true"
+                             label="Depends on Column"
+                             />
+                <dataElement name="sqlDataType"
+                             dataType="description"
+                             label="Data Type"
+                             businessDescription="As defined in the db"
+                             />
+                <dataElement name="size"
+                             dataType="number"
+                             businessDescription="true"
+                             label="Size"
+                             />
+                <dataElement name="precision"
+                             dataType="number"
+                             businessDescription="true"
+                             label="Precision"
+                             />
+                <dataElement name="scale"
+                             dataType="number"
+                             businessDescription="true"
+                             label="Scale"
+                             />
+                <dataElement name="isNullable"
+                             dataType="boolean"
+                             businessDescription="true"
+                             label="Scale"
+                             />
+                             
+            </elements>
+        </dataGroup>
+
+    <dataGroup name="user"
+               label="User"  >
+      <elements>
+        <dataElement  name="userId"
+                      dataType="id"
+                      label="Internal Id"
+                      businessDescription="Internally generated. User does not see this."
+                              />
+        <dataElement name="userName"
+                     dataType="entityName"
+                     label="Sql type"
+                             />
+      </elements>
+    </dataGroup>
+
+
+
+     <dataGroup name="workflow"
+               label="Work flow"  >
+      <elements>
+        <dataElement  name="workflowId"
+                      dataType="id"
+                      label="Internal Id"
+                      businessDescription="Internally generated. Unique across all workflows"
+                              />
+        <dataElement name="workflowName"
+                     dataType="entityName"
+                     label="Workflow"
+                     businessDescription="Name of the workflow definition, of which this is an instance"
+                             />
+        <dataElement name="linkedDocumentId"
+                     dataType="id"
+                     label="Document Id"
+                     businessDescription="Id of the document that is being oushed thru this workflow"
+                             />
+        <dataElement name="initiatorUserId"
+                     dataType="id"
+                     label="Initiator User Id"
+                     businessDescription="user id, internal one, of the user who initiated this workflow"
+                             />
+        <dataElement name="initiatorRoleId"
+                     dataType="id"
+                     label="Initiator Role"
+                     businessDescription="User-role assigmenet id under which the user initiated this workflow"
+                     />
+        <dataElement name="assignedRoles"
+                     dataType="text"
+                     label="Assigned Roles"
+                     businessDescription="This is an internal field that has all roles for which users are already assigned for this workflow. It is a comma separated list of assignments in the form roleName1=assignedRoleId1,roleName2=assignedRoleId2...."
+                     />
+        <dataElement name="currentWorkflowState"
+                     dataType="number"
+                     label="Row number"
+                     />
+        <dataElement name="userRoleId"
+                     dataType="id"
+                     label="User Role"
+                     businessDescription="User role that took this step"
+                     />
+        <dataElement name="workflowAction"
+                     dataType="entityName"
+                     label="Action"
+                     businessDescription="Action that resulted in this step"
+                     />
+        <dataElement name="toWorkflowState"
+                     dataType="entityName"
+                     label="To State"
+                     businessDescription="ending (new) state of the workflow"
+                     />
+        <dataElement name="fromWorkflowState"
+                     dataType="entityName"
+                     label="From State"
+                     businessDescription="Starting (current) state of the workflow"
+                     />
+        
+        <dataElement name="userId"
+                     dataType="id"
+                     label="User Id"
+                     businessDescription="This is the niternal key"
+                     />
+        <dataElement name="loginId"
+                     dataType="entityName"
+                     label="Login Id"
+                     businessDescription="This is teh Id that the user uses to get into the system"
+                     />
+        <dataElement name="userNickName"
+                     dataType="text"
+                     label="User"
+                     businessDescription="Name as it shoudl be displayed"
+                     />
+        <dataElement name="userNickNameInLocalLanguage"
+                     dataType="text"
+                     label="User"
+                     businessDescription="Good to have this!!!"
+                     />
+        <dataElement name="roleId"
+                     dataType="id"
+                     label="Role Id"
+                     businessDescription="internal key"
+                     />
+        <dataElement name="roleName"
+                     dataType="entityName"
+                     label="Role"
+                     businessDescription="unique name of this role. Not visible to users. Users will see label."
+                     />
+        <dataElement name="roleLabel"
+                     dataType="text"
+                     label="Role Label"
+                     businessDescription="Role as seen by end users"
+                     />
+        <dataElement name="roleDescription"
+                     dataType="description"
+                     label="Description"
+                     />
+        <dataElement name="reportingRoleId"
+                     dataType="id"
+                     label="Reporting Role"
+                     businessDescription="Role to which this role reports to. 0 if this is the top role."
+                     />
+        <dataElement name="roleAssignmentId"
+                     dataType="id"
+                     label="Role Assignment"
+                     />
+        <dataElement name="reportingRoleAssignmentId"
+                     dataType="id"
+                     label="Reporting Role"
+                     businessDescription="points to a key in the same tabale, except for role that do not report into any one else"
+                     />
+      </elements>
+    </dataGroup>
+    </groups>
+</dataDictionary>

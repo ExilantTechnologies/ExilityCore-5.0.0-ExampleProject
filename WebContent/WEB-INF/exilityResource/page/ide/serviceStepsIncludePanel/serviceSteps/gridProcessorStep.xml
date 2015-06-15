@@ -1,0 +1,33 @@
+
+<displayPanel name="gridProcessorStep" description=""
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="gridProcessorStepProcessor"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Processor:"
+			valueList="addColumn,addColumn;cloneColumn,cloneColumn;copyColumns,copyColumns;copyColumnsAcrossGrids,copyColumnsAcrossGrids;copyGrid,copyGrid;copyRows,copyRows;filterRows,filterRows;
+					   gridToValues,gridToValues;mergeColumns,mergeColumns;mergeRows,mergeRows;removeGrid,removeGrid;renameColumn,renameColumn;renameGrid,renameGrid;splitColumns,splitColumns;
+					   splitRows,splitRows;"
+			numberOfUnitsToUse="2"
+			onChangeActionName="showSubStep"
+			/>
+
+
+		<assistedInputField name="gridProcessorStepIfWorkDoneGoTo"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="If Work Done Goto" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+		<assistedInputField name="gridProcessorStepIfNoWorkDoneGoTo"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="If NO Work Done GoTo" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+	</elements>
+</displayPanel>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<sql xmlns="http://com.exilant.exility/schema" 
+	name="locationList"
+	description="used as list service"
+	>
+  <sql>
+    <![CDATA[
+            SELECT
+                    id, description from etc_locationlist
+		]]>
+  </sql>
+  
+</sql>

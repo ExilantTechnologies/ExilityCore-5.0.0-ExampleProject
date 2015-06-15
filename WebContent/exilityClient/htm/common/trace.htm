@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Trace</title>
+    <script type="text/javascript">
+        var textDiv, headerManu;
+        function loaded()
+        {
+            headerMenu = window.opener.PM.headerMenu;
+            textDiv = document.getElementById('txt');
+        }
+
+        function clean()
+        {
+            if (!textDiv)
+                loaded();
+            textDiv.innerHTML = '';
+        }
+
+        function appendText(txt)
+        {
+            if (!textDiv)
+                loaded();
+            var div = document.createElement('div');
+            div.innerHTML = txt + '<br />';
+            textDiv.appendChild(div);
+        }
+    </script>
+</head>
+<body onload="loaded();" onunload="try{headerMenu.traceClosed()}catch(e){};">
+    <div style="width:100%; position:fixed; top:0px; left:1px; border:solid 1px #aaaaaa; background-color:#eeeeee;S">
+        <form>
+        <input type="button" value="Clean" onclick="clean();" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="Close" onclick="window.close();" />
+        </form>
+    </div>
+    <div style="margin-top:35px;" id="txt">
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page   xmlns="http://com.exilant.exility/page" 
+		name="assetMasterView" 
+		module="eta"
+		description="show details of an asset its allocations"
+		onLoadActionNames="getAssetDetails"
+		> 
+	<pageParameters>
+		<pageParameter name="id" dataType="number"
+				/>
+	</pageParameters>
+	<actions>
+	<serverAction name="getAssetDetails"
+				  serviceId="eta.getAssetDetails"
+				  submitFields="id"
+				/>
+	<closeAction name="close"/>
+	<navigationAction name="edit"
+					  pageToGo="eta/assetMasterEdit.htm" 
+					  windowDisposal="reset"
+					  queryFieldNames="id" 
+					  />
+	<navigationAction name="new"
+					  pageToGo="eta/assetMasterEdit.htm" 
+					  windowDisposal="replace"
+					  />
+	</actions>
+	<panels>
+		<displayPanel name="assetAttributes" 
+					  recordName="eta.assetMaster"
+					  fieldsAreOutputByDefault="true"
+					  elementsPerRow="3"
+		>
+		
+		</displayPanel>
+		
+		<listPanel name="allocationdetails"
+				   recordName="eta.assetAllocation" 
+				   tableName="allocations" 
+				   fieldsAreOutputByDefault="true"></listPanel>
+		<buttonPanel name="actionButtons">
+			<elements>
+				<buttonElement name="edit" label="Edit" onClickActionName="edit" />
+				<buttonElement name="new" label="New Asset" onClickActionName="new" />
+				<buttonElement name="close" label="Close" onClickActionName="close"/>
+			</elements>
+		</buttonPanel>
+	</panels>
+</page>
+

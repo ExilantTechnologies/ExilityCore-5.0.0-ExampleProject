@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<sql xmlns="http://com.exilant.exility/schema" 
+	name="personList"
+	description="used as list service, and hence we do not have select as"
+	>
+  <sql>
+    <![CDATA[
+            SELECT
+                    personcode, displayname from etp_personMaster where statuscode = 'Y'
+		]]>
+  </sql>
+  
+</sql>

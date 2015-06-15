@@ -1,0 +1,68 @@
+<displayPanel name="sqlTask" description="This is the sub task of TaskStep"
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="sqlTaskTaskName"
+			isRequired="false" dataElementName="gridName" label="Task Name:" />
+		<textElement cssClassName="note"
+			label="The name of the task or table name" />
+		
+		<assistedInputField name="sqlTaskGridName" label="Grid Name" 
+			isRequired="false" dataElementName="gridName" />
+		<textElement cssClassName="note"
+			label="The name of the Grid" />	
+			
+		<assistedInputField name="sqlTaskIfNoWorkDoneMessageName" label="No Work Done Message Name" 
+			isRequired="false" dataElementName="name" 		
+			/>				
+		<textElement cssClassName="note"
+			label="If No Work Done Message Name" />			
+			
+		<assistedInputField name="sqlTaskIfNoWorkDoneMessageParameters"
+			dataElementName="name" label="No Work Done Message Parameters" />			
+		<textElement cssClassName="note"
+			label="No Work Done Message Parameters,all parameters with comma separates" />
+			
+			
+		<assistedInputField name="sqlTaskIfWorkDoneMessageName"
+			isRequired="false" dataElementName="name" label="Work Done Message Name:" />
+		<textElement cssClassName="note"
+			label="TWork Done Message Name" />
+		
+		<assistedInputField name="sqlTaskIfWorkDoneMessageParameters" label="Work Done Message Parameters" 
+			isRequired="false" dataElementName="name" />
+		<textElement cssClassName="note"
+			label="Work Done Message Parameters,all parameters with comma separates" />	
+			
+		<assistedInputField name="sqlTaskPrefix" label="Prefix" 
+			isRequired="false" dataElementName="name" 		
+			/>				
+		<textElement cssClassName="note"
+			label="Prefix to be added for each column value in grid" />			
+			
+		<assistedInputField name="sqlTaskRaiseExceptionIfNoWorkDone"
+			dataElementName="name" label="Raise Exception If No Work Done" />			
+		<textElement cssClassName="note"
+			label="Raise Exception If No Work Done, true or false as value" />	
+			
+		<assistedInputField name="sqlTaskRaiseExceptionIfWorkDone"
+			dataElementName="name" label="Raise Exception If Work Done" />			
+		<textElement cssClassName="note"
+			label="Raise Exception If Work Done, true or false as value" />	
+			
+		<assistedInputField name="sqlTaskRepeatForRowsInGrid"
+			dataElementName="name" label="Do you want to repeat for each row in grid" />			
+		<textElement cssClassName="note"
+			label="Do you want to repeat for each row in grid" />	
+			
+		<assistedInputField name="sqlTaskTaskParameters"
+			dataElementName="name" label="Task Parameters" />			
+		<textElement cssClassName="note"
+			label="Task Parameters, all parameters with comma separates" />				
+			
+		<assistedInputField name="sqlTaskToDataTable"
+			dataElementName="name" label="To Data Table" />			
+		<textElement cssClassName="note"
+			label="To Data Table, true or false as value" />			
+
+	</elements>
+</displayPanel>

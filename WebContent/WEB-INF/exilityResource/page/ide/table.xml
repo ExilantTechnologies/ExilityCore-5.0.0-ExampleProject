@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<page xmlns="http://com.exilant.exility/page"
+      name="table"
+      module="ide"
+      description="manage table definitions"
+      title="Table"
+      trackFieldChanges="true"
+      onLoadActionNames="getFolders"
+      scriptsToInclude="../../js/ide/table.js,../../css/ide/table.css"
+      onFormChangeActionName="formChanged"
+      onFormResetActionName="formReset"
+      >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+
+  <actions>
+    <serverAction name="getFolders"
+                  serviceId="ide.getFolders"
+                  queryFieldNames="resourceType"
+                  disableForm="true"
+                     />
+    <serverAction name="getTables"
+                  serviceId="ide.getFiles"
+                  disableForm="true"
+                  queryFieldNames="resourceType,folderName"
+                />
+    <serverAction name="getTable"
+                  serviceId="ide.getTable"
+                  disableForm="true"
+                  queryFieldNames="folderName,name"
+                  queryFieldSources="folderName,fileName"
+                  enableFields="new,delete"
+                  disableFields="name"
+                  fieldToFocusAfterExecution="description"
+                />
+    <serverAction name="save"
+                  serviceId="ide.saveTable"
+                  disableForm="true"
+                  submitForm="true"
+                  callBackActionName="reselectTable"
+                />
+    <serverAction name="delete"
+                  description="delete this Table"
+                  serviceId="ide.deleteTable"
+                  disableForm="true"
+                  queryFieldNames="name"
+                  callBackActionName="getTables"
+                  resetFormModifiedState="true"
+                />
+    <localAction name="reselectTable"
+                 description="after table is saved, we get it back from server"
+                 functionName="reselectTable"/>
+    <localAction name="newTable"
+                 functionName="newTable"
+                 disableFields="new,delete"
+                 enableFields="name"
+                 showPanels="tableAttributes"
+                 fieldToFocusAfterExecution="name"
+                     />
+    <dummyAction name="formChanged"
+                 disableFields="folderName,fileName,new,delete"
+                     />
+    <dummyAction name="formReset"
+                 enableFields="folderName,fileName"
+                     />
+    <closeAction name="close"/>
+    <resetAction name="reload"/>
+  </actions>
+
+  <panels>
+    <buttonPanel name="topButtons"
+                 cssClassName="topButtons"
+                     >
+      <elements>
+        <buttonElement name="save"
+                       hoverText="Save"
+                       imageName="saveIcon.png"
+                       onClickActionName="save"
+                               />
+        <buttonElement name="reload"
+                       hoverText="Reload"
+                       imageName="reloadIcon.png"
+                       onClickActionName="reload"
+                               />
+        <buttonElement name="close"
+                       hoverText="Close"
+                       imageName="closeIcon.png"
+                       onClickActionName="close"
+                               />
+      </elements>
+    </buttonPanel>
+    
+    
+     <displayPanel name="selection"
+                  elementsPerRow="4"
+                      >
+      <elements>
+      
+	     <displayPanel name="searchPanel" elementsPerRow="2">      
+	       <elements>
+	      
+	      	  <assistedInputField name="folderName"
+	                            listServiceId="folders"
+	                            noAutoLoad="true"
+	                            selectFirstOption="true"
+	                            onChangeActionName="getTables"
+	                            size="35"
+	                            donotTrackChanges="true"
+	                            doNotValidate="true"
+	                                />
+	        <assistedInputField name="fileName"
+	                            size="35"
+	                            label="Table Name"
+	                            listServiceId="files"
+	                            noAutoLoad="true"
+	                            onChangeActionName="getTable"
+	                            isRequired="true"
+	                            donotTrackChanges="true"
+	                            selectFirstOption="true"
+	                                />
+	        <hiddenField name="resourceType"
+	                     defaultValue="table"/>
+	                     
+	       </elements>
+	      </displayPanel>
+	    
+	     <displayPanel name="btnPanel" elementsPerRow="2">
+	     
+	     <elements>
+	     
+	      <buttonElement name="new"
+	                       label="New Table"
+	                       onClickActionName="newTable"
+	                               />
+	        <buttonElement name="delete"
+	                       label="Delete this Table"
+	                       onClickActionName="delete"
+	                               />
+	     </elements>
+	     </displayPanel>
+    
+      </elements>
+    </displayPanel>
+      
+    <tabPanel name="editingArea"
+              description="instead of showing all attributes in one panel, we show table attributes in one tab, and columns in another."
+              >
+      <elements>
+
+        <displayPanel name="tableAttributes"
+                      elementsPerRow="2"
+                      tabLabel="Table Attributes"
+                      >
+          <elements>
+            <textElement cssClassName="note"
+                         numberOfUnitsToUse="2"
+                         label="Name is normally the name of the rdbms table. However, there could be two reasons why may have name different from table name.
+                         If you choose to create more than on templates on one rdbms table, you have to have different names. For example if there are role-based access restriction on some fields.
+                         If you choose a better naming convention than the one followed in naming rdbms tables.
+                         "/>
+            <assistedInputField name="name"
+                                isRequired="true"
+                                size="50"
+                                numberOfUnitsToUse="2"
+                                />
+            <assistedInputField name="tableName"
+                                size="50"
+                                numberOfUnitsToUse="0"
+                                />
+            <assistedInputField name="module"
+                                />
+            <textElement cssClassName="note"
+                         label="This is just for documentation. However we strongly recommend that you use this more like folder structure. That is, module is the folder name under which this table definition is stored."/>
+            <assistedInputField name="description"
+                                size="110"
+                                numberOfUnitsToUse="2"
+                                />
+            <assistedInputField name="okToDelete"
+                                valueList="0,No;1,Yes"
+                                defaultValue="0"
+                                />
+            <textElement cssClassName="note"
+                         label="A small safety step. tableDeleteTask throws-up an exception if this is not set to true."/>
+            <assistedInputField name="keyToBegenerated"
+                                valueList="0,No;1,Yes"
+                              defaultValue="0"
+                                />
+            <textElement cssClassName="note"
+                         label="If yes, exility generates a one-up number. Exility manages this thru a table named exilPrimaryKey. A row for each table is maintained there. In case you do some data preparation where in you8 have populated rows, delete the row in this table, so that Exility resets the value to the last used number."/>
+            <textInputField name="createdTimestampName"
+                                />
+            <textElement cssClassName="note"
+                         label="Name of the column that represents createdTime. Note that you MUST define that as a column, and then specify it here. Exility DOES NOT add this column autamtically into the table. However, you should not supply value to this field. Exility sets the value to system time automatically. Similar treatment for next three attributes."/>
+            <textInputField name="modifiedTimestampName"
+                                />
+            <textElement cssClassName="note"
+                         label=""/>
+            <textInputField name="createdUserName"
+                                />
+            <textElement cssClassName="note"
+                         label="logged-in user is determined based on loggedInUserName set in applicationParameters."/>
+            <textInputField name="modifiedUserName"
+                                />
+            <textElement cssClassName="note"
+                         label=""/>
+          </elements>
+        </displayPanel>
+        <displayPanel name="columnArea"
+                      tabLabel="Column Attributes"
+                      elementsPerRow="2">
+          <elements>
+
+            <gridPanel name="cols"
+                       description="To be dispalyed like a list panel, because editing happens in right panel."
+                       tableName="columns"
+                       cssClassName="listPanel"
+                       rowsCanBeAdded="false"
+                       rowsCanBeDeleted="false"
+                       uniqueColumns="name"
+                       rowHelpText="click to edit this parameter"
+                       simulateClickOnFirstRow="true"
+                                   >
+              <elements>
+                <outputField name="name"
+                             maxCharacters="22"
+                             label="Column"
+                             defaultValue="new column"/>
+                <hiddenField name="columnName"/>
+                <hiddenField name="label"/>
+                <hiddenField name="description"/>
+                <hiddenField name="dataElementName"/>
+                <hiddenField name="defaultValue"/>
+                <hiddenField name="isOptional"/>
+                <hiddenField name="dependantOnColumnName"/>
+                <hiddenField name="isKeyColumn"/>
+                <hiddenField name="listServiceName"/>
+                <hiddenField name="enumeration"/>
+                <hiddenField name="enumerationType"/>
+              </elements>
+            </gridPanel>
+            <displayPanel name="colArea"
+                          >
+              <elements>
+                <buttonPanel name="nav"
+                             >
+                  <elements>
+                    <buttonElement name="columnsMoveFirst"
+                                   label="First"
+                                   />
+                    <buttonElement name="columnsMovePrev"
+                                   label="Prev"
+                                   />
+                    <buttonElement name="columnsMoveNext"
+                                   label="Next"
+                                  />
+                    <buttonElement name="columnsMoveLast"
+                                   label="Last"
+                                  />
+                    <buttonElement name="columnsNewRow"
+                                   label="New Column"
+                                  />
+                    <buttonElement name="columnsDeleteRow"
+                                   label="Delete Column"
+                                  />
+                  </elements>
+                </buttonPanel>
+                <displayPanel name="colAttributes"
+                              tableName="column"
+                              linkedTableName="columns"
+                              elementsPerRow="2"
+                              >
+                  <elements>
+
+                    <textInputField name="name"
+                                    defaultValue="new column"
+                                    isRequired="true"
+                                    />
+                    <textElement cssClassName="note"
+                                 label="Name used in your application. Normally this is the column name, and we STRONGLY recommend that. In an exceptional case that are approved by your tech-lead, you can choose to have a name that is different from columnName. in such a case, this column is known by this name in your application, while it is known by columnName(next field) in the data abse."/>
+                    <textInputField name="columnName"
+                                    />
+                    <textElement cssClassName="note"
+                                 label="Leave this as blank, unless it is different from name above. Read comments for Name. leave it as blank"/>
+                    <textInputField name="label"/>
+                    <textElement cssClassName="note"
+                                 label="Label is intended to be used in the future for some auto generated pages.This label IS NOT USED as default in a page. Label specified in data dictionary serves that purpose."/>
+                    <textInputField name="description"/>
+                    <textElement cssClassName="note"
+                                 label=""/>
+                    <textInputField name="dataElementName"/>
+                    <textElement cssClassName="note"
+                                 label="Leave this as blank, unless there is no entry in data dictionary for name specified in first field."/>
+                    <textInputField name="defaultValue"/>
+                    <textElement cssClassName="note"
+                                 label="If client does not supply value for this field for an insert (create/add) operation, then this value is assumed. Note that this value will not be used in an update operation."/>
+                    <radioButtonField name="isOptional"
+                                      defaultValue="0"/>
+                    <textElement cssClassName="note"
+                                 label="Can the value be omitted during an insert (create/add) operation? If you have set a default value, then there is no need for you to make this field optional. Note that this has no implication for an update operation."/>
+                    <textInputField name="dependantOnColumnName"/>
+                    <textElement cssClassName="note"
+                                 label="If this column is mandatory only if another column value is specified, then use this feature."/>
+                    <radioButtonField name="isKeyColumn"
+                                      defaultValue="0"/>
+                    <textElement cssClassName="note"
+                                 label="If you mark this true for more than one key, then we assume that the primary key is a composite of al the marked one. We STRONGLY recommend using a surrogate (generated by Exility) primary key. This would be in addition to a logical unique key you may have in the table."/>
+                    <textInputField name="listServiceName"/>
+                    <textElement cssClassName="note"
+                                 label="Do I use this or the one specified in data dictionary?"/>
+                    <textInputField name="enumeration"/>
+                    <textElement cssClassName="note"
+                                 label="If this field can have a only a list of predetermined values, specify them in a comma separated list. e.g. red,blue,orange or 1,5,8. You have to ensure that the values are valid for the data type of this column."/>
+                    <textInputField name="enumerationType"/>
+                    <textElement cssClassName="note"
+                                 label="can this be different from the data type? Will clarify."/>
+                  </elements>
+                </displayPanel>
+              </elements>
+            </displayPanel>
+          </elements>
+        </displayPanel>
+      </elements>
+    </tabPanel>
+  </panels>
+</page>
+

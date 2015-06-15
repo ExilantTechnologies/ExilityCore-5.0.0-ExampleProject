@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="generatePage"
+      module="ide"
+      description="Compile a page.xml into run-time components"
+      title="Generate Page"
+      onLoadActionNames="getFolders,getLanguages"
+      trackFieldChanges="false"
+      scriptsToInclude="../../js/ide/generatePage.js,../../css/ide/generatePage.css"
+      firstFieldName="folderName"
+      onFormResetActionName="showResult"
+      >
+  <actions>
+    <serverAction name="action"
+                  serviceId="ide.generatePage"
+                  submitForm="true"
+                  disableForm="true"
+                  callBackActionName="checkForMessage"
+                  callBackEvenOnError="true"
+                  resetFormModifiedState="true"
+                  
+                />
+    <serverAction name="getFolders"
+                  serviceId="ide.getFolders"
+                  queryFieldNames="resourceType"
+                  disableForm="true"
+             />
+    <serverAction name="getPages"
+                  serviceId="ide.getFiles"
+                  queryFieldNames="resourceType, folderName"
+                  disableForm="true"
+                />
+    <serverAction name="getLanguages"
+                  serviceId="ide.getLanguages"
+                  callBackActionName="checkLanguages"
+                  toRefreshPage="afterMyAction"
+                />
+    <localAction name="checkLanguages"
+                 functionName="checkLanguages"/>
+    <closeAction name="close"/>
+    <resetAction name="reload"/>
+    <localAction name="checkForMessage"
+                 functionName="checkForMessage"/>
+    <dummyAction name="showResult" showPanels="generatedPanel"/>
+    <dummyAction name="hideResult" hidePanels="generatedPanel"/>
+  </actions>
+
+  <panels>
+    <buttonPanel name="topButtons"
+                 cssClassName="topButtons"
+                     >
+      <elements>
+        <buttonElement name="reload"
+                       hoverText="Reload"
+                       imageName="reloadIcon.png"
+                       onClickActionName="reload"
+                               />
+        <buttonElement name="close"
+                       hoverText="Close"
+                       imageName="closeIcon.png"
+                       onClickActionName="close"
+                               />
+      </elements>
+    </buttonPanel>
+
+    <displayPanel name="selection"
+                  elementsPerRow="4"
+                      >
+      <elements>
+		<displayPanel name="languagePanel" 
+					description="option needs to be displayed only if the project has set up more than one language. This panel needs to be enabled by script if required."
+					hidden="true">
+			<elements>
+				<assistedInputField name="language"
+				blankOption="Default"
+				selectFirstOption="true"
+				listServiceId="languages"
+				noAutoLoad="true"/>
+			</elements>
+		</displayPanel>
+        <assistedInputField name="folderName"
+                            listServiceId="folders"
+                            noAutoLoad="true"
+                            selectFirstOption="true"
+                            onChangeActionName="getPages"
+                            doNotValidate="true"
+                                />
+        <assistedInputField name="fileName"
+                            label="Page Name"
+                            listServiceId="files"
+                            blankOption="All files In this folder"
+                            noAutoLoad="true"
+                            selectFirstOption="true"
+                            doNotValidate="true"
+                            onChangeActionName="hideResult"
+                                />
+        <hiddenField name="resourceType"
+                     defaultValue="page"/>
+        <hiddenField name="liveWithErrors"
+                     defaultValue="false"/>
+        <buttonElement name="go"
+                       hoverText="Generate Page"
+                       onClickActionName="action"
+                       label="GO"
+       />
+      </elements>
+    </displayPanel>
+
+    <listPanel name="generatedPanel" tableName="fileNames"  initialNumberOfRows="1" hidden="true"
+                  >
+      <elements>
+        <outputField name="fileName" label="Files Generated"
+                             />
+      </elements>
+    </listPanel>
+<displayPanel name="errorPanel" keepItSimple="true" hidden="true">
+   <elements>
+   <textElement name="errorMessage" label=" ERROR MESSAGES"/>
+    <listPanel name="messageList" tableName="messages"
+                  >
+      <elements>
+        <outputField name="message" dataElementName="text"
+                             />
+      </elements>
+    </listPanel>
+    </elements>
+    </displayPanel>
+  </panels>
+</page>
+

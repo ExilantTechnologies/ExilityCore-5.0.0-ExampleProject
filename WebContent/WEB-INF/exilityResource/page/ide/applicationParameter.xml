@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="applicationParameter"
+      module="ide"
+      description="Maintain Application Parameters"
+      title="Application Parameters"
+      trackFieldChanges="true"
+      onModifyModeActionNames="disableSave,getData"
+      onLoadActionNames="getData"
+      scriptsToInclude="../../js/ide/applicationParameter.js,../../css/ide/applicationParameter.css"
+      >
+    <pageParameters>
+        <pageParameter name="okToSave"
+                       isPrimaryKey ="true"/>
+    </pageParameters>
+    <actions>
+
+        <dummyAction name="disableSave"
+                      hidePanels="canNotSave"
+                      showPanels="save"
+                      />
+        <serverAction name="getData"
+                      serviceId="ide.getAp"
+                      queryFieldNames="resourceType,resourceName"
+                      />
+        <serverAction name="save"
+                      serviceId="ide.saveAp"
+                      submitForm="true"
+                      toRefreshPage="none"
+                      disableForm="true"
+                      callBackActionName="claimVictory"
+                    />
+        <localAction name="claimVictory"
+                     functionName="PM.message('Parameters Saved', 'Info', 'OK');"
+                    />
+      <localAction name="resetDefaultFields"
+                   description="Resets some db rekated fields based on teh chosen rdbms"
+                   functionName="resetDefaultFields"/>
+        <closeAction name="close"/>
+        <resetAction name="reload" />
+    </actions>
+
+    <panels>
+        <displayPanel name="topButtons"
+        			  keepItSimple="true"
+                     cssClassName="topButtons"
+                     >
+            <elements>
+                <textElement name="reload"
+                               hoverText="Reload"
+                               onClickActionName="reload"
+                               />
+                <textElement name="close"
+                               hoverText="Close"
+                               onClickActionName="close"
+                               />
+                <textElement name="save"
+                               hoverText="Save"
+                               onClickActionName="save"
+                               hidden="true"
+                               />
+            </elements>
+        </displayPanel>
+        <displayPanel name="canNotSave">
+            <elements>
+                <textElement label="NOTE : Save option is disabled for you. Only PL can make changes to Application Parameters."/>
+            </elements>
+        </displayPanel>
+        <tabPanel name="allParameters"
+                  >
+            <elements>
+                <displayPanel name="projectSetup"
+                              tabLabel="Project Setup"
+                              renderFieldDescriptions="true"
+                      >
+                    <elements>
+                        <assistedInputField name="uniqueNamesAcrossGroups"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <assistedInputField name="dataElementSeparator"/>
+                        <assistedInputField name="globalServerDataNames"/>
+                      <assistedInputField name="loginServiceId"/>
+                      <assistedInputField name="logoutServiceId"/>
+                      <assistedInputField name="loggedInUserFieldName"/>
+                        <assistedInputField name="loggedInUserDataTypeIsInteger"
+                                            valueList="0,Yes;1,No"
+                                            />
+                        <assistedInputField name="setCookies"/>
+                        <assistedInputField name="getCookies"/>
+                        <hiddenField name="fileUploadMeans"/>
+                        <assistedInputField name="filePath"/>
+                        <assistedInputField name="excelFilePath"/>
+                        <assistedInputField name="ExcelTemplatesPath"/>
+                        <assistedInputField name="excelReportFileSavePath"/>
+                        <assistedInputField name="cleanserName"/>
+                        <assistedInputField name="cleanserNameSpace"/>
+                        <assistedInputField name="cleanserAssemblyName"/>
+                    </elements>
+                </displayPanel>
+                <displayPanel name="dbDetails"
+                              tabLabel="Database"
+                              renderFieldDescriptions="true"
+                      >
+                    <elements>
+                        <assistedInputField name="dataSource"/>
+                        <assistedInputField name="dbDriver"/>
+                        <assistedInputField name="connectionString"/>
+                        <hiddenField name="commonPrimaryKeyColumnName"/> <!-- not used any more-->
+                        <assistedInputField name="commandTimeOutTime"/>
+                        <assistedInputField name="batchConnectionString"/>
+                        <assistedInputField name="enableAuditForAll"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <assistedInputField name="auditdataSource"/>
+                        <assistedInputField name="isSeparateAuditSchema"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <assistedInputField name="audittableSuffix"/>
+                        <assistedInputField name="auditConnectionString"/>
+                          <assistedInputField name="rdbmsBeingUsed" 
+                                              label="rdbms being used"
+                                              dataElementName="text" 
+                                              valueList="postgre;oracle;sqlServer;mySql"
+                                              defaultValue="postgreSql"
+                                              />
+                          <buttonElement name="resetDefaults" 
+                                         label="Reset following parameters for this rdbms "
+                                         onClickActionName="resetDefaultFields"/>
+                          <assistedInputField name="systemDateFunction"/>
+                          <assistedInputField name="dateFormattingPrefix"/>
+                          <assistedInputField name="dateFormattingPostfix"/>
+                          <assistedInputField name="dateTimeFormattingPrefix"/>
+                          <assistedInputField name="dateTimeFormattingPostfix"/>
+                          <assistedInputField name="nlsDateFormat"/>
+                          <assistedInputField name="useQuotesInSql"
+                                              valueList="0,No;1,Yes"
+                                              />
+                          <assistedInputField name="useNullForEmptyString"
+                                              valueList="0,No;1,Yes"
+                                              />
+                   </elements>
+                </displayPanel>
+                <displayPanel name="pageDetails"
+                              renderFieldDescriptions="true"
+                              tabLabel="Page Generator"
+                      >
+                    <elements>
+                        <assistedInputField name="projectName"  isRequired="true"/>
+                        <assistedInputField name="pageLayoutType"  isRequired="true"
+                                        valueList="css,css;0,default;1,One;2,Two;3,Three;4,Four;5,PathFinder"/>
+                        <assistedInputField name="exilityFolderPrefix"  isRequired="true"/>
+                        <assistedInputField name="commonFolderPrefix"  isRequired="true"/>
+                        <assistedInputField name="imageFilePrefix"  isRequired="true"/>
+                        <assistedInputField name="paginateButtonType"  isRequired="true"
+                                            valueList="dropDown;nextToEachOther"/>
+                        <assistedInputField name="defaultPageHeight"  isRequired="true" />
+                        <assistedInputField name="defaultPageWidth"  isRequired="true"/>
+                        <assistedInputField name="defaultPaginationSize"/>
+                        <assistedInputField name="assumeTextForMissingDataElement"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="alignPanels"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="htmlRootRelativeToResourcePath"  isRequired="true"/>
+                        <assistedInputField name="starForRequiredField"  isRequired="true"
+                                            valueList="0,Default;3,Do not put *;1,* before labl;2,* after label"/>
+                        <assistedInputField name="httpNoCacheTagRequires"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="lastKeyEventTrigger"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="showDeleteOptionAtEnd"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="showIamgeForDeleteOption"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="showRequiredLabelinGrid"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="spanForButtonPanelRequires"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+                        <assistedInputField name="generateColTags"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="true"/>
+                        <assistedInputField name="quietResetAction"
+                                          valueList="0,No;1,Yes"
+                                          defaultValue="false"/>
+
+                        <hiddenField name="resourceType"
+                                     defaultValue="applicationParameter"/>
+                        <hiddenField name="resourceName"
+                                     defaultValue="applicationParameters"/>
+                    </elements>
+                </displayPanel>
+                <displayPanel name="deployment"
+                              tabLabel="Deployment"
+                              renderFieldDescriptions="true"
+                      >
+                    <elements>
+                        <assistedInputField name="eMailHost"/>
+                        <assistedInputField name="eMailPort"/>
+                        <assistedInputField name="eMailFromUserId"/>
+                        <assistedInputField name="eMailFromPassword" />
+                        <assistedInputField name="eMailBody" />
+                        <assistedInputField name="definitionsToBeCached"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <hiddenField name="trace"/> <!-- not used -->
+                        <assistedInputField name="licenceValidation"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <assistedInputField name="securityEnabled"
+                                          valueList="0,No;1,Yes"
+                                          />
+                        <assistedInputField name="cachePrimaryKeys"
+                                          valueList="0,No;1,Yes"
+                                          />
+                    </elements>
+                </displayPanel>
+            </elements>
+        </tabPanel>
+    </panels>
+</page>
+

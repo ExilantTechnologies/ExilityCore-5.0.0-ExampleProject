@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<page xmlns="http://com.exilant.exility/page" 
+		name="workflow" 
+	    module="workflow"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://com.exilant.exility/page ../../page.xsd"
+		onLoadActionNames="createActionGrid"
+		scriptsToInclude="workflow.css,../../jscripts/workflow/jquery-1.4.2.min.js,../../jscripts/workflow/createActionGrid.js,../../jscripts/workflow/workflow.js"
+		>
+
+<actions>
+   
+    <serverAction name ="initiateWorkflow"
+                  serviceId="workflow.first_wf_testing"          
+                  submitForm="true" 
+                 />  
+                 
+      <serverAction name ="savePfRequest"
+                  serviceId="pf.savePfRequest"          
+                  submitForm="true" 
+                 />                          
+    
+    <localAction name="createActionGrid" 
+    			 functionName="createActionGrid"/>    
+     
+</actions>
+		
+		
+<panels>
+
+<displayPanel name="actionPanel" cssClassName="actionClass">
+	<elements>
+	
+	 <textElement name="actionMenu"  />
+	 
+	</elements>
+</displayPanel>
+
+<displayPanel name="pfWithdrawalPanel"			 
+			  label="Employee Withdrawal Form"
+			 >
+	 <elements>
+	 
+	   <assistedInputField name="employeeName" />
+	   <assistedInputField name="designation" />
+	   
+	   <assistedInputField name="employeeId" />
+	   <assistedInputField name="department" />
+	   
+	   <assistedInputField name="appliedAmount"  numberOfUnitsToUse="2" />
+	   
+	   <textAreaField name ="purposeOfPFWithdrawal" 
+					 numberOfRows="10"
+					 numberOfCharactersPerRow="100" 
+					 />
+	   
+	 </elements>
+ </displayPanel>
+
+
+ <displayPanel name="panelWithHiddenField" hidden="true">
+	 <elements>
+	 
+	 <hiddenField name="workflow_action" dataElementName="description"/>
+	 <hiddenField name="user_id" defaultValue="420" dataElementName="id"/>
+	 
+	 </elements>
+ </displayPanel>
+ 
+</panels>
+</page>
+
+
+

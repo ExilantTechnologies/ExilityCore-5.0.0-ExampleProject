@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page   xmlns="http://com.exilant.exility/page" 
+		name="assetMasterSearch" 
+		module="eta"
+		description="search assets"
+		> 
+	<actions>
+	<dummyAction name="disableAsset" disableFields="assetName,isRetired,assetGroupId"/>
+	<dummyAction name="enableAsset" enableFields="assetName,isRetired,assetGroupId"/>
+	<serverAction name="filterAssets"
+				  serviceId="eta.filterAssets"
+				  submitForm="true"
+				  disableForm="true"
+				/>
+	<closeAction name="close"/>
+	<navigationAction name="view"
+					  pageToGo="eta/assetMasterView.htm" 
+					  windowDisposal="retainState"
+					  queryFieldNames="id" 
+					  />
+	<navigationAction name="new"
+					  pageToGo="eta/assetMasterEdit.htm" 
+					  windowDisposal="retainState"
+					  />
+	</actions>
+	<panels>
+		<displayPanel name="assetAttributes" 
+					  recordName="eta.assetMaster"
+					  elementsPerRow="2"
+		>
+			<elements>
+				<filterField name="assetName"/>
+				<filterField name="assetGroupId"/>
+				<filterField name="locationMasterId"/>
+				<filterField name="purchaseDate"/>
+				<filterField name="retirementDate"/>
+				<textInputField name="isRetired" />
+			</elements>
+		
+		</displayPanel>
+		<buttonPanel name="searchButtons">
+			<elements>
+				<buttonElement name="goButton" label="Get Assets" onClickActionName="filterAssets"/>
+				<buttonElement name="close" label="Close" onClickActionName="close"/>
+				<buttonElement name="new" label="New Asset" onClickActionName="new"/>
+				<buttonElement name="disable" label="Disable Asset" onClickActionName="disableAsset"/>
+				<buttonElement name="enable" label="Enable Asset" onClickActionName="enableAsset"/>
+			</elements>
+		</buttonPanel>
+		<listPanel name="assetLis"
+				   recordName="eta.assetMaster" 
+				   tableName="assets" 
+				   fieldsAreOutputByDefault="true"
+				   onClickActionName="view"
+				   pageSize="5"/>
+	</panels>
+</page>
+

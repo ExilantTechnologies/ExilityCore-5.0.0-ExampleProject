@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://com.exilant.exility/dataTypes" 
+targetNamespace="http://com.exilant.exility/dataTypes" 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:simpleType name="declaredDataTypes">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="amt2"><xs:annotation><xs:documentation>Amount with two decimal places</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="boolean"><xs:annotation><xs:documentation>0 for false and 1 for true</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="code"><xs:annotation><xs:documentation>alphanumeric and these special characters -._ And nothing else for a max of 20 characters</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="date"><xs:annotation><xs:documentation>Date</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="dateTime"><xs:annotation><xs:documentation>Date with time</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="decimal"><xs:annotation><xs:documentation>Number with an optional decimal point, but not negative.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="description"><xs:annotation><xs:documentation>Three thousand characters are more than enough to describe pretty much anything. Well almost.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="entityName"><xs:annotation><xs:documentation>Entity name starts with an alpha character and can follow with any alpha-numeric characters. Dot, hiphen and underscore are also allowed. 200 chars is considered enough.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="futureDate"><xs:annotation><xs:documentation>date in the future</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="id"><xs:annotation><xs:documentation>Internally generated number by the system as primary key for table</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="maxValue"><xs:annotation><xs:documentation>maximum of 15 digits allowed</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="number"><xs:annotation><xs:documentation>Non-negative whole number with a max of 14 digits is accepted.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="pastDate"><xs:annotation><xs:documentation>Date in the past</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="price"><xs:annotation><xs:documentation>Price can have up to two decimal palces. Optionally you may specify the currency after the amount. Example '34.56 USD' </xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="signedDecimal"><xs:annotation><xs:documentation>Number with an optional negative sign, and an optional decimal point.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="signedNumber"><xs:annotation><xs:documentation>Whole number, possibly signed with a max of 14 digits.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="text"><xs:annotation><xs:documentation>Three thousand characters are more than enough to describe pretty much anything. Well almost.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="timeStamp"><xs:annotation><xs:documentation>Date with time used as time stamp</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="trueFalse"><xs:annotation><xs:documentation>true and false are the only valid values</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="yesNo"><xs:annotation><xs:documentation>yes or no please</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="yn"><xs:annotation><xs:documentation>Y for true/yes N for false/No</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

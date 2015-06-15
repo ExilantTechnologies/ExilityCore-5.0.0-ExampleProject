@@ -1,0 +1,52 @@
+<displayPanel name="rightDispPanel" description="This panel containing all the step of a service as a display panel">
+  <elements>
+  
+	 <displayPanel name="editPanel"
+				description="The actual content of a task begins here" >
+		 <elements>
+		
+				<includePanel panelNameToBeIncluded="internal.serviceStepsIncludePanel.commonFields"  name="commonFields"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.expressionAssignmentStep"  name="expressionAssignmentStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.dummyStep"  name="dummyStep"/>				
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.gridProcessorStep"  name="gridProcessorStep"/>						
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.addColumn"  name="addColumn"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.appendToList"  name="appendToList"/>			
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.errorCheckStep"  name="errorCheckStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.functionAssignmentStep"  name="functionAssignmentStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.gridStep"  name="gridStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.listStep"  name="listStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.lookUpStep"  name="lookUpStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.loopStep"  name="loopStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.massDeleteStep"  name="massDeleteStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.massUpdateStep"  name="massUpdateStep"/>
+				
+				<includePanel panelNameToBeIncluded="internal.internalIncludePanel.serviceStep"  name="serviceStep"/>
+				
+			    <includePanel panelNameToBeIncluded="internal.internalIncludePanel.setValueStep"  name="setValueStep"/>
+			    
+			    <includePanel panelNameToBeIncluded="internal.internalIncludePanel.stopStep"  name="stopStep"/>
+			    
+			    <includePanel panelNameToBeIncluded="internal.internalIncludePanel.switchStep"  name="switchStep"/>
+			    
+			    <includePanel panelNameToBeIncluded="internal.internalIncludePanel.taskStep"  name="taskStep"/>
+			    
+			    <includePanel panelNameToBeIncluded="internal.internalIncludePanel.validationStep"  name="validationStep"/>
+	
+    	  </elements>
+	   </displayPanel>
+
+   </elements>
+</displayPanel>

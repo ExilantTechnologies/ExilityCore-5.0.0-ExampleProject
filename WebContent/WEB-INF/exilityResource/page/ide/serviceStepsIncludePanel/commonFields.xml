@@ -1,0 +1,45 @@
+<displayPanel name="commonFields"
+	description="fields that are common across all service steps"
+	elementsPerRow="2">
+	<elements>
+
+		<assistedInputField name="label"
+			description="Should be disabled for editing except in add (new) mode"
+			isRequired="false" />
+		<textElement cssClassName="note"
+			label="camelCase naming convention is recommended. Let the name suggest its use, and not its definition. e.g. shortName and NOT text15. Remember, the whole idea is to keep the flexibility of changing the length in place. You shoudl not end-up with a text20 data type with a lenght of 25 chars!!!" />
+
+		<assistedInputField name="stepType" label="Step Type" isProtected="true" /><!--  _type-->
+		<textElement cssClassName="note"
+			label="People with Oracle background tend to use a char(1) dat type for boolean. We strongly discourage this practice. Boolean is a good concept!!" />
+
+		<assistedInputField name="stepSubType" label="Step Sub Type" size="100"
+			numberOfUnitsToUse="2" /><!-- isRequired="false" subType -->
+
+
+		<assistedInputField name="description" size="100"
+			numberOfUnitsToUse="2" /><!-- isRequired="false" -->
+			
+		<assistedInputField name="techNotes" label="Tech Notes" size="100"
+			numberOfUnitsToUse="2" /><!-- isRequired="false" -->	
+
+		<assistedInputField name="skipOnMessageIds" label="Skip on message Id(s)"
+			isRequired="false" size="100" numberOfUnitsToUse="2" /><!-- 
+			isRequired="false" -->
+
+		<assistedInputField name="executeOnMessageIds"
+			label="Execute on message Id(s)" isRequired="false" size="100"
+			numberOfUnitsToUse="2"  /><!-- isRequired="false" -->
+
+		<assistedInputField name="executeOnCondition"
+			label="Execute on condition" isRequired="false" size="100"
+			numberOfUnitsToUse="2" /><!-- isRequired="false" -->
+
+		<assistedInputField name="markedAsComment" label="Mark as comment"
+			isRequired="false" size="100" numberOfUnitsToUse="2" /><!-- 
+			isRequired="false" -->
+
+		<hiddenField name="id" />
+		<hiddenField name="_type" />
+	</elements>
+</displayPanel>

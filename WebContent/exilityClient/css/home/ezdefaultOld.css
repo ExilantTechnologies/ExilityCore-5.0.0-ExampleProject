@@ -1,0 +1,1525 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+/*
+Following css names are used by exility page generator.
+button - form button <input type=button>
+imagebutton - form button <input type=image>
+label - <span> label of a a field
+field - outputField <span>
+headerpanel - not used any more. Used to be a header panel<div>
+pageheader - header of the page inside a fieldset <legend>
+expandedfieldset - fieldset used to produce outline, when it is expanded <fieldset>
+collapsedfieldset - fieldset used to produce outline, when it is collapsed. lower border with .. looks   good <fieldset>
+twister - text of the twister for a collapsible panel <legend> if outline is used, <span> otherwise
+tablelabel - label of a panel if no twistie <span>
+buttonpanel - earlier called tools, for button panel <div>
+displaypanel - earlier called inputpanel <div>
+fieldstable - table insode display panel <table>
+gridpanel - outer div of gridpanel <div>
+gridtable - table of grid <table>
+listpanel - outer div of listpanel <div>
+listtable - table of list <table>
+spacerpanel - div inside a table that takes 100% <div>
+subwindowpanel - outerpanel <div> 
+tabnav - outermost panel of tabbed panel (group)
+activetablabel - label of the tab that is active <span>
+passivetablabel - label of a tab that is not visible <span>
+tabs = a common div for all the tab divs in a tabbed panel <div>
+row1 - first row of list/grid <tr>
+row2 - second row of list/grid <tr>
+
+*/
+
+
+body
+{
+margin: 0px; padding: 0px; background: #fff;
+	font:0.8125em Arial,Helvetica,sans-serif;
+    overflow:auto;
+}
+
+h1 /*used for page heading */
+{
+	color:#FF3333;
+	font: bold 16px Georgia, "Times New Roman" , Times, serif;
+}
+
+.pageheader /*used for page heading #FF3333; #3b6788 */
+{
+color: #3b6788 ;
+	font: bold 16px Georgia, "Times New Roman" , Times, serif; 
+}
+fieldset
+{
+	
+	border-style:outset; border-color: #BCD0E3; border-width: 1px;
+     margin:0px; padding:0;  
+     background-color:#fff; 
+
+      /*background:#FD836B #355379 url('../../exilityImages/newBg.gif') no-repeat center top;* #FD836B*/
+}
+.expandedfieldset 
+{
+    
+/*border-style:double; border-color:#FD836B; border-width: 1px;
+     margin:0px; padding:0;  */
+     width :100%;
+
+}
+.fieldset span
+{
+	color:#FF3333;
+	font: bold 16px Georgia, "Times New Roman" , Times, serif;
+	
+
+}
+
+legend
+{
+	margin-left: 10px;
+    font: bold 14px Arial,Helvetica,sans-serif;
+    color: rgb(51, 51, 51);
+	
+}
+
+legend a:link, legend a:visited, a:active
+{
+	text-decoration: none;
+	color: rgb(51, 51, 51);
+}
+legend a:hover
+{
+	text-decoration: none;
+	background-color: rgb(204, 204, 204);
+}
+div.panel table /* form fields are inside this table*/
+{
+	 width: 100%;
+}
+strong /* used for that MUST ENTER * */
+{
+	color: #FD836B;
+}
+ /* used by all labels to form fields or output field */
+
+
+select, option, textarea
+{
+	padding: 0.1em 0.25em;  
+	font: normal 10px Verdana, Helvetica, Arial, sans-serif; 
+	margin: 2px;
+}
+
+
+
+
+
+
+
+.br
+{
+	height:1px;
+}
+
+
+
+ 
+
+.small /* note, typically explaining somehting in small font*/
+{
+	font-size: 0.75em;
+	white-space: nowrap;
+}
+
+
+.tablelabel /* caption of the table */
+{
+	padding-left: 10px;
+	text-align: left;
+	color: rgb(10, 10, 10);
+	font: normal 12px Arial,Helvetica,sans-serif;
+	font-weight: bold;
+}
+
+
+.row1
+{
+	
+
+	white-space: nowrap;
+	/*background-color: rgb(239, 239, 250);*/
+      background-color: #EDECFF;
+}
+
+.row2
+{
+	white-space: nowrap;
+	/*background-color: White;*/
+	background-color: #c9dce6;
+
+	
+}
+
+  td, th 
+  {
+	/*padding: 5px 16px 3px 5px;*/
+   
+    vertical-align: top;
+    
+    }
+
+th
+{
+
+	
+	border-top: 1px dotted rgb(204, 204, 204);
+    border-bottom: 1px dotted rgb(204, 204, 204);
+    background: rgb(239, 239, 250) none repeat scroll 0% 50%;
+ 
+    color: rgb(51, 51, 51);
+    font-family: Arial,Verdana,Arial Black,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 100%;
+    line-height: normal;
+
+    text-transform: capitalize;
+}
+
+.gridtable
+{
+	 padding :0px ;
+    border-style: outset; 
+    border-color: rgb(192, 192, 192);
+    border-width: 1px 1px 2px;
+    background: #fff;
+       font: normal 10px Arial,Verdana, Helvetica, Arial Black, sans-serif;  
+      
+}
+.gridtable td
+  {
+	 text-indent:9px;
+     vertical-align: top;
+      
+    }
+
+.gridtable  th 
+  {
+	padding: 5px 16px 3px 5px;
+    text-indent:5px;
+    vertical-align:  super;
+     text-align: center;
+    font: normal 12px Arail , Helvetica, Arial Black, sans-serif bolder;
+     background-color: #386890;
+     color:White;
+    }
+.listtable
+{ 
+	/*height:200px;*/
+	overflow:auto;
+	/*padding: 0px 10px 0px 5px;  */
+    border-style: outset; 
+    border-color: White;
+    border-width: thin;
+    background: #fff;
+    font: normal 12px Arial Black, Helvetica, Arial , sans-serif bolder;
+    
+
+}
+
+.listtable th
+{
+    text-align: center;
+    height: 22px;
+    background-color: #2E79A1;
+    font: bold 12px Helvetica, Arial, sans-serif;
+    color: #ffffff;
+}
+
+/*.listtable  th 
+  {
+	
+        padding: 2px 10px 10px 10px;
+        vertical-align:text-top ;
+        font:normal 12px Arail Black, Helvetica, Arial , sans-serif bolder;
+        color:White;
+        background-color: #386890;
+        white-space: nowrap;
+    }
+    */
+.listtable tr
+{
+    height: 18px;
+}
+
+.listtable  td
+  {
+
+    vertical-align:text-top ;
+    
+   
+    }
+    
+   /*pagenation*/
+.pagination
+{
+    font: 0.75em Arial,Helvetica,sans-serif;
+    white-space: nowrap;
+}
+     .gridpnlcssname
+{
+	width :Auto%;
+	padding: 0px 0px 0px 0px;
+    border-style: outset; 
+    border-color: rgb(192, 192, 192);
+    border-width: 0px 0px 0px;
+    background:  rgb(255, 255, 204);
+    font: normal 20px Arail Black, Helvetica, Arial , sans-serif bolder;
+      
+}
+ .Panneltable
+{
+	width :Auto%;
+	padding: 0px 0px 0px 0px;
+    border-style: outset; 
+    border-color: rgb(192, 192, 192);
+    border-width: 0px 0px 0px;
+    background: #fff;
+    font: normal 16px Arail Black, Helvetica, Arial , sans-serif bolder;
+      
+	
+}
+.Panneltable  th 
+{	
+	display:block;	
+}
+.Panneltable tr
+{
+	background: rgb(255, 255, 204) url('../../images/tab_btm.gif') repeat-x center bottom;
+	display:block; background-color:rgb(255, 255, 204)
+}
+
+.Panneltable  td
+{
+    vertical-align:text-top ;
+}
+
+    
+a:link, a:visited
+{
+	color: rgb(248, 53, 96);
+	text-decoration: none;
+}
+
+a:hover
+{
+	background: rgb(204, 204, 204);
+	color: #000000;
+	text-decoration: underline;
+}
+/*pagenation*/
+.pagenation
+{
+	font: 0.75em Arial,Helvetica,sans-serif;
+	white-space: nowrap;
+}
+/*Tabs*/
+.tabpanel
+{
+	border-style: none solid solid solid;
+	border-color: #FD836B;
+	border-width: 1px;
+	padding: 8px 16px;
+	margin: 0 0 16px;
+	/*background: rgb(255, 255, 204);*/	
+}
+
+.tabs
+{
+   float:left;
+    border-style: none solid solid;
+    border-color: #e9e9e9; /*#969696;*/
+    border-width: 0px;
+    padding: 8px 16px;
+    margin: 0 0 16px;
+    background: #F8F8F8;
+    overflow:auto;
+    /*height:250px;*/
+}
+
+.tabscontainer
+{
+    clear:both;
+    background: #fff;
+}
+
+div.tabnav
+{
+    /*background-image:  url('../images/blueDot.gif');*/
+    background-image: url('../images/blackDot.gif');
+    background-repeat: repeat-x;
+    background-position: center bottom; /*border:      1px solid rgb( 81, 93, 95 );   background:    rgb( 252, 252, 254 );*/
+}
+div.tabnav ul.tabheaders
+{
+    height: 28px;
+    list-style-type: none;
+}
+
+div.tabnav ul.tabheaders li
+{
+    display: block;
+    float: left;
+    height: 28px;
+    background: url( '../../images/tabbg.gif' ) no-repeat -1px 0px;
+}
+
+div.tabnav ul.tabheaders li a
+{
+    display: block;
+    font-weight: bold;
+    font-size: 11px;
+    color: #09F;
+    background: url( '../../images/passivetabend.gif' ) no-repeat top right;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+div.tabnav ul.tabheaders li a:hover
+{
+    text-decoration: underline;
+    color: #09F;
+}
+
+div.tabnav ul.tabheaders
+{
+    display: block;
+    float: left;
+    height: 28px;
+    background: url( '../../images/tabbg.gif' ) no-repeat 0px 0px;
+}
+
+
+.tablabels
+{
+	margin: 0;
+	background: url('../../images/tab_btm.gif') repeat-x center bottom;
+	height: 200px;
+	padding-left: 10px;
+	border-bottom:1px solid #BCD0E3;
+
+}
+
+
+/*.passivetablabel
+{
+	border: 1px solid #FD836B;
+	border-bottom: -1px solid rgb(255, 255, 204);
+	padding: 2px 10px;
+	background: rgb(243, 243, 243) none repeat scroll 0% 50%;
+	float: left;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	margin:1px 5px 1px 5px;
+	text-decoration: none;
+	color: rgb(102, 102, 102);
+	
+cursor:hand;
+}
+
+.activetablabel
+{
+	border: 1px solid #FD836B;
+	border-bottom :1px none ;
+	padding: 2px 10px;
+	float: left;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	color: rgb(102, 102, 102);
+	margin:2px 5px 2px 5px;
+	cursor:auto;
+	background-color: rgb(255, 255, 204);
+}
+*/
+/*Buttons*/
+fieldset div.tools
+{
+	border-left: 8px solid #BCD0E3;
+	border-right: 8px solid #BCD0E3;
+	border-top: 2px solid #BCD0E3;
+	border-bottom: 2px none #BCD0E3;
+	clear: both;
+	margin: 0;
+	background: url('../../images/BgTools.gif') 0px 2px;
+	text-align: right;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 0;
+	padding-bottom: 0
+}
+
+
+fieldset div.tools label
+{
+	float: none;
+	color: rgb(102, 102, 102);
+	padding: 0 5px 0 16px;
+}
+
+
+BODY INPUT 
+{
+ 
+ padding: 0.1em 0.25em;  
+ font: normal 10px Verdana, Helvetica, Arial, sans-serif; 
+ margin: 2px;
+	
+ }
+/*div.buttonpanel
+{
+    border-left: 4px solid #BCD0E3;
+	border-right: 4px solid #BCD0E3;
+	border-top: 2px solid #BCD0E3;
+	border-bottom: 2px none #BCD0E3;
+	
+	margin: 0;
+ background  : url('../../images/bgbar2.jpg') 0px 2px;
+	padding: 0.1em 0.25em;
+	text-align: left;
+	clear: both;
+padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 0;
+	padding-bottom: 0	
+	
+}*/
+
+div.buttonpanel
+{
+    border-left: 2px none #006600;
+    border-right: 2px none #006600;
+    border-top: 2px none #006600;
+    border-bottom: 2px none #006600;
+    clear: both;
+    margin: 0; /*background: url('../../images/BgTools.gif') 0px 2px;*/
+    text-align: right;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 0;
+    padding-bottom: 0;
+    /* background  : url('../../images/bgbar2.jpg') 0px 2px;*/
+   background-color:#fff;
+}
+
+.button 
+{
+	padding: 0.1em 0.25em;
+	font: bold 12px Arial, Helvetica, sans-serif;
+	margin-left: 20px;
+	
+
+}
+.content
+{
+ border-color: rgb(192, 192, 192);
+	font-size: 1em;
+	font: normal 11px Arail Black, Helvetica, Arial, sans-serif bolder;
+}
+.clmnsumavg
+{
+ border-color: rgb(192, 192, 192);
+	font-size: 1em;
+	font: normal 11px Arail Blue, Helvetica, Arial, sans-serif bolder;
+}
+
+
+.field
+{
+	color:Black;
+	font-size: 1em;
+	font:normal  11px Arail, Helvetica, Arial Black, sans-serif bolder;
+	
+     text-align:right;
+}
+
+
+.label
+{
+	/*float: right;
+	color: rgb(102, 102, 102);
+	font-size: 1em;
+	font: bold 10px Verdana, Helvetica, Arial, sans-serif;
+	*/
+	color:Black;
+	font-size: 1em;
+	font: normal 12px Arail , Helvetica, Arial Black, sans-serif bolder;
+
+     text-align:right;	/*
+	color:Black;
+	 font-weight:bolder;
+	 
+	font: bold 10px Verdana, Helvetica, Arial, sans-serif;
+	font: normal 14px Arail Black, Helvetica, Arial, sans-serif bolder;*/
+	
+}
+.requiredlabel
+{
+	color:Black;
+	font-size: 1em;
+	font: normal 12px Arail , Helvetica, Arial Black, sans-serif bolder;
+		
+	
+}
+
+.requiredstar /* used for that MUST ENTER * */
+{
+	color: #FD836B;
+	font-size :medium;
+}
+
+
+/*table TR TD SPAN .label
+{
+	color: rgb(102, 102, 102);
+	font-size: 1em;
+	text-align:left;
+	font: bold 10px Arail Black, Helvetica, Arial, sans-serif;
+}
+*/
+.leadon
+{
+	color:red;
+}
+
+
+
+/**********************************NOTES**********************************************/
+
+fieldset div.notes { border-style: dotted solid solid dotted;  border-color: #BCD0E3; border-width: 1px;  padding: 5px; float: right; width: auto; background-color:rgb(255, 255, 225); }
+		fieldset div.notes p { margin: 0em 0em 1.2em; color: rgb(102, 102, 102); }
+ 		fieldset div.notes p.last { margin: 0em; }
+fieldset div.clear {margin:0 0 16px; clear: both; border-bottom: 1px dotted #3b6788; width:auto;}
+fieldset div.addNotes { border-style: dotted solid solid dotted;  border-color: #BCD0E3; border-width: 1px;  padding: 5px; float: right; width: auto; background-color: rgb(255, 255, 225); }
+		fieldset div.addNotes p { margin: 0em 0em 1.2em; color: rgb(102, 102, 102); }
+ 		fieldset div.addNotes p.last { margin: 0em; }
+ body .container { padding:5px; width:99%; }
+.detail {background: url('../../images/BgFrm.gif');}
+fieldset div.left { float: left; margin:0 0 10px; width:auto; }
+
+.right
+{
+	text-align:right;
+}
+.diabledinput
+{
+ border-width:0;
+ color:White;	
+}
+.delete
+{
+	font-size: 0.80em;
+	white-space: nowrap;
+}
+.newmessage
+{
+	color:Red;
+	
+}
+
+/*  exility styles, and the reason for them to continue !!!    */
+
+/* let me wait and see what happens without this */
+
+/* used for all output text */
+.span
+{
+	font-size: 1em;
+	font:10px Verdana, Helvetica, Arial, sans-serif;
+}
+
+.displaypanel
+{
+	  vertical-align: middle;
+    font: normal 10px Arial,Helvetica,sans-serif; /* added on 17 -02-01 for display panel colur change panel 1 type --shan*/
+    background-color: #FFFFFF;
+    width:875px;
+}
+.displaypanelScroll
+{
+    vertical-align: middle;
+    font: normal 10px Arial,Helvetica,sans-serif;
+    overflow: auto;
+}
+
+
+.selectedlistrow
+{
+	white-space: nowrap;
+	background-color:Silver;
+	width:25px;
+}
+.twister
+{
+ 
+ text-align: left; 
+ color: rgb(51, 51, 51); 
+ text-transform: capitalize; 
+ font: bold 12px Arail Black, Helvetica, Arial, sans-serif bolder;
+ 
+}
+.fieldstable
+{
+     /*background: #355379 url('../../images/newBg.gif') no-repeat center top;*/
+}
+.inputpanel 
+{
+	vertical-align:middle;
+	text-align:left;
+	font: normal 12px Arail Black, Helvetica, Arial, sans-serif bolder;
+	/*background: #fff;*/
+	 /*background: #355379 url('../../images/newBg.gif') no-repeat center top;*/
+
+}
+
+.displaypanel 
+{
+	vertical-align:middle;
+	text-align:left;
+	font: normal 12px Arail Black, Helvetica, Arial, sans-serif bolder;
+	/*background: #fff;*/
+	 /*background: #355379 url('../../images/newBg.gif') no-repeat center top;*/
+
+}
+
+
+.spacerPanel
+{
+	margin: 0 0 16px;
+	clear: both;
+	border-bottom: 1px dotted #3b6788;
+	width: auto;
+}
+
+
+
+div.tabs
+{
+	border-style: outset;
+	border-color: #BCD0E3;
+	border-width: 1px;
+	padding: 8px 16px;
+	margin: 0 0 16px;
+/*	background: #c1dae7;*/
+    background-color:#fff;
+	
+	/*
+	border-style: none solid solid;
+	border-color: #fd836b;
+	border-width: 1px;
+	padding: 8px 16px;
+	margin: 0 0 16px;
+	background: rgb(255, 255, 204);
+*/
+}
+
+/*menu start*/
+
+#menudetail li
+{
+	list-style: none;
+	list-style-image: url('../../images/1.gif');
+	margin-left: 0px;
+	margin-right: 5px;
+}
+.rootnode
+{
+    list-style: none;
+	margin-left: 0px;
+	margin-right: 5px;
+}
+.rootnode li:hover
+{
+	font-weight:bolder;
+	cursor: hand;
+}
+UL,LI {list-style:none;margin-left:5px;}
+
+/*menu end*/
+
+
+/* command by sathyaraj to show full tab on compatibility mode.
+.tabnav
+{
+    border-color:red;
+	margin: 0;
+	
+	height: 10px;
+	padding-left: 20px;
+}
+*/
+
+/*.tabnav div
+{
+	margin: 0pt;
+	padding: 0pt;
+	display: none;
+	
+}
+
+.tabnav div, .tabnav div
+{
+	border: 1px solid #FD836B;
+	padding: 2px 10px;
+	background: rgb(243, 243, 243) none repeat scroll 0% 50%;
+	float: left;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	margin-right: 4px;
+	text-decoration: none;
+	color: rgb(102, 102, 102);
+}
+
+.tabnav div.active, .tabnav div.active
+{
+border: 1px solid #FD836B;
+	border-bottom: 1px solid rgb(255, 255, 204);
+	padding: 2px 10px;
+	float: left;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	color: rgb(102, 102, 102);
+	margin:2px 5px 2px 5px;
+	cursor:auto;
+	background-color: rgb(255, 255, 204);
+}
+.tabnav div.passive, .tabnav div.passive
+{
+border: 1px solid #FD836B;
+	border-bottom :1px none ;
+	padding: 2px 10px;
+	float: left;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	color: rgb(102, 102, 102);
+	margin:2px 5px 2px 5px;
+	cursor:auto;
+	background: rgb(243, 243, 243);
+	cursor:hand;
+}*/
+
+.tabnav li.inactive, .tabnav li.inactive
+{
+	/*border: 1px solid #BCD0E3;*/
+	border-bottom: 1px solid rgb(255, 255, 204);
+	
+	background: rgb(255, 255, 204) none repeat scroll 0% 50%; 
+	
+		
+	
+	background: rgb(243, 243, 243) none repeat scroll 0% 50%;
+	
+	
+color:rgb(0,0,0);
+cursor:hand;
+}
+
+.tabnav div:hover
+{
+	/*background: rgb(255, 255, 255) none repeat scroll 0% 50%; */
+	cursor:hand;
+	-moz-background-clip:initial;
+-moz-background-origin:initial;
+-moz-background-inline-policy:initial;
+
+/*color:rgb(248,53,96);*/
+}
+
+fieldset div.notes { border-style: dotted solid solid dotted;  border-color: #BCD0E3; border-width: 1px;  padding: 5px; float: right; width: auto; background-color:rgb(255, 255, 225); }
+		fieldset div.notes p { margin: 0em 0em 1.2em; color: rgb(102, 102, 102); }
+ 		fieldset div.notes p.last { margin: 0em; }
+fieldset div.clear {margin:0 0 16px; clear: both; border-bottom: 1px dotted rgb(220, 141, 97); width:auto;}
+fieldset div.addNotes { border-style: dotted solid solid dotted;  border-color: #BCD0E3; border-width: 1px;  padding: 5px; float: right; width: auto; background-color: rgb(255, 255, 225); }
+		fieldset div.addNotes p { margin: 0em 0em 1.2em; color: rgb(102, 102, 102); }
+ 		fieldset div.addNotes p.last { margin: 0em; }
+ body .container { padding:5px; width:99%; }
+.detail {background: url('../images/BgFrm.gif');}
+fieldset div.left { float: left; margin:0 0 10px; width:auto; }
+
+.table
+{
+	
+}
+.row2, row1
+{
+	font-size: 0.80em;
+	white-space: nowrap;
+}
+.right
+{
+	text-align:right;
+}
+.delete
+{
+	font-size: 0.80em;
+	white-space: nowrap;
+}
+.newmessage
+{
+	color:Red;
+}
+
+.activepaginationbutton
+{
+	cursor:pointer;
+	color:Blue;
+	text-decoration:underline;
+}
+
+.inactivepaginationbutton
+{
+	
+}
+
+.deletedrow
+{
+	white-space: nowrap;
+	background-color:#FFB395;
+	width:25px;
+}
+
+.gridrow
+{
+	
+}
+
+.machinefloor
+{
+	background-color: #FFF7F0;   border: 1px solid 
+}
+
+.machinefloorhiglight
+{
+	background-color: #D6D3D0;   border: 1px solid  ;border-color:Maroon;
+}
+
+.machinelane
+{
+	background-color:#BB9F86;
+}
+
+.machineloc
+{
+	background-color:#FFCC99;
+}
+
+.machinefloor
+{
+	background-color: #FFF7F0;
+}
+
+.machinelane
+{
+	background-color: #FFFFCC;
+}
+
+.machineloc
+{
+	background-color:#FFCC99;
+}
+
+.machineloadingloc
+{
+	background-color:#FFCC99;
+}
+
+
+.weekends
+ {
+	background-color:#FFCC99; 
+ }
+
+.holiday
+{
+	background-color:#FFCC99;
+}
+.divgclass
+{
+	overflow-x:auto;position:relative;overflow-y:hidden;
+	
+}
+
+
+.gridMover
+{
+	background-color:#9A3C42;left:0px;top:0px;
+}
+
+.drag
+{position:absolute;z-index:1001; background:#ACB0EE;border-color:Maroon;width:42px
+} 
+
+.handler
+{ border-left:2px solid white; border-top:2px solid white; border-bottom:thin solid gray; background:white; position:absolute;border-right:1px none Gray ;
+} 
+
+.handlerContents
+{ background:white;border:3px solid black;position:relative;border-bottom-color:gray;border-bottom-width:thin;
+}
+
+.displaygridtable
+{
+	 padding :0px ;
+    width:100%; border-style: outset; 
+   border-color: rgb(192, 192, 192);
+    border-width: 1px 1px 2px;
+    background: #fff;
+       font: normal 10px Arial,Verdana, Helvetica, Arial Black, sans-serif;  
+}
+
+.planningBoard table 
+{
+	
+	 padding :0px ;
+   
+    border-color: rgb(192, 192, 192);
+    background: #fff;
+    font: normal 10px Arial,Verdana, Helvetica, Arial Black, sans-serif;  
+   left:0px;top:0px;
+  
+
+}
+
+.planningOrderBoard table
+{
+	
+	 padding :0px ;
+     border: 1px  rgb(204, 204, 204);
+    border-color: rgb(192, 192, 192);
+    background: #fff;
+    font: normal 10px Arial,Verdana, Helvetica, Arial Black, sans-serif;  
+   left:0px;top:0px;
+  
+
+}
+
+
+
+.contextMenu table
+{ background-color:White;
+	 padding :0px ;
+     border: 1px dotted rgb(204, 204, 204);
+    border-color: rgb(192, 192, 192);
+    font: normal 10px Arial,Verdana, Helvetica, Arial Black, sans-serif;  
+}
+
+.contextMenu tr
+    {
+	border: 0px dotted rgb(204, 204, 204);
+		background-color:Yellow;
+		background-color:White;
+		font-family :  Arial, Helvetica, sans-serif;
+		height:15px;
+		width:80px;
+	}
+.resource tr
+	{
+		border: 1px dotted rgb(204, 204, 204);
+		/*background-color :#ffe4b5;*/
+		background-color :#FFFDDC;
+		font-family :  Arial, Helvetica, sans-serif;
+		height:25px;
+		width:80px;
+		
+		
+	}
+	.resource th
+	{
+		font-family :  Arial, Helvetica, sans-serif;
+		width:80px;
+		font-weight:bold;
+	
+	}
+	.resource td
+	{
+		font-family :  Arial, Helvetica, sans-serif;
+		width:100px;
+	}
+	
+	.testth
+	{
+		font-family :  Arial, Helvetica, sans-serif;
+		font-weight:bold;
+	
+	}
+	
+	
+	.testtr
+	{
+		border: 1px dotted rgb(204, 204, 204);
+		/*background-color :#ffe4b5;*/
+		background-color :#FFFDDC;
+		font-family :  Arial, Helvetica, sans-serif;
+		height:25px;
+		
+		
+		
+	}
+	
+	.setcursor
+	{
+		cursor:default;
+		}
+
+.chartfield
+{
+	border:solid 2px #BCD0E3;
+	background-color: #E1E1E1;
+	text-align:center;
+}
+
+.chartcontainer
+{
+}
+
+.chartfieldlabelholder
+{
+}
+.chartfieldlabel
+{
+	width:inherit;
+	position:relative;
+	font-family: Verdana;
+	font-size:large;
+	font-weight:bold;
+}
+
+.messageTop
+{
+	height:32px; 
+	background-image:url('../../images/messageTop.png');
+	background-repeat:repeat-x;
+}
+
+.messageLeft
+{
+	width:2px; 
+	background-image:url('../../images/messageLeft.png');
+	background-repeat:repeat-y;
+}
+
+.messageFill
+{
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7fd8f9', EndColorStr='#16baf7');
+}
+
+.messagePanelHolder
+{
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7fd8f9', EndColorStr='#16baf7');
+}
+
+.messageRight
+{
+	width:20px; 
+	background-image:url('../../images/messageRight.png');
+	background-repeat:repeat-y;
+}
+
+.messageBottom
+{
+	height:55px; 
+	background-image:url('../../images/messageBottom.png');
+	background-repeat:repeat-x;
+}
+
+.messageText
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight:bold;
+    font-size: 11px;
+    color:#09038c;
+}
+
+.messageLabel
+{
+    font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color:#000000;	
+}		
+
+.tableHeader
+{
+	color: rgb(51,51,51);
+	font-weight: bold;
+	height:25px;
+}
+
+.chartfield
+{
+	border:solid 1px red;
+}
+
+.chartfieldlabelholder 
+{
+	width:98%;
+	height:6%;
+	text-align:center;
+	vertical-align:middle;
+}
+
+.chartfieldlabel
+{
+	width:100%;
+	height:100%;
+	text-align:center;
+	font-size:medium;
+	font-weight:bold;
+}
+
+.chartfieldxaxislabelholder
+{
+	width:98%;
+	height:6%;
+	text-align:center;
+	vertical-align:middle;
+}
+
+.chartfieldyaxislabelholder
+{
+	width:3%;
+	height:85%;
+	text-align:center;
+	vertical-align:middle;
+	float:left;
+}
+
+.chartfieldaxislabel
+{
+	width:100%;
+	height:100%;
+	text-align:center;
+	font-size:medium;
+	font-weight:bold;
+}
+
+.chartfieldcontainer
+{
+	width:95%;
+	height:85%;
+	float:right;
+}
+
+/*
+.passivetablabelLeft
+{
+	width: 0px; 
+	height: 0px; 
+	float:left; 
+	margin: 0px 0px 0px 0px; 
+}
+*/
+.passivetablabelLeft
+{
+    width: 8px;
+    height: 20px;
+    background-image: url( '../../images/TabSelected_Left01.png' );
+    float: left;
+    margin: 1px 0px 1px 0px;
+    cursor: hand;
+}
+.passivetablabel
+{
+    width: auto;
+    height: 20px;
+    background-image: url( '../../images/TabSelected_Middle01.png' );
+    float: left;
+    margin: 1px 0px 1px 0px;
+    cursor: hand;
+    font: 12px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #616161;
+}
+/*
+.passivetablabel
+{
+	margin: 0pt;
+	padding: 0pt;
+	display: inline;
+	
+	border: 1px solid #BCD0E3;
+	 border-spacing:0px 0px 0px 0px;
+	border-bottom :1px none ;
+	padding: 2px 10px;
+	float: left;
+	font-size: 11px;
+	line-height: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color:black; 
+	cursor:auto;
+	background: rgb(243, 243, 243);
+	cursor:hand;
+	 border-left-width:thin;
+}
+*/
+/*
+.passivetablabelRight
+{
+	width: 0px; 
+	height: 0px; 
+	float:left; 
+	margin: 0px 0px 0px 0px;
+}
+*/
+.passivetablabelRight
+{
+    width: 12px;
+    height: 20px;
+    background-image: url( '../../images/TabSelected_Right01.png' );
+    float: left;
+    margin: 1px 0px 1px 0px;
+    cursor: hand;
+}
+
+
+/*
+.activetablabelLeft
+{
+	width: 0px; 
+	height: 0px; 
+	float:left; 
+	margin: 0px 0px 0px 0px;
+}
+*/
+.activetablabelLeft
+{
+    width: 8px;
+    height: 20px;
+    background-image: url( '../../images/TabNormal_Left01.png' );
+    float: left;
+    margin: 2px 0px 2px 0px;
+    cursor: hand;
+}
+/* OLD
+.activetablabel 
+{
+	margin: 0pt;
+	padding: 0pt;
+	display:  inline;
+	
+	border-bottom: 1px solid rgb(255, 255, 204);
+	border-spacing:0px 0px 0px 0px;	
+	 float: left; 
+   font-size   : 11px;
+	line-height: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	color:white;
+	 cursor:move;
+  background-color :  #386890
+ background  : url('../../images/Tabright.gif') repeat-x centre; 
+  padding-left:5px; padding-right:2px; padding-top:2px; padding-bottom:2px;
+  border-left-width:thin;
+    
+}*/
+
+.activetablabel
+{
+    width: auto;
+    height: 20px;
+    background-image: url( '../../images/TabNormal_Middle01.png' );
+    float: left;
+    margin: 2px 0px 2px 0px;
+    cursor: hand;
+    font: 12px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+}
+/*
+.activetablabelRight
+{
+	width: 0px; 
+	height: 0px; 
+	float: left; 
+	margin: 0px 0px 0px 0px;
+	 
+}
+*/
+
+.passivetablabel:hover
+{
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+   /* text-decoration: underline;*/
+}
+
+.activetablabel:hover
+{
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    /*text-decoration: underline;*/
+}
+
+.activetablabelRight
+{
+    width: 15px;
+    height: 20px;
+    background-image: url( '../../images/TabNormal_Right01.png' );
+    float: left;
+    margin: 2px 0px 2px 0px;
+    cursor: hand;
+    
+}
+
+
+
+.dateinputfield
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 11px;
+    text-align :center;
+    color:#09038c;	
+}
+.disabledinput
+{
+	font-family: Arial,Verdana,Helvetica,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 11px;
+    color:#09038c;
+    background-color:#F4F4F4;
+    border-style:outset;
+    border-color:#C7D5E0;
+    border-right-style:inset;
+    border-bottom-style:inset;
+}
+
+
+.dateinputfield
+
+{
+      text-align:right;
+      width:70px;
+}
+
+/*Default pannel border*/
+.b2Top
+{
+    height: 10px;
+    background-image: url('../../images/pannels/panel1_top_center.png' );
+    background-repeat: repeat-x;
+}
+
+.b2Left
+{
+    width: 10px;
+    background-image: url('../../images/pannels/panel1_left_middle.png' );
+    background-repeat: repeat-y;
+}
+
+.b2Right
+{
+     
+    width: 13px;
+    background-image: url('../../images/pannels/panel1_right_middle.png' );
+    background-repeat: repeat-y;
+}
+
+.b2Bottom
+{
+    background-image: url('../../images/pannels/panel1_bottom_center.png' );
+    background-repeat: repeat-x;
+}
+.topLeftCorner
+{
+    width: 10px;
+    background-image: url('../../images/pannels/panel1_top_left.png');
+    background-repeat: no-repeat;
+}
+.topRightCorner
+{
+    width: 10px;
+    background-image: url('../../images/pannels/panel1_top_Right.png');
+    background-repeat: no-repeat;
+}
+.bottomLeftCorner
+{
+    width: 10px;
+    background-image: url('../../images/pannels/panel1_bottom_left.png');
+    background-repeat: no-repeat;
+}
+.bottomRightCorner
+{
+    width: 10px;
+    background-image: url('../../exilityImages/pannels/panel1_bottom_right.png');
+    background-repeat: no-repeat;
+}
+
+.tabB2Left
+{
+    width: 1px;
+    background-image: url('../../exilityImages/tabB2LeftRight.gif');
+    background-repeat: repeat-y;
+}
+
+.tabB2Fill
+{
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#F8F8F8', EndColorStr='#f8f8f8');
+}
+
+.tabB2Right
+{
+    width: 1px;
+    background-image: url('../../exilityImages/tabB2LeftRight.gif');
+    background-repeat: repeat-y;
+}
+
+.tabB2Bottom
+{
+    height: 10px;
+    background-color: #f8f8f8;
+    background-image: url('../../exilityImages/tabB2Bottom.gif');
+    background-repeat: repeat-x;
+}

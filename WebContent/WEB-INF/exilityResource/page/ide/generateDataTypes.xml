@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="generateDataTypes"
+      module="ide"
+      description="Compile a page.xml into run-time components"
+      title="Generate Data Types"
+      >
+     <actions>
+        <serverAction name="action"
+                      serviceId="ide.generateDataTypes"
+                />
+        <closeAction name="close"/>
+    </actions>
+
+    <panels>
+        <buttonPanel name="topButtons"
+                     cssClassName="topButtons"
+                     >
+            <elements>
+                <buttonElement name="close"
+                               hoverText="Close"
+                               imageName="closeIcon.png"
+                               onClickActionName="close"
+                               />
+                <buttonElement name="action"
+                               imageName="actionIcon.png"
+                               hoverText="Generate Data Types"
+                               onClickActionName="action"
+                               isDefaultButton="true"
+                               />
+            </elements>
+        </buttonPanel>
+
+        <displayPanel name="outputMessage"
+>
+            <elements>
+                <outputField name="traceText"
+                             dataElementName="name"
+                             allowHtmlFormattedText="true"
+                             label=" "
+                             labelPosition="merge"
+                             defaultValue="&lt;p />Cilck on action to generate Data Types. &lt;br />&lt;br /> dataTypes.js and dataTypes.xsd will be created inside your resource folder. Copy dataTypes.js to the location from where your home/index page includes this. &lt;br />&lt;br /> NOTE: your resource folder is generally not accessible to client directly. Hence you should not include dataTypes.js from resource folder."
+                             />
+            </elements>
+        </displayPanel>
+    </panels>
+</page>
+

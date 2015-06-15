@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<!--=============================================================================================
+    Purpose : Used to Take global variable
+Called From : 
+ CHANGE LOG :
+   
+   DATE                            CHANGED BY                DESCRIPTION
+===========                        ==========              ===============
+02-Mar-2009                          Venkat                Initial Version
+=============================================================================================-->
+<sql xmlns="http://com.exilant.exility/schema" name="GlobalVariables">
+  <sql>
+    <![CDATA[
+            SELECT
+                    1 AS "*_companymasterid",
+             'EXILANT' AS "*_organisation",
+                    @1 AS "*_currentuser"
+		]]>
+  </sql>
+  
+  <inputParameters>
+    <sqlParameter name ="userMaster_userID" defaultValue="exility"/>
+  </inputParameters>
+</sql>

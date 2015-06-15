@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page" name="login" title="Login"
+      scriptsToInclude="../../Jscripts/common/login.js" module="common" 
+      height="535" width="950">
+  
+  <actions>
+    <serverAction name="LoginSubmit" serviceId="demo.loginService"
+                  submitForm="true"
+                  callBackActionName="ProessAfterLogin" 
+                  disableForm="false"/>
+    <navigationAction name="AfterLogin" windowDisposal="replace" pageToGo="PagePanel/PageHeader.htm" />
+    <localAction name="ProessAfterLogin"  functionName="ProessAfterLogin"/>
+  </actions>
+
+  <panels>
+    <displayPanel name="LoginPage"  requiresGroupOutline="true" align="center" width="900px" height="475px">
+      <elements>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        <spacerPanel></spacerPanel>
+        
+        <displayPanel name="LoginContent" align="center">
+          <elements>
+            <textInputField	name="userMaster_userID"
+                            label="User Name"
+                            width="150px"
+                            isRequired="true"
+                            defaultValue="exility"/>
+            <passwordField name="userMaster_password"
+                           label="Password"
+                           isRequired="true"
+                           width="150px"
+                           defaultValue="exility"
+                           htmlAttributes="type=password"/>
+          </elements>
+        </displayPanel>
+
+        <buttonPanel name="LoginButtons"  align="center">
+          <elements>
+            <buttonElement name="bttnSubmit"
+                           isDefaultButton="true"
+                           label="Login"
+                           onClickActionName="LoginSubmit"/>
+          </elements>
+        </buttonPanel>
+      </elements>
+    </displayPanel>
+  </panels>
+</page>
+
+

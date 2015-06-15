@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<serviceList xmlns="http://com.exilant.exility/schema" >
+<!-- 
+    All services used by IDE
+-->
+    <serviceEntries>
+    	<serviceEntry name="generateLabels"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Rebuild translation table for labels."
+                 serviceName="generateLabels"
+                 fullyQualifiedClassName="com.exilant.exility.ide.GetLabelsFromDictionary"
+                 />
+    	<serviceEntry name="getLanguages"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="get list of languages this project has been set-up to deal with."
+                 fullyQualifiedClassName="com.exilant.exility.ide.GetLanguages"
+                 />
+      <serviceEntry name="generateDataTypes"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Generate Data Types.xml and dataTypes.xsd"
+                 fullyQualifiedClassName="com.exilant.exility.ide.GenerateDataTypes"
+                 />
+      <serviceEntry name="generatePage"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Generates page"
+                 fullyQualifiedClassName="com.exilant.exility.ide.GeneratePage"
+                 />
+
+      <serviceEntry name="saveSql"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Save details of a Sql"
+                 fullyQualifiedClassName="com.exilant.exility.ide.SaveSql"
+                 />
+      <serviceEntry name="saveAp"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Generates page"
+                 fullyQualifiedClassName="com.exilant.exility.core.SaveAp"
+                 />
+      <serviceEntry name="saveTable"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Save details of a table"
+                 fullyQualifiedClassName="com.exilant.exility.core.SaveTable"
+                 />
+
+      <serviceEntry name="getVersion"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="Get Exility server version"
+                 fullyQualifiedClassName="com.exilant.exility.ide.GetVersion"
+                 />
+
+      <serviceEntry name="dbToTable"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="readOnly"
+                 description="Get a default table definition based on the table defined in the data base"
+                 fullyQualifiedClassName="com.exilant.exility.ide.DbToTable"
+                 />
+
+      <batchEntry name="getAllResourceLists"
+      				batchServiceName="internal.dummyLogin"
+      				inputGridName="someTable"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="readOnly"
+                 description="Get lists of all resources"
+                 fullyQualifiedClassName="com.exilant.exility.ide.GetAllResourceLists"
+                 />
+
+      <serviceEntry name="temp"
+                 allowAllInput="true"
+                 allowAllOutput="true"
+                 dataAccessType="none"
+                 description="temp"
+                 fullyQualifiedClassName="com.exilant.exility.ide.Temp"
+                 />
+
+    </serviceEntries>
+    
+</serviceList>

@@ -1,0 +1,18 @@
+<displayPanel name="switchStep" description=""
+	elementsPerRow="2"  hidden="true">
+	<elements>
+		<assistedInputField name="switchStepFieldName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Field Name:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+		<assistedInputField name="switchStepSwitchActions"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Switch Actions:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+	</elements>
+</displayPanel>

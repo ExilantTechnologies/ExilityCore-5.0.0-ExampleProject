@@ -1,0 +1,34 @@
+<displayPanel name="taskStep" description=""
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="taskStepTask"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Task Type:" 
+			valueList="actionTask,actionTask;bulkTask,bulkTask;businessLogicTask,businessLogicTask;craftedLogicTask,craftedLogicTask;customCodeTask,customCodeTask;debugTask,debugTask;
+					   sqlTask,sqlTask;storedProcedureTask,storedProcedureTask;tableDeleteTask,tableDeleteTask;tableFilterTask,tableFilterTask;tableInsertTask,tableInsertTask;
+					   tableReadTask,tableReadTask;tableSaveTask,tableSaveTask;tableUpdateTask,tableUpdateTask;userTask,userTask;"
+			onChangeActionName="showSubStep"		   
+					   />
+		<textElement cssClassName="note" label="This is the sub task name in task step.It can be any one from the list" />
+		
+
+
+		<assistedInputField name="taskStepIfWorkDoneGoTo"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="If Work Done Go to" />
+		<textElement cssClassName="note" label="Work Done then Go To" />
+		
+
+
+		<assistedInputField name="taskStepIfNoWorkDoneGoTo"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="If NO Work Done Go to" />
+		<textElement cssClassName="note" label="No Work Done Then Go To" />
+		
+		
+		<assistedInputField name="taskStepSubmitAsBackgroundProcess"			
+			isRequired="false" dataElementName="subType" label="Submit As Background Process" />
+		<textElement cssClassName="note" label="Submit As Background Process" />
+
+	</elements>
+</displayPanel>

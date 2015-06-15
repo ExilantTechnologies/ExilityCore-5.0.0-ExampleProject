@@ -1,0 +1,187 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+/** since the chart is part of a page, we can not guarantee that our class names are unique. hence we play it safe with #xx before using class names**/
+
+#gantContainer {
+	width:990;
+	background-color: white;
+}
+#gantContainer tr {
+	border-bottom : solid 1px gray; /* medium */
+}
+#gantContainer tr:last-child {
+	border-bottom : none;
+}
+
+#gantHeader {
+	border : solid 1px black; /* strong */
+	border-bottom : none;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	margin-left: 250px;
+}
+
+#gantHeader td {
+	padding : 0px;
+	border-right : solid 1px gray; /* medium */
+	width:24px;
+	text-align: center;
+	vertical-align: middle;
+}
+#gantHeader td:last-child {
+	border-right : none;
+}
+
+#gantHeader tr.months {
+	font-size : x-small;
+}
+
+#gantData {
+	border : solid 1px black; /* strong */
+	border-top : none;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	empty-cells: show;
+	width : 988px;
+}
+
+#gantData >tbody >tr > td {
+	padding : 2px;
+	border-right : solid 1px gray; /* medium */
+	vertical-align: middle;
+	line-break : loose;
+	
+}
+#gantData >tbody> tr >td:last-child {
+	border : none;
+}
+
+/** handle border for top row **/
+#gantData >tbody > tr:first-child >td {
+	border-top:solid 1px black; /* strong */
+}
+
+#gantData >tbody > tr:first-child > td.chartArea {
+	border-top: solid 1px gray; /* medium */
+}
+
+/** background for period headers ***/
+#prevYear{
+	background-color: #bbbbbb;
+}
+
+#currentYear{
+	background-color: #ccddee;
+}
+
+#nextYear{
+	background-color: #bbbbbb;
+}
+tr.quarters td.even{
+	background-color: #eeeeee;
+}
+tr.quarters td.odd{
+	background-color: #efeedd;
+}
+
+#gantHeader td.month{
+	background-color: #d4d4d4;
+}
+
+/* total of space for border and padding is 21px 
+   widths should add up to 969
+*/
+#gantData td.health {
+	width:18px;
+}
+
+td.health div {
+	width : 12px;
+	height:12px;
+	background-color: red;
+	border-radius: 6px;
+	border : solid 0px;
+	margin: 4px;
+}
+td.health div.health1 {
+	background-color: red;
+}
+
+td.health div.health2 {
+	background-color: yellow;
+}
+
+td.health div.health3 {
+	background-color: green;
+}
+
+#gantData td.bhu {
+	width:220px;
+}
+#gantData td.chartArea {
+	padding:0px;
+	width :599px;
+	background-image: url('../../images/grayDot.png');
+	background-repeat: repeat-x repeat-y;
+}
+#gantData td.bu > div {
+	width: 132px;
+	overflow-x : hidden; /* in case a long word refuses to break */
+}
+
+div.gantRow{
+	overflow-x : hidden;
+	width : 599px;
+	clear : both;
+	vertical-align: middle;
+	padding : 5px 0px;
+}
+div.gantRow div {
+	float:left;
+	border : solid 0px;
+	height : 16px; 
+	border-radius : 8px;
+	white-space: nowrap;
+	overflow : hidden;
+	color:white;
+	opacity:0.5;
+	font-size: smaller;padding-left: 10px;
+}
+
+div.gantRow div.g1 {
+	background-color: blue;
+}
+
+div.gantRow div.g2 {
+	background-color: green;
+}
+
+div.gantRow div.g3 {
+	background-color: brown;
+}
+
+div.gantRow div.g4 {
+	background-color: maroon;
+}
+div.gantRow div.g5 {
+	background-color: navy;
+}

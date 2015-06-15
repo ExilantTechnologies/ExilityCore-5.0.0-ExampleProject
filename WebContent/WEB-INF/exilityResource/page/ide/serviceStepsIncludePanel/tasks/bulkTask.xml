@@ -1,0 +1,83 @@
+<displayPanel name="bulkTask" description="This is the sub task of TaskStep"
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="bulkTaskTaskName"
+			isRequired="false" dataElementName="gridName" label="Task Name:" />
+		<textElement cssClassName="note"
+			label="The name of the task or table name" />
+		
+		<assistedInputField name="bulkTaskGridName" label="Grid Name" 
+			isRequired="false" dataElementName="gridName" />
+		<textElement cssClassName="note"
+			label="The name of the Grid" />	
+			
+		<assistedInputField name="bulkTaskIfNoWorkDoneMessageName" label="No Work Done Message Name" 
+			isRequired="false" dataElementName="name" 		
+			/>				
+		<textElement cssClassName="note"
+			label="If No Work Done Message Name" />			
+			
+		<assistedInputField name="bulkTaskIfNoWorkDoneMessageParameters"
+			dataElementName="name" label="No Work Done Message Parameters" />			
+		<textElement cssClassName="note"
+			label="No Work Done Message Parameters,all parameters with comma separates" />
+			
+			
+		<assistedInputField name="bulkTaskIfWorkDoneMessageName"
+			isRequired="false" dataElementName="name" label="Work Done Message Name:" />
+		<textElement cssClassName="note"
+			label="TWork Done Message Name" />
+		
+		<assistedInputField name="bulkTaskIfWorkDoneMessageParameters" label="Work Done Message Parameters" 
+			isRequired="false" dataElementName="name" />
+		<textElement cssClassName="note"
+			label="Work Done Message Parameters,all parameters with comma separates" />	
+			
+		<assistedInputField name="bulkTaskPrefix" label="Prefix" 
+			isRequired="false" dataElementName="name" 		
+			/>				
+		<textElement cssClassName="note"
+			label="Prefix to be added for each column value in grid" />			
+			
+		<assistedInputField name="bulkTaskRaiseExceptionIfNoWorkDone"
+			dataElementName="name" label="Raise Exception If No Work Done" />			
+		<textElement cssClassName="note"
+			label="Raise Exception If No Work Done, true or false as value" />	
+			
+		<assistedInputField name="bulkTaskRaiseExceptionIfWorkDone"
+			dataElementName="name" label="Raise Exception If Work Done" />			
+		<textElement cssClassName="note"
+			label="Raise Exception If Work Done, true or false as value" />	
+			
+		<assistedInputField name="bulkTaskRepeatForRowsInGrid"
+			dataElementName="name" label="Do you want to repeat for each row in grid" />			
+		<textElement cssClassName="note"
+			label="Do you want to repeat for each row in grid" />	
+			
+		<assistedInputField name="bulkTaskTaskParameters"
+			dataElementName="name" label="Task Parameters" />			
+		<textElement cssClassName="note"
+			label="Task Parameters, all parameters with comma separates" />				
+			
+		<assistedInputField name="bulkTaskToDataTable"
+			dataElementName="name" label="To Data Table" />			
+		<textElement cssClassName="note"
+			label="To Data Table, true or false as value" />
+			
+		<assistedInputField name="bulkTaskActionFieldName"
+			dataElementName="name" label="Bulk Action Field Name" />			
+		<textElement cssClassName="note"
+			label="Bulk Action Field Name in grid" />	
+			
+		<assistedInputField name="bulkTaskParentKeyColumnNameInThisGrid"
+			dataElementName="name" label="Parent Key Column Name" />			
+		<textElement cssClassName="note"
+			label="Column name in the grid that is used for for bulk action that refers to the primary key of the parent. (foreign key column name)" />				
+			
+		<assistedInputField name="bulkTaskParentTableName"
+			dataElementName="name" label="Parent Table Name" />			
+		<textElement cssClassName="note"
+			label="Specify parent table if generated key from the parent key is to be used by this table based task" />				
+
+	</elements>
+</displayPanel>

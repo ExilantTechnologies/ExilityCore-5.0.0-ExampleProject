@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema">
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+  <groups>
+     <dataGroup name="workflow"
+               label="Work flow"  >
+      <elements>
+        <dataElement  name="workflowId"
+                      dataType="id"
+                      label="Internal Id"
+                      businessDescription="Internally generated. Unique across all workflows"
+                              />
+        <dataElement name="workflowName"
+                     dataType="entityName"
+                     label="Workflow"
+                     businessDescription="Name of the workflow definition, of which this is an instance"
+                             />
+        <dataElement name="linkedDocumentId"
+                     dataType="id"
+                     label="Document Id"
+                     businessDescription="Id of the document that is being oushed thru this workflow"
+                             />
+        <dataElement name="initiatorUserId"
+                     dataType="id"
+                     label="Initiator User Id"
+                     businessDescription="user id, internal one, of the user who initiated this workflow"
+                             />
+        <dataElement name="initiatorRoleId"
+                     dataType="id"
+                     label="Initiator Role"
+                     businessDescription="User-role assigmenet id under which the user initiated this workflow"
+                     />
+        <dataElement name="assignedRoles"
+                     dataType="text"
+                     label="Assigned Roles"
+                     businessDescription="This is an internal field that has all roles for which users are already assigned for this workflow. It is a comma separated list of assignments in the form roleName1=assignedRoleId1,roleName2=assignedRoleId2...."
+                     />
+        <dataElement name="currentWorkflowState"
+                     dataType="number"
+                     label="Row number"
+                     />
+        <dataElement name="userRoleId"
+                     dataType="id"
+                     label="User Role"
+                     businessDescription="User role that took this step"
+                     />
+        <dataElement name="workflowAction"
+                     dataType="entityName"
+                     label="Action"
+                     businessDescription="Action that resulted in this step"
+                     />
+        <dataElement name="toWorkflowState"
+                     dataType="entityName"
+                     label="To State"
+                     businessDescription="ending (new) state of the workflow"
+                     />
+        <dataElement name="fromWorkflowState"
+                     dataType="entityName"
+                     label="From State"
+                     businessDescription="Starting (current) state of the workflow"
+                     />
+        
+        <dataElement name="userId"
+                     dataType="id"
+                     label="User Id"
+                     businessDescription="This is the niternal key"
+                     />
+        <dataElement name="loginId"
+                     dataType="entityName"
+                     label="Login Id"
+                     businessDescription="This is teh Id that the user uses to get into the system"
+                     />
+        <dataElement name="userNickName"
+                     dataType="text"
+                     label="User"
+                     businessDescription="Name as it shoudl be displayed"
+                     />
+        <dataElement name="userNickNameInLocalLanguage"
+                     dataType="text"
+                     label="User"
+                     businessDescription="Good to have this!!!"
+                     />
+        <dataElement name="roleId"
+                     dataType="id"
+                     label="Role Id"
+                     businessDescription="internal key"
+                     />
+        <dataElement name="roleName"
+                     dataType="entityName"
+                     label="Role"
+                     businessDescription="unique name of this role. Not visible to users. Users will see label."
+                     />
+        <dataElement name="roleLabel"
+                     dataType="text"
+                     label="Role Label"
+                     businessDescription="Role as seen by end users"
+                     />
+        <dataElement name="roleDescription"
+                     dataType="description"
+                     label="Description"
+                     />
+        <dataElement name="reportingRoleId"
+                     dataType="id"
+                     label="Reporting Role"
+                     businessDescription="Role to which this role reports to. 0 if this is the top role."
+                     />
+        <dataElement name="roleAssignmentId"
+                     dataType="id"
+                     label="Role Assignment"
+                     />
+        <dataElement name="reportingRoleAssignmentId"
+                     dataType="id"
+                     label="Reporting Role"
+                     businessDescription="points to a key in the same tabale, except for role that do not report into any one else"
+                     />
+      </elements>
+    </dataGroup>
+    </groups>
+</dataDictionary>

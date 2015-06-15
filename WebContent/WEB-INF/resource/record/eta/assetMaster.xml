@@ -1,0 +1,345 @@
+<?xml version="1.0" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<record xmlns="http://com.exilant.exility/schema" 
+       name="assetMaster"
+       recordType="storage"
+       keyToBeGenerated="true"
+       tableName="eta_assetmaster"
+       description="Asset Master"
+       >
+       <fields>
+       	<field 
+       		name="id"
+       		label="Id" 
+       		columnType="primaryKey" 
+       		dataType="id" 
+       		description="logged in user id that is used as modifiedBy and creartedBy field in all table" 
+       		defaultInputType="hiddenField"
+       		/>
+
+       	<field 
+       		name="assetName"
+       		label="Asset Name"
+       		columnName="assetname" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Name of asset" 
+       		defaultInputType="textInputField"
+       		/>
+
+       	<field 
+       		name="assetGroupId"
+       		label="Asset Group"
+       		columnName="assetgroupid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="Asset group " 
+       		defaultInputType="textInputField"
+       		/>
+       		
+       	<field 
+       		name="modelId"
+       		label="Model Id"
+       		columnName="modelid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="Model Id" 
+       		isOptional="true"
+       		defaultInputType="textInputField"
+       		/>
+  
+       	<field 
+       		name="manufacturerPartNo"
+       		label="Manuf Part No"
+       		columnName="manufacturerpartno" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Manufacturer part no" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="locationMasterId"
+       		label="Location"
+       		columnName="locationmasterid" 
+       		columnType="foreignKey"
+       		referredRecord="etc.locationMaster" 
+       		referredField="id"
+       		dataType="number" 
+       		description="location master id" 
+       		defaultInputType="assistedInputField" 
+       		>
+       		<pageFieldAttributes
+       			listServiceId="etc.locationList"
+       		/>
+       		</field>
+		
+       	<field 
+       		name="purchaseDate"
+       		label="Purchased On"
+       		columnName="purchasedate" 
+       		columnType="data" 
+       		dataType="pastDate" 
+       		description="Date of purchase" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="price"
+       		label="Price"
+       		columnName="price" 
+       		columnType="data" 
+       		dataType="price" 
+       		description="Price with currency in case it is not in rs" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="poNumber"
+       		label="Purchase Order No"
+       		columnName="ponumber" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Purchase Order number" 
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="invoiceNumber"
+       		label="Invoice No"
+       		columnName="invoicenumber" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Invoice number" 
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="insured"
+       		label="Insurance Reference"
+       		columnName="insured" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="reference if insured"
+       		isOptional="true"
+       		defaultInputType="assistedInputField" 
+       		/>
+
+       	<field 
+       		name="retirementDate"
+       		label="To be Retired on"
+       		columnName="retirementdate" 
+       		columnType="data" 
+       		dataType="futureDate" 
+       		description="" 
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="isRetired"
+       		label="Retired?"
+       		columnName="isretired" 
+       		columnType="data" 
+       		dataType="yn" 
+       		description="Is the product retired"
+       		defaultInputType="assistedInputField" 
+       		valueList="0,No;1,Yes"
+       		
+       		/>
+
+       	<field 
+       		name="retiredOn"
+       		label="Retired On"
+       		columnName="retiredon" 
+       		columnType="data" 
+       		dataType="pastDate" 
+       		description="Product scrapped/retired date" 
+       		defaultInputType="assistedInputField"
+       		isNullable="true"
+       		isOptional="true"
+       		basedOnField="isRetired"
+       		/>
+       	<field 
+       		name="systemSerialNo"
+       		label="System Sl No"
+       		columnName="systemserialno" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="System Serial number" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="osid"
+       		label="OS Id"
+       		columnName="osid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="monitorSerialNo"
+       		label="Monitor Sl No"
+       		columnName="monitorserialno" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Monitor Serial Number" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+       	<field 
+       		name="ramId"
+       		label="Ram Id"
+       		columnName="ramid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="Ram Id" 
+       		isOptional="true"
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="processorId"
+       		label="Processor Id"
+       		columnName="processorid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="Processor Id" 
+       		isOptional="true"
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="hardDiskId"
+       		label="Hard Disk Id"
+       		columnName="harddiskid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="Hard disk id"
+       		isOptional="true"
+       		defaultInputType="assistedInputField" 
+       		/>
+
+       	<field 
+       		name="adapterSerialNo"
+       		label="Adapter Sl No"
+       		columnName="adapterserialno" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="serial number of power adapter"
+       		defaultInputType="assistedInputField" 
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="accessories"
+       		label="Accessories"
+       		columnName="accessories" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Accossories of this material"
+       		isOptional="true" 
+       		/>
+
+       	<field 
+       		name="createdBy"
+       		label="Created By"
+       		columnName="createdby" 
+       		columnType="createdByUser"
+       		dataType="text" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		/>
+
+       	<field 
+       		name="createdOn"
+       		label="Created On"
+       		columnName="createdon" 
+       		columnType="createdTimeStamp" 
+       		dataType="timeStamp" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		/>
+
+
+       	<field 
+       		name="modifiedBy"
+       		label="Modified By"
+       		columnName="modifiedby" 
+       		columnType="modifiedByUser" 
+       		dataType="text" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		/>
+
+       	<field 
+       		name="modifiedOn"
+       		columnName="modifiedon"
+       		label="Modified On" 
+       		columnType="modifiedTimeStamp" 
+       		dataType="timeStamp" 
+       		description="last modified time stamp"
+       		defaultInputType="hiddenField"
+       		isOptional="true" 
+       		/>
+
+       	<field 
+       		name="companyId"
+       		label="Company"
+       		columnName="companyid" 
+       		columnType="foreignKey" 
+       		referredField="id"
+       		referredRecord="etm.companyMaster"
+       		dataType="number" 
+       		description="Purchase Order number" 
+       		defaultInputType="hiddenField"
+       		isOptional="true"
+       		defaultValue="1"
+       		
+       		/>
+
+       	<field 
+       		name="oldId"
+       		label="Old Id"
+       		columnName="oldid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="primary key from the data base that this is migrated"
+       		defaultInputType="hiddenField" 
+       		defaultValue="0"
+       		isOptional="true"
+       		/>
+
+
+       </fields>
+ </record>

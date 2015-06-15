@@ -1,0 +1,390 @@
+<html> <head>
+	<title>Calendar</title>
+		<style type="text/css">
+		.anyday, .invalid {font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;color:navy;font-size:10px;cursor:pointer;}
+		.today  {font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;color:red;font-size:10px;cursor:pointer;}
+		.year   {font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;color:blue;font-weight:bold; font-size:12px}
+		.dayname{font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:12px;}
+		.invalid{text-decoration:line-through; cursor:auto;}
+	</style>
+	<script type="text/javascript" src="../../Exility2.0/exilityParameters.js"></script>
+	<script  type="text/javascript">
+// Initialize arrays.
+var months = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+var daysInMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+var days = new Array("M", "T","W", "T", "F", "S", "S");
+
+var yearObj, monthObj, calObj, PM, currentP2;
+var currentDate = new Date();
+var global = 0;
+// Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (Start) : Aravinda
+var selectedYear, selectedMonth, selectedDate, selectedHour, selectedMinute, selectedSecond;
+var hourObj, minuteObj, secondObj;
+// Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (End) : Aravinda
+
+function pageLoaded()
+{ //cache frequently used objects
+    PM = window.parent;
+	calObj  = document.getElementById('calendar').tBodies[0];
+	yearObj = document.getElementById('divYear');
+	monthObj= document.getElementById('month');
+    // Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (Start) : Aravinda
+	hourObj  = document.getElementById('hours');
+	minuteObj = document.getElementById('minutes');
+	secondObj = document.getElementById('seconds');
+    // Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (End) : Aravinda
+    currentDate = new CurrentDate();
+	newCalendar();
+}
+
+function getDays(month, year) 
+{	
+	// Test for leap year when February is selected.
+    if (1 != month)
+        return daysInMonth[month];
+    //ok it is feb.
+    if (year % 4 ) //not a leap year
+        return 28;
+
+    if(year % 100 == 0 && year % 400) //not a leap year
+        return 28;
+    return 29;
+}
+
+//allow the user to chose a date. This is the trigger from the calling page.
+function interact(P2, date, min, max)
+{
+    currentP2 = P2;
+    currentDate = new CurrentDate(date, min, max);
+    newCalendar();
+}
+
+function CurrentDate(date, min, max)
+{
+    //convinient object for parts of today's date
+	this.date = date || new Date();
+	this.year = this.date.getFullYear();
+	this.month = this.date.getMonth();
+	this.day = this.date.getDate();
+	if (min)
+	    this.min = { year: min.getFullYear(), month: min.getMonth(), day: min.getDate() };
+	if (min)
+	    this.max = { year: max.getFullYear(), month: max.getMonth(), day: max.getDate() };
+
+	yearObj.innerHTML = this.year;
+	monthObj.selectedIndex = this.month;
+
+    selectedYear = this.year;
+    selectedMonth = this.month;
+    selectedDate = this.day;
+    selectedHour = this.date.getHours();
+    selectedMinute = this.date.getMinutes();
+    selectedSecond = this.date.getSeconds();
+    hourObj.value = selectedHour;
+    minuteObj.value = selectedMinute;
+    secondObj.value = selectedSecond;
+}
+
+function newCalendar() 
+{
+	var parseYear = parseInt(yearObj.innerHTML);
+    var parseMonth =  monthObj.selectedIndex;
+	var newCal = new Date(parseYear, parseMonth, 1);
+	//getDay returns a number between 0 and 6, 0 for Sunday. we want Monday as zero
+	var startDay = newCal.getDay() - 1; //day of the week to start this month's calendar
+	if(startDay < 0)
+	    startDay = 6;
+	//to match todays date, if it happens to be in this month
+    var day = -1;
+	if ((currentDate.year == newCal.getFullYear()) &&	(currentDate.month == newCal.getMonth()))
+	    day = currentDate.day;
+	
+    //is this month all valid, all invalid, or part valid?
+    //let us assume all dates are fine...
+    var minDate = 0;
+    var maxDate = 32;
+	var min = currentDate.min;
+	var max = currentDate.max;
+    if (min) //there is restriction on min date
+    {
+        if (parseYear < min.year) //whole month is invalid
+            maxDate = 0;
+        else if (parseYear == min.year)
+        {
+            if (parseMonth < min.month) //whole month is invalid
+                maxDate = 0;
+            else if (parseMonth == min.month) //this month is partly invalid
+                minDate = min.day;
+        }
+    }
+
+    if (maxDate && max)//if the month atleast partly valid, we need not check of max constraint
+    {
+        if (parseYear > max.year) //month is invalid
+            maxDate = 0;
+        else if (parseYear == max.year)
+        {
+            if (parseMonth > max.month)//month is invalid
+                maxDate = 0;
+            else if (parseMonth == max.month) //partly valid. limit on max date
+                maxDate = max.day;
+        }
+    }
+
+	var thisDate = 0;
+	var intDaysInMonth = getDays(newCal.getMonth(), newCal.getFullYear());
+    //OK. Let us start printing dates in this calendar
+	for (var intWeek = 0; intWeek < 6; intWeek++)
+	{
+	    var row = calObj.rows[intWeek];
+		for (var intDay = 0; intDay < 7; intDay++)
+		{
+			var cell = row.cells[intDay];
+			if ((intDay == startDay) && (0 == thisDate)) //we have hit first date to be printed in the first row
+                thisDate = 1;
+			
+            if ((thisDate > 0) && (thisDate <= intDaysInMonth)) //set date
+			{
+			    cell.innerHTML = thisDate;
+			    if (maxDate && thisDate < maxDate && thisDate > minDate)
+                    cell.className = (day == thisDate) ? 'today' : 'anyday';
+			    else
+                    cell.className = 'invalid';
+			    thisDate++;
+			}
+			else
+            {
+				cell.innerHTML = "";
+				cell.className="";
+			}
+		}
+	}
+}
+
+function cancelClicked()
+{
+    PM.debug('date picker cancelled');
+	currentP2.datePickerReturned(null);
+}
+
+function dateClicked(e) 
+{
+    var evt = e || event;
+    var ele = evt.target || evt.srcElement;
+    if (ele.tagName.toUpperCase() != 'TD' || !ele.className || ele.className == 'invalid') //not on a valid date
+        return; 
+	var val = ele.innerHTML;
+	var date = null;
+	if(val)
+	    date = new Date(yearObj.innerHTML, monthObj.selectedIndex, val, hourObj.value, minuteObj.value, secondObj.value);
+	currentP2.datePickerReturned(date);
+}
+
+function changeYear(incr)
+{
+    yearObj.innerHTML = parseInt(yearObj.innerHTML) +incr;
+}
+
+</script>
+
+</head>
+<body onload="pageLoaded();" style=" background-color:#cccccc; margin:3 3 3 3 " >
+<form>
+	<table id="calendar" border="0" cellpadding="2" cellspacing="0">
+	<thead>
+	<tr>
+		<td colspan="6" align="CENTER">
+			<input type="image" onclick="changeYear(-1);newCalendar();return false;" style="border:none" src="../../../resources/Images/left.gif" id="Button1" name="Button1" />
+			<span id="divYear" class="year">Year</span>
+			<input onclick="changeYear(1);newCalendar();return false;" type="image" style="border:none" src="../../../resources/Images/right.gif" />
+			<!-- Month combo box -->
+			<br /><select id="month" onchange="newCalendar()">
+<script type="text/javascript">
+for (var i = 0; i < 12; i++)
+	document.write("<option value= " + (i + 1) + " " + (currentDate.month == i ? "Selected" : "") + ">" + months[i]);
+</script>
+			</select>
+		</td>
+		<td valign="top" align="right" onclick="cancelClicked();" style="cursor:pointer"><img alt="close" title="close" src="../../../resources/Images/close.gif" /></td>
+	</tr>
+	<tr>
+<script type="text/javascript">
+// Output days.
+for (var i = 0; i < 7; i++)
+	document.write('<td align="right" class="dayname">' + days[i] + '</td>');
+</script>
+	</tr>
+	</thead>
+
+	<tbody id="dayList" onclick="dateClicked(event)">
+	<!-- Generate grid for individual days. -->
+<script type="text/javascript">
+for (var i = 0; i < 6; i++) {
+	document.write('<tr>');
+	for (var j = 0; j < 7; j++) document.write('<td align="right">&nbsp;</td>');
+	document.write('</tr>');
+}
+</script>
+	</tbody>
+    <!-- Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (Start) : Aravinda -->
+	<tfoot>
+	    <tr>
+		    <td colspan="6" align="CENTER">
+		        <select name="hours" id="hours">
+		            <option value="0">00</option>
+		            <option value="1">01</option>
+		            <option value="2">02</option>
+		            <option value="3">03</option>
+		            <option value="4">04</option>
+		            <option value="5">05</option>
+		            <option value="6">06</option>
+		            <option value="7">07</option>
+		            <option value="8">08</option>
+		            <option value="9">09</option>
+		            <option value="10">10</option>
+		            <option value="11">11</option>
+		            <option value="12">12</option>
+		            <option value="13">13</option>
+		            <option value="14">14</option>
+		            <option value="15">15</option>
+		            <option value="16">16</option>
+		            <option value="17">17</option>
+		            <option value="18">18</option>
+		            <option value="19">19</option>
+		            <option value="20">20</option>
+		            <option value="21">21</option>
+		            <option value="22">22</option>
+		            <option value="23">23</option>
+		        </select>
+		        <select name="minutes" id="minutes">
+		            <option value="0">00</option>
+		            <option value="1">01</option>
+		            <option value="2">02</option>
+		            <option value="3">03</option>
+		            <option value="4">04</option>
+		            <option value="5">05</option>
+		            <option value="6">06</option>
+		            <option value="7">07</option>
+		            <option value="8">08</option>
+		            <option value="9">09</option>
+		            <option value="10">10</option>
+		            <option value="11">11</option>
+		            <option value="12">12</option>
+		            <option value="13">13</option>
+		            <option value="14">14</option>
+		            <option value="15">15</option>
+		            <option value="16">16</option>
+		            <option value="17">17</option>
+		            <option value="18">18</option>
+		            <option value="19">19</option>
+		            <option value="20">20</option>
+		            <option value="21">21</option>
+		            <option value="22">22</option>
+		            <option value="23">23</option>
+		            <option value="24">24</option>
+		            <option value="25">25</option>
+		            <option value="26">26</option>
+		            <option value="27">27</option>
+		            <option value="28">28</option>
+		            <option value="29">29</option>
+		            <option value="30">30</option>
+		            <option value="31">31</option>
+		            <option value="32">32</option>
+		            <option value="33">33</option>
+		            <option value="34">34</option>
+		            <option value="35">35</option>
+		            <option value="36">36</option>
+		            <option value="37">37</option>
+		            <option value="38">38</option>
+		            <option value="39">39</option>
+		            <option value="40">40</option>
+		            <option value="41">41</option>
+		            <option value="42">42</option>
+		            <option value="43">43</option>
+		            <option value="44">44</option>
+		            <option value="45">45</option>
+		            <option value="46">46</option>
+		            <option value="47">47</option>
+		            <option value="48">48</option>
+		            <option value="49">49</option>
+		            <option value="50">50</option>
+		            <option value="51">51</option>
+		            <option value="52">52</option>
+		            <option value="53">53</option>
+		            <option value="54">54</option>
+		            <option value="55">55</option>
+		            <option value="56">56</option>
+		            <option value="57">57</option>
+		            <option value="58">58</option>
+		            <option value="59">59</option>
+		        </select>
+		        <select name="seconds" id="seconds">
+		            <option value="0">00</option>
+		            <option value="1">01</option>
+		            <option value="2">02</option>
+		            <option value="3">03</option>
+		            <option value="4">04</option>
+		            <option value="5">05</option>
+		            <option value="6">06</option>
+		            <option value="7">07</option>
+		            <option value="8">08</option>
+		            <option value="9">09</option>
+		            <option value="10">10</option>
+		            <option value="11">11</option>
+		            <option value="12">12</option>
+		            <option value="13">13</option>
+		            <option value="14">14</option>
+		            <option value="15">15</option>
+		            <option value="16">16</option>
+		            <option value="17">17</option>
+		            <option value="18">18</option>
+		            <option value="19">19</option>
+		            <option value="20">20</option>
+		            <option value="21">21</option>
+		            <option value="22">22</option>
+		            <option value="23">23</option>
+		            <option value="24">24</option>
+		            <option value="25">25</option>
+		            <option value="26">26</option>
+		            <option value="27">27</option>
+		            <option value="28">28</option>
+		            <option value="29">29</option>
+		            <option value="30">30</option>
+		            <option value="31">31</option>
+		            <option value="32">32</option>
+		            <option value="33">33</option>
+		            <option value="34">34</option>
+		            <option value="35">35</option>
+		            <option value="36">36</option>
+		            <option value="37">37</option>
+		            <option value="38">38</option>
+		            <option value="39">39</option>
+		            <option value="40">40</option>
+		            <option value="41">41</option>
+		            <option value="42">42</option>
+		            <option value="43">43</option>
+		            <option value="44">44</option>
+		            <option value="45">45</option>
+		            <option value="46">46</option>
+		            <option value="47">47</option>
+		            <option value="48">48</option>
+		            <option value="49">49</option>
+		            <option value="50">50</option>
+		            <option value="51">51</option>
+		            <option value="52">52</option>
+		            <option value="53">53</option>
+		            <option value="54">54</option>
+		            <option value="55">55</option>
+		            <option value="56">56</option>
+		            <option value="57">57</option>
+		            <option value="58">58</option>
+		            <option value="59">59</option>
+		        </select>
+		    </td>
+	    </tr>
+	</tfoot>
+    <!-- Apr 30 2009 : Bug 235 -  Date and Time field display - WeaveIT (End) : Aravinda -->
+	</table>
+	</form>
+</body>
+</html>

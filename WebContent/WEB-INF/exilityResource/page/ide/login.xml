@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="login"
+      module="ide"
+      description="login page that accepts credential on a need basis. This page is invoked from index page whenever a new project is chosen, and the project requries a login. It is called with loginServiceId "
+      title="Login"
+      scriptsToInclude="../../ide/login.js"
+      onLoadActionNames="setServiceId"
+      >
+  <pageParameters>
+    <pageParameter name="serviceId"
+                   dataElementName="text"
+                   description="this is the login service name  for this project. This should match teh service set in applicationParameters.xml"
+                   isRequired="true"/>
+    <pageParameter name="userFieldName"
+                   description="this is the field name used by server for userId field"
+                   dataElementName="text"
+                   isRequired="true"/>
+    <pageParameter name="pwdFieldName"
+                   description="this is the field name used by server for password field"
+                   dataElementName="text"
+                   isRequired="true"/>
+  </pageParameters>
+  <actions>
+    <localAction name="setServiceId"
+                 functionName="setServiceId"
+                 />
+    <localAction name="login"
+                  functionName="login"
+                  />
+    <closeAction name="close"/>
+  </actions>
+
+  <panels>
+    <displayPanel name="login">
+      <elements>
+        <assistedInputField name="userId"
+                            dataElementName="text"
+                            label="User Id"
+                            isRequired="true"/>
+        <passwordField name="pwd"
+                       dataElementName="text"
+                       label="Password"
+                       isRequired="true"/>
+        <buttonElement name="go"
+                       label="Go"
+                       onClickActionName="login"/>
+        <hiddenField name="serviceId"
+                     dataElementName="text"/>
+        <hiddenField name="fieldName"
+                     dataElementName="text"/>
+      </elements>
+    </displayPanel>
+  </panels>
+</page>
+

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link rel="stylesheet" href="../../css/home/default.css" type="text/css" />
+    <script type="text/javascript" src="../../exilityClient/js/api/exilityLoader.js"></script>
+    
+<script type="text/javascript" src="assetMasterEdit.metadata.js" ></script> 
+</head>
+<body onload="exilPageLoad();" style="display: none;" onunload="exilPageUnload();"
+    onscroll="adjustFrameHeightToBodyHeight();">
+    <form id="form1" onsubmit="if(event.preventDefault) event.preventDefault(); else event.returnValue= false; return false;" action="" accept-charset="UTF-8">
+    <div class="page">
+        <div id="pageTitle"></div>
+        <div class="expandedfieldset" id="assetAttributesTop" >
+<div class="displayPanel" id="assetAttributes" >  <table class="fieldsTable"  id="assetAttributesFieldsTable" >
+<col id="assetAttributesCol1" /><col id="assetAttributesCol2" /><col id="assetAttributesCol3" /><col id="assetAttributesCol4" /><col id="assetAttributesCol5" /><col id="assetAttributesCol6" /><tr>
+<td class="labelCell" id="assetNameLabelCell" ><div class="requiredLabel" id="assetNameLabel"  >Asset Name</div></td><td class="fieldCell" id="assetNameFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="assetName"  onchange="P2.fieldChanged(this, 'assetName');" />&nbsp;
+<input type="hidden"  id="id"  onchange="P2.fieldChanged(this, 'id');" /></td>
+<td class="labelCell" id="assetGroupIdLabelCell" ><div class="requiredLabel" id="assetGroupIdLabel"  >Asset Group</div></td><td class="fieldCell" id="assetGroupIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="assetGroupId"  onchange="P2.fieldChanged(this, 'assetGroupId');" /></td>
+<td class="labelCell" id="modelIdLabelCell" ><div class="label" id="modelIdLabel"  >Model Id</div></td><td class="fieldCell" id="modelIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="modelId"  onchange="P2.fieldChanged(this, 'modelId');" /></td></tr><tr>
+<td class="labelCell" id="manufacturerPartNoLabelCell" ><div class="label" id="manufacturerPartNoLabel"  >Manuf Part No</div></td><td class="fieldCell" id="manufacturerPartNoFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="manufacturerPartNo"  onchange="P2.fieldChanged(this, 'manufacturerPartNo');"  onfocus="P2.fieldFocussed(this, 'manufacturerPartNo');"  onblur="P2.inputFocusOut(this, 'manufacturerPartNo');" /></td>
+<td class="labelCell" id="locationMasterIdLabelCell" ><div class="requiredLabel" id="locationMasterIdLabel"  >Location</div></td><td class="fieldCell" id="locationMasterIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="locationMasterId"  onchange="P2.fieldChanged(this, 'locationMasterId');"  onfocus="P2.fieldFocussed(this, 'locationMasterId');"  onblur="P2.inputFocusOut(this, 'locationMasterId');" /></td>
+<td class="labelCell" id="purchaseDateLabelCell" ><div class="label" id="purchaseDateLabel"  >Purchased On</div></td><td class="fieldCell" id="purchaseDateFieldCell" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="purchaseDate"  onchange="P2.fieldChanged(this, 'purchaseDate');"  onfocus="P2.fieldFocussed(this, 'purchaseDate');"  onblur="P2.inputFocusOut(this, 'purchaseDate');"  onkeyup="P2.inputKeyUp(this, 'purchaseDate', event);" /></td></tr><tr>
+<td class="labelCell" id="priceLabelCell" ><div class="label" id="priceLabel"  >Price</div></td><td class="fieldCell" id="priceFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="20"  id="price"  onchange="P2.fieldChanged(this, 'price');"  onfocus="P2.fieldFocussed(this, 'price');"  onblur="P2.inputFocusOut(this, 'price');" /></td>
+<td class="labelCell" id="poNumberLabelCell" ><div class="requiredLabel" id="poNumberLabel"  >Purchase Order No</div></td><td class="fieldCell" id="poNumberFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="poNumber"  onchange="P2.fieldChanged(this, 'poNumber');"  onfocus="P2.fieldFocussed(this, 'poNumber');"  onblur="P2.inputFocusOut(this, 'poNumber');" /></td>
+<td class="labelCell" id="invoiceNumberLabelCell" ><div class="requiredLabel" id="invoiceNumberLabel"  >Invoice No</div></td><td class="fieldCell" id="invoiceNumberFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="invoiceNumber"  onchange="P2.fieldChanged(this, 'invoiceNumber');"  onfocus="P2.fieldFocussed(this, 'invoiceNumber');"  onblur="P2.inputFocusOut(this, 'invoiceNumber');" /></td></tr><tr>
+<td class="labelCell" id="insuredLabelCell" ><div class="label" id="insuredLabel"  >Insurance Reference</div></td><td class="fieldCell" id="insuredFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="insured"  onchange="P2.fieldChanged(this, 'insured');"  onfocus="P2.fieldFocussed(this, 'insured');"  onblur="P2.inputFocusOut(this, 'insured');" /></td>
+<td class="labelCell" id="retirementDateLabelCell" ><div class="requiredLabel" id="retirementDateLabel"  >To be Retired on</div></td><td class="fieldCell" id="retirementDateFieldCell" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="retirementDate"  onchange="P2.fieldChanged(this, 'retirementDate');"  onfocus="P2.fieldFocussed(this, 'retirementDate');"  onblur="P2.inputFocusOut(this, 'retirementDate');"  onkeyup="P2.inputKeyUp(this, 'retirementDate', event);" /></td>
+<td class="labelCell" id="isRetiredLabelCell" ><div class="requiredLabel" id="isRetiredLabel"  >Retired?</div></td><td class="fieldCell" id="isRetiredFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="1"  id="isRetired"  onchange="P2.fieldChanged(this, 'isRetired');"  onfocus="P2.fieldFocussed(this, 'isRetired');"  onblur="P2.inputFocusOut(this, 'isRetired');" /></td></tr><tr>
+<td class="labelCell" id="retiredOnLabelCell" ><div class="label" id="retiredOnLabel"  >Retired On</div></td><td class="fieldCell" id="retiredOnFieldCell" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="retiredOn"  onchange="P2.fieldChanged(this, 'retiredOn');"  onfocus="P2.fieldFocussed(this, 'retiredOn');"  onblur="P2.inputFocusOut(this, 'retiredOn');"  onkeyup="P2.inputKeyUp(this, 'retiredOn', event);" /></td>
+<td class="labelCell" id="systemSerialNoLabelCell" ><div class="label" id="systemSerialNoLabel"  >System Sl No</div></td><td class="fieldCell" id="systemSerialNoFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="systemSerialNo"  onchange="P2.fieldChanged(this, 'systemSerialNo');"  onfocus="P2.fieldFocussed(this, 'systemSerialNo');"  onblur="P2.inputFocusOut(this, 'systemSerialNo');" /></td>
+<td class="labelCell" id="osidLabelCell" ><div class="label" id="osidLabel"  >OS Id</div></td><td class="fieldCell" id="osidFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="osid"  onchange="P2.fieldChanged(this, 'osid');"  onfocus="P2.fieldFocussed(this, 'osid');"  onblur="P2.inputFocusOut(this, 'osid');" /></td></tr><tr>
+<td class="labelCell" id="monitorSerialNoLabelCell" ><div class="label" id="monitorSerialNoLabel"  >Monitor Sl No</div></td><td class="fieldCell" id="monitorSerialNoFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="monitorSerialNo"  onchange="P2.fieldChanged(this, 'monitorSerialNo');"  onfocus="P2.fieldFocussed(this, 'monitorSerialNo');"  onblur="P2.inputFocusOut(this, 'monitorSerialNo');" /></td>
+<td class="labelCell" id="ramIdLabelCell" ><div class="label" id="ramIdLabel"  >Ram Id</div></td><td class="fieldCell" id="ramIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="ramId"  onchange="P2.fieldChanged(this, 'ramId');"  onfocus="P2.fieldFocussed(this, 'ramId');"  onblur="P2.inputFocusOut(this, 'ramId');" /></td>
+<td class="labelCell" id="processorIdLabelCell" ><div class="label" id="processorIdLabel"  >Processor Id</div></td><td class="fieldCell" id="processorIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="processorId"  onchange="P2.fieldChanged(this, 'processorId');"  onfocus="P2.fieldFocussed(this, 'processorId');"  onblur="P2.inputFocusOut(this, 'processorId');" /></td></tr><tr>
+<td class="labelCell" id="hardDiskIdLabelCell" ><div class="label" id="hardDiskIdLabel"  >Hard Disk Id</div></td><td class="fieldCell" id="hardDiskIdFieldCell" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="hardDiskId"  onchange="P2.fieldChanged(this, 'hardDiskId');"  onfocus="P2.fieldFocussed(this, 'hardDiskId');"  onblur="P2.inputFocusOut(this, 'hardDiskId');" /></td>
+<td class="labelCell" id="adapterSerialNoLabelCell" ><div class="label" id="adapterSerialNoLabel"  >Adapter Sl No</div></td><td class="fieldCell" id="adapterSerialNoFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="adapterSerialNo"  onchange="P2.fieldChanged(this, 'adapterSerialNo');"  onfocus="P2.fieldFocussed(this, 'adapterSerialNo');"  onblur="P2.inputFocusOut(this, 'adapterSerialNo');" /></td>
+<td class="labelCell" id="accessoriesLabelCell" ><div class="label" id="accessoriesLabel"  >Accessories</div></td><td class="fieldCell" id="accessoriesFieldCell" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="accessories"  onchange="P2.fieldChanged(this, 'accessories');"  onfocus="P2.fieldFocussed(this, 'accessories');"  onblur="P2.inputFocusOut(this, 'accessories');" />&nbsp;
+<input type="hidden"  id="createdBy"  onchange="P2.fieldChanged(this, 'createdBy');" />&nbsp;
+<input type="hidden"  id="createdOn"  onchange="P2.fieldChanged(this, 'createdOn');" />&nbsp;
+<input type="hidden"  id="modifiedBy"  onchange="P2.fieldChanged(this, 'modifiedBy');" />&nbsp;
+<input type="hidden"  id="modifiedOn"  onchange="P2.fieldChanged(this, 'modifiedOn');" />&nbsp;
+<input type="hidden"  id="companyId"  onchange="P2.fieldChanged(this, 'companyId');" value="1" />&nbsp;
+<input type="hidden"  id="oldId"  onchange="P2.fieldChanged(this, 'oldId');" /></td></tr> </table>  </div></div><div class="expandedfieldset" id="allocationdetailsTop" >
+<div class="gridPanel" id="allocationdetails" >
+<table id="allocations" class="gridtable" ><col id="allocationsCol1" /><col id="allocationsCol2"  /><col id="allocationsCol3"  /><col id="allocationsCol4"  /><col id="allocationsCol5"  /><col id="allocationsCol6"  /><col id="allocationsCol7"  /><thead><tr ><th><input type="checkbox" style="cursor:pointer;" id="allocationsDeleteBulkCheck" onclick="P2.bulkDeleteClicked(this, 'allocations');" /></th><th class="left" id="allocations_personCodeLabel" ><div>&nbsp;Person<span class="requiredstar">*</span></div></th><th class="left" id="allocations_identificationNumberLabel" ><div>&nbsp;Id Number</div></th><th class="left" id="allocations_fromDateLabel" ><div>&nbsp;Allocate From<span class="requiredstar">*</span></div></th><th class="left" id="allocations_toDateLabel" ><div>&nbsp;Allcoated Till<span class="requiredstar">*</span></div></th><th class="left" id="allocations_isDeallocatedLabel" ><div>&nbsp;Deallocated ?<span class="requiredstar">*</span></div></th><th class="left" id="allocations_deallocationDateLabel" ><div>&nbsp;Deallocated On<span class="requiredstar">*</span></div></th></tr></thead><tbody ><tr onclick="P2.listClicked(this, 'allocations', event);"  class="gridrow" ><td>
+<input type="checkbox"  id="allocations_allocationsDelete"  onchange="P2.fieldChanged(this, 'allocations_allocationsDelete');"  onfocus="P2.fieldFocussed(this, 'allocations_allocationsDelete');"  onkeydown="P2.handleGridNav(this, 'allocationsDelete', event);" onclick="return P2.deleteTableRow(event, this, 'allocations');"  /></td><td class="left" >
+<input type="text" autocomplete="off" class="intdecinputfield"  size="20"  maxlength="14"  id="allocations_personCode"  onchange="P2.fieldChanged(this, 'allocations_personCode');"  onkeydown="P2.handleGridNav(this, 'allocations_personCode', event);"  onfocus="P2.fieldFocussed(this, 'allocations_personCode');"  onblur="P2.inputFocusOut(this, 'allocations_personCode');" />
+<input type="hidden"  id="allocations_companyId"  onchange="P2.fieldChanged(this, 'allocations_companyId');"  onkeydown="P2.handleGridNav(this, 'allocations_companyId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_companyId');" />
+<input type="hidden"  id="allocations_id"  onchange="P2.fieldChanged(this, 'allocations_id');"  onkeydown="P2.handleGridNav(this, 'allocations_id', event);"  onfocus="P2.fieldFocussed(this, 'allocations_id');" /></td><td class="left" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="3000"  id="allocations_identificationNumber"  onchange="P2.fieldChanged(this, 'allocations_identificationNumber');"  onkeydown="P2.handleGridNav(this, 'allocations_identificationNumber', event);"  onfocus="P2.fieldFocussed(this, 'allocations_identificationNumber');"  onblur="P2.inputFocusOut(this, 'allocations_identificationNumber');" />
+<input type="hidden"  id="allocations_assetId"  onchange="P2.fieldChanged(this, 'allocations_assetId');"  onkeydown="P2.handleGridNav(this, 'allocations_assetId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_assetId');" /></td><td class="left" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="allocations_fromDate"  onchange="P2.fieldChanged(this, 'allocations_fromDate');"  onkeydown="P2.handleGridNav(this, 'allocations_fromDate', event);"  onfocus="P2.fieldFocussed(this, 'allocations_fromDate');"  onblur="P2.inputFocusOut(this, 'allocations_fromDate');"  onkeyup="P2.inputKeyUp(this, 'allocations_fromDate', event);" /></td><td class="left" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="allocations_toDate"  onchange="P2.fieldChanged(this, 'allocations_toDate');"  onkeydown="P2.handleGridNav(this, 'allocations_toDate', event);"  onfocus="P2.fieldFocussed(this, 'allocations_toDate');"  onblur="P2.inputFocusOut(this, 'allocations_toDate');"  onkeyup="P2.inputKeyUp(this, 'allocations_toDate', event);" /></td><td class="left" >
+<input type="text" autocomplete="off" class="inputfield"  size="20"  maxlength="1"  id="allocations_isDeallocated"  onchange="P2.fieldChanged(this, 'allocations_isDeallocated');"  onkeydown="P2.handleGridNav(this, 'allocations_isDeallocated', event);"  onfocus="P2.fieldFocussed(this, 'allocations_isDeallocated');"  onblur="P2.inputFocusOut(this, 'allocations_isDeallocated');" /></td><td class="left" >
+<input type="text" autocomplete="off" class="dateinputfield"  size="20"  maxlength="12"  id="allocations_deallocationDate"  onchange="P2.fieldChanged(this, 'allocations_deallocationDate');"  onkeydown="P2.handleGridNav(this, 'allocations_deallocationDate', event);"  onfocus="P2.fieldFocussed(this, 'allocations_deallocationDate');"  onblur="P2.inputFocusOut(this, 'allocations_deallocationDate');"  onkeyup="P2.inputKeyUp(this, 'allocations_deallocationDate', event);" />
+<input type="hidden"  id="allocations_createdBy"  onchange="P2.fieldChanged(this, 'allocations_createdBy');"  onkeydown="P2.handleGridNav(this, 'allocations_createdBy', event);"  onfocus="P2.fieldFocussed(this, 'allocations_createdBy');" />
+<input type="hidden"  id="allocations_createdOn"  onchange="P2.fieldChanged(this, 'allocations_createdOn');"  onkeydown="P2.handleGridNav(this, 'allocations_createdOn', event);"  onfocus="P2.fieldFocussed(this, 'allocations_createdOn');" />
+<input type="hidden"  id="allocations_modifiedBy"  onchange="P2.fieldChanged(this, 'allocations_modifiedBy');"  onkeydown="P2.handleGridNav(this, 'allocations_modifiedBy', event);"  onfocus="P2.fieldFocussed(this, 'allocations_modifiedBy');" />
+<input type="hidden"  id="allocations_modifiedOn"  onchange="P2.fieldChanged(this, 'allocations_modifiedOn');"  onkeydown="P2.handleGridNav(this, 'allocations_modifiedOn', event);"  onfocus="P2.fieldFocussed(this, 'allocations_modifiedOn');" />
+<input type="hidden"  id="allocations_oldId"  onchange="P2.fieldChanged(this, 'allocations_oldId');"  onkeydown="P2.handleGridNav(this, 'allocations_oldId', event);"  onfocus="P2.fieldFocussed(this, 'allocations_oldId');" value="1" />
+<input type="hidden"  id="allocations_bulkAction"  onchange="P2.fieldChanged(this, 'allocations_bulkAction');"  onkeydown="P2.handleGridNav(this, 'allocations_bulkAction', event);"  onfocus="P2.fieldFocussed(this, 'allocations_bulkAction');" /></td></tr></tbody></table>
+<input type="button" value="Add a Row" id="allocationsAddRow"  onclick="P2.addTableRow(this, 'allocations');"   /></div></div><div class="expandedfieldset" id="actionButtonsTop" >
+<div class="buttonpanel" id="actionButtons" >
+<input type="button" value="Save" id="save" onclick="P2.act(this, 'save', 'save', event);" style="cursor:pointer;"  />
+<input type="button" value="Reset" id="reset" onclick="P2.act(this, 'reset', 'reset', event);" style="cursor:pointer;"  />
+<input type="button" value="Cancel" id="cancel" onclick="P2.act(this, 'cancel', 'cancel', event);" style="cursor:pointer;"  />
+<input type="button" value="Close" id="close" onclick="P2.act(this, 'close', 'close', event);" style="cursor:pointer;"  /></div></div>
+    </div>
+    </form>
+</body>
+</html>

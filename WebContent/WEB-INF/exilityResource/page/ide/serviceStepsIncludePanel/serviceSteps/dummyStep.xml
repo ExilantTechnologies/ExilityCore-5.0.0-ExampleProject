@@ -1,0 +1,12 @@
+<displayPanel name="dummyStep" description="This panel will include attrs related to dummyStep"
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="dummyStepGoTo"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Go To:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+	</elements>
+</displayPanel>

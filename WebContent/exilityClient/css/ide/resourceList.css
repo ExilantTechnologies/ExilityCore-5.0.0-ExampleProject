@@ -1,0 +1,88 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+/***** this is one exmaple of a css file for left menu *********/
+/*** dom of a typical left menu is as below. This helps you in understanding css
+<div.leftMenu>
+    <div.nodeBranch>
+        <div.trunkNodeText>menu item 1...</div>
+        <div.nodeGroup>
+            <div.leafNodetext>page 1 </div>
+            <div.nodeBranch>
+                <div.branchNodeText>sub-menu 1 </div>
+                <div.nodeGroup>
+                etc.....
+            </div>
+        </div>
+        <div style="position:relative">
+    </div>
+    <div.trunkNodeText> leaf at the root level </div>
+</div>
+
+*******/
+.leftMenu
+{
+    display:inline-block;
+}
+
+/* Let us take a bottom-up approach. Three types of nodes, trunck, branch and leaf */
+
+div.trunkNodeText, div.leafNodeText, div.branchNodeText
+{
+    cursor:pointer;
+    white-space:nowrap;
+    padding-left:15px;
+}
+
+div.trunkNodeText:hover, div.leafNodeText:hover, div.branchNodeText:hover
+{
+    background-color: #eeeeee;
+    border-radius:6px;
+}
+div.trunkNodeText, div.branchNodeText
+{
+    background-image:url('../../images/plus.gif');
+    background-repeat:no-repeat;
+    background-position:left top;
+}
+div.trunkNodeText[expanded], div.branchNodeText[expanded]
+{
+    background-image:url('../../images/minus.gif');
+    background-repeat:no-repeat;
+    background-position:left top;
+}
+div.nodeGroup
+{
+    margin-left:20px;
+}
+div.nodeBranch
+{
+}    
+
+
+/* */
+#resources
+{
+    display:inline-block;
+    border:none;
+    background-color:White;
+}

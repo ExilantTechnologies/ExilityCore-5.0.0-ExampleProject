@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="dataType"
+      module="ide"
+      description="Allow user to pick a file and see data types within that. New one can be created. Existing one can be edited/saved"
+      title="Data Type"
+      onLoadActionNames="getMessages,checkForPageParameters"
+      trackFieldChanges="true"
+      scriptsToInclude="../../js/ide/dataType.js,../../css/ide/dataType.css"
+      >
+  <pageParameters>
+    <pageParameter name="resourceName"
+                   description="if this is passed, we have to hide the panel meant for selecting folder/file "
+                   setTo="fileName"/>
+  </pageParameters>
+  <actions>
+    <localAction name="checkForPageParameters"
+                 functionName="checkForPageParameters"/>
+    <serverAction name="getFiles"
+                  description="get all data-type files"
+                  serviceId="ide.getFiles"
+                  queryFieldNames="resourceType"
+                  disableForm="true"
+                      />
+
+    <serverAction name="getMessages"
+                  description="dataType uses message as an attribute. Get all possible messages and use it as set of possible values for this attribute"
+                  serviceId="ide.getMessages"
+                  callBackActionName="assignMessages"
+                  toRefreshPage="afterMyAction"/>
+
+    <localAction name="assignMessages"
+                 description="Scrub messages table and make it suitable for drop-down list of messageName field"
+                 functionName="assignMessages"/>
+
+    <serverAction name="getDataTypes"
+                  description="Get data types within a file. Triggered when a file is selected."
+                  serviceId="ide.getDataTypes"
+                  disableForm="true"
+                  queryFieldNames="fileName"
+                      />
+
+    <serverAction name="doSave"
+                  description="save data types that are modified in the grid. only modified rowsa are sent for save operation."
+                  serviceId="ide.saveDataTypes"
+                  submitForm="true"
+                  disableForm="true"
+                  resetFormModifiedState="true"
+                       />
+ 
+    <localAction name="showRelevantFields"
+                 description="Show only the relevant fields for the selected data type"
+                 functionName="showRelevantFields"/>
+    
+    <localAction name="setAllowNegative"
+                 functionName="setAllowNegative"
+                 description=""/>
+    <!-- dummy actions to show/hide. These are used by showRelevantFields local function -->
+    <dummyAction name="showText"
+                 description="show fields relevant for text data type"
+                 hidePanels="numberFields,dateFields,booleanFields"
+                 showPanels="textFields"/>
+    
+    <dummyAction name="showNumber"
+                 hidePanels="textFields,dateFields,booleanFields"
+                 showPanels="numberFields"/>
+    
+    <dummyAction name="showDate"
+                 hidePanels="textFields,numberFields,booleanFields"
+                 showPanels="dateFields"/>
+    
+    <dummyAction name="showBoolean"
+                 hidePanels="textFields,numberFields,dateFields"
+                 showPanels="booleanFields"/>
+    
+    <dummyAction name="hideAll"
+                 hidePanels="textFields,numberFields,dateFields,booleanFields"
+                     />
+    <localAction name="rowClicked"
+                 description="when grid row is clicked"
+                 functionName="rowClicked"/>
+    
+    <dummyAction name="enableName"
+                 description="Invoked from local function rowClciked"
+                 enableFields="editingTable_name"/>
+    
+    <dummyAction name="disableName"
+                 description="Invoked from local function rowClciked"
+                 disableFields="editingTable_name"/>
+    
+    <closeAction name="close"/>
+    
+    <resetAction name="reload"/>
+
+  </actions>
+
+  <panels>
+    <buttonPanel name="topButtons"
+                 cssClassName="topButtons"
+                     >
+      <elements>
+        <buttonElement name="save"
+                       hoverText="Save"
+                       imageName="saveIcon.png"
+                       onClickActionName="doSave"
+                               />
+        <buttonElement name="reload"
+                       hoverText="Reload"
+                       imageName="reloadIcon.png"
+                       onClickActionName="reload"
+                               />
+        <buttonElement name="close"
+                       hoverText="Close"
+                       imageName="closeIcon.png"
+                       onClickActionName="close"
+                               />
+      </elements>
+    </buttonPanel>
+    <displayPanel name="searchPanel"
+                  elementsPerRow="1"
+                      >
+      <elements>
+        <selectionField name="fileName"
+                            isRequired="true"
+                            listServiceId="files"
+                            noAutoLoad="true"
+                            onChangeActionName="getDataTypes"
+                            selectFirstOption="true"
+                            donotTrackChanges="true"
+                                />
+
+        <hiddenField name="resourceType"
+                     description="used as parameter for getFiles"
+                     defaultValue="dataType"/>
+      </elements>
+    </displayPanel>
+    <displayPanel name="data"
+                  description="container that houses list of data types and the details of the current data type"
+                  elementsPerRow="2"
+                      >
+      <elements>
+        <gridPanel name="dts"
+                   description="Left side grid that lists all data types. Since this is linked to the right side panel, we have all fields except name as hidden field."
+                   tableName="dataTypes"
+                   cssClassName="listPanel"
+                   rowsCanBeAdded="false"
+                   rowsCanBeDeleted="false"
+                   rowHelpText="click to edit this Data Type."
+                   idFieldName="name"
+                   actionFieldName="bulkAction"
+                   keyFieldName="bulkAction"
+                   confirmOnRowDelete="true"
+                   simulateClickOnFirstRow="true"
+                   onClickActionName="rowClicked"
+                   uniqueColumns="name"
+            >
+          <elements>
+            <imageField name="bulkAction"
+                        description="bulk action is used as image field to show appropriate image for a row to indicate action on this row like delete/modify/add"
+                        label=" "
+                        labelPosition="hide"
+                        baseSrc="../../images/row"
+                        imageExtension=".png"
+                                    />
+            <outputField name="name"
+                         description="Defiend as output because this is linked to rigth panel. Hence toBeSentToServer set to true"
+                         maxCharacters="25"
+                         toBeSentToServer="true"
+                         label="Data Type Name"
+                             />
+            <hiddenField name="_type"/>
+            <hiddenField name="description"/>
+            <hiddenField name="messageName"/>
+            <hiddenField name="regex"/>
+            <hiddenField name="minLength"/>
+            <hiddenField name="maxLength"/>
+            <hiddenField name="minValue"/>
+            <hiddenField name="maxValue"/>
+            <hiddenField name="allowNegativeValue"/>
+            <hiddenField name="numberOfDecimals"/>
+            <hiddenField name="maxDaysBeforeToday"/>
+            <hiddenField name="maxDaysAfterToday"/>
+            <hiddenField name="includesTime"/>
+            <hiddenField name="trueValue"/>
+            <hiddenField name="falseValue"/>
+          </elements>
+        </gridPanel>
+        <displayPanel name="details"
+                      description="rigth panel. we will have the buttons on the top, and teh data below that">
+          <elements>
+            <buttonPanel name="navActions"
+                         description="Navigation buttons assciated with dataTypes. We have to follow the right naming convention">
+              <elements>
+                <buttonElement name="dataTypesMoveFirst"
+                               label="First"
+                                                        />
+                <buttonElement name="dataTypesMovePrev"
+                               label="Prev"
+                                                        />
+                <buttonElement name="dataTypesMoveNext"
+                               label="Next"
+                                                        />
+                <buttonElement name="dataTypesMoveLast"
+                               label="Last"
+                                                        />
+                <buttonElement name="dataTypesNewRow"
+                               label="New Data Type"
+                                                       />
+                <buttonElement name="dataTypesDeleteRow"
+                               label="Delete This Data Type"
+                                                       />
+                <buttonElement name="dataTypesUndeleteRow"
+                               label="Undelete This Data Type"
+                                                       />
+              </elements>
+            </buttonPanel>
+            <displayPanel name="editPanel"
+                          description="Linked right panel for dataTypes for ease of editing"
+                          linkedTableName="dataTypes"
+                          tableName="editingTable"
+                      >
+              <elements>
+                <displayPanel name="commonFields"
+                              description="fields that are common across all data types."
+                              elementsPerRow="2"
+                              >
+                  <elements>
+
+                    <assistedInputField name="name"
+                                        description="Should be disabled for editing except in add (new) mode"
+                                        isRequired="true"
+                                />
+                    <textElement cssClassName="note"
+                                 label="camelCase naming convention is recommended. Let the name suggest its use, and not its definition. e.g. shortName and NOT text15. Remember, the whole idea is to keep the flexibility of changing the length in place. You shoudl not end-up with a text20 data type with a lenght of 25 chars!!!"/>
+                    <assistedInputField name="_type"
+                                        valueList="TextDataType,Text;IntegralDataType,Integer;DecimalDataType,Decimal;DateDataType,Date;BooleanDataType,Boolean"
+                                        isRequired="true"
+                                        onChangeActionName="showRelevantFields"
+                                />
+                    <textElement cssClassName="note"
+                                 label="People with Oracle background tend to use a char(1) dat type for boolean. We strongly discourage this practice. Boolean is a good concept!!"/>
+                    <assistedInputField name="description"
+                                        isRequired="true"
+                                        size="100"
+                                        numberOfUnitsToUse="2"
+                                />
+                    <assistedInputField name="messageName"
+                                        isRequired="true"
+                                        listServiceId="messages"
+                                        noAutoLoad="true"
+                                        sameListForAllRows="true"
+                                />
+                    <textElement cssClassName="note"
+                                 label="message name to be used to communicate to the user when she types an invalid value for this type. We recommend a conventionto create one message for each data type and call it invaliddataType. e.g. invalidShortName."/>
+                  </elements>
+                </displayPanel>
+                <displayPanel name="textFields"
+                              description="fields that are relevant only for text data types"
+                              elementsPerRow="2"
+                              >
+                  <elements>
+                    <assistedInputField name="minLength"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="TextDataType"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="minimum number of characters required for this field to be valid. Note that spaces at the beginning and at end are trimmed automatically by exility when the field is read."/>
+                    <assistedInputField name="maxLength"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="TextDataType"
+                                        fromField="minLength"
+                                />
+                    <textElement cssClassName="note"
+                                 label="maximum number of characters, including embedded spaces that this field can contain."/>
+                    <assistedInputField name="regex"
+                                />
+                    <textElement cssClassName="note"
+                                 label="Well, this is a technical term, and you have to be aware of regular expression to use this. We recommend simple regexes only. Complex regexes may behave differently on client and server, and on diffetrent flavors of servers!!"/>
+                  </elements>
+                </displayPanel>
+                <displayPanel name="numberFields"
+                              description="common for integral and decimal data types"
+                              elementsPerRow="2"
+                              >
+                  <elements>
+                    <assistedInputField name="minValue"
+                                        description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+                                        validationFunction="validateMinMaxValue"
+                                        onUserChangeActionName="setAllowNegative"
+                                />
+                    <hiddenField name="allowNegativeValue"
+                                 description="This is now reduntant, but for backward compatibility, this should be in tune with min. value. This is set through onUserChangeAction for minValue"
+                                       />
+                    <textElement cssClassName="note"
+                                 label="Zero might look like a good min, but most likely it is not. In business, 0 probably means optional, and hence you may live with 1 as min. And if you want to allow negative, restrict to a max of 15 digits"/>
+                    <assistedInputField name="maxValue"
+                                        fromField="minValue"
+                                        validationFunction="validateMinMaxValue"
+                                />
+                    <textElement cssClassName="note"
+                                 label="Don't say sky is the limit. Fifteen digits is just too much, and you shold set max to that value, at most."/>
+                    <assistedInputField name="numberOfDecimals"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="DecimalDataType"
+                                />
+                    <textElement cssClassName="note"
+                                 label="MaxIf user types a value different from this. we still accept it and round-it to these many places. Also, when the field is output, it is formatted to these many places."/>
+                  </elements>
+                </displayPanel>
+                <displayPanel name="dateFields"
+                              elementsPerRow="2"
+                        >
+                  <elements>
+                    <assistedInputField name="maxDaysBeforeToday"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="DateDataType"
+                                />
+                    <textElement cssClassName="note"
+                                 label="What is the lower limit for this date? If it is, say, 1 year into the past, use 365 as the value here. If the date HAS to be in the future, say at least one year, use -365. if the date has to be exactly today, well we do not recommend making it an input field, but if you prefer it that way, use 0 for both limits :-) "/>
+                    <assistedInputField name="maxDaysAfterToday"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="DateDataType"
+                                />
+                    <textElement cssClassName="note"
+                                 label="Set the upper limit for the date. If the upper limit is in the future, ie. after today, use a positive integer. If the max date has to be before today, use a negative number to indicate number of days before today. e.g. if you use -12 here, and today happens to be friday the 13th, any date after 1st is considered to be invalid."/>
+                    <assistedInputField name="includesTime"
+                                        valueList="0,No;1,Yes"
+                                       />
+                    <textElement cssClassName="note"
+                                 label="Computers find it easy to internally represent date as absolute time elapsed from a reference. Because of this, date field and date-with-time are treated the same way. This convention has crossed over to data types as well. We have designed a common data type. Please tell us whether this data type requires time component to be tracked."/>
+                  </elements>
+                </displayPanel>
+                <displayPanel name="booleanFields"
+                              elementsPerRow="2"
+                              >
+                  <elements>
+                    <assistedInputField name="trueValue"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="BooleanDataType"
+                                        />
+                    <textElement cssClassName="note"
+                                 label="  trueValue and false value are used as labels for radio buttons when the field is rendered as a radio button. e.g. Status : -active -inactive. We recommend radio buttons whenever such labels read better than using a question mark as a label and render the field as a check-box."/>
+                    <assistedInputField name="falseValue"
+                                        basedOnField="_type"
+                                        basedOnFieldValue="BooleanDataType"
+                                        />
+                    <textElement cssClassName="note"
+                                 label=""/>
+                  </elements>
+                </displayPanel>
+              </elements>
+            </displayPanel>
+          </elements>
+        </displayPanel>
+
+      </elements>
+    </displayPanel>
+
+  </panels>
+</page>
+

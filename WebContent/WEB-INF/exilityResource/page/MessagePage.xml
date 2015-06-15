@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="Message"
+      module="internal"
+      description="manage messages"
+      title="Messages"
+      onLoadActionNames="getFiles"
+      trackFieldChanges="true"
+      scriptsToInclude="**Include here stylesheet and javascript"
+      >
+
+  <actions>
+    <serverAction name="getFiles"
+                  description="get all message files and supply this as list of options for field fileName "
+                  serviceId="internal.getFiles"
+                  queryFieldNames="resourceType"
+                  disableForm="true"
+             />
+    <serverAction name="getMessages"
+                  description="Get all messages for the selected file. This is the list of messages to be edited in this page."
+                  serviceId="internal.getMessages"
+                  disableForm="true"
+                  submitFields="fileName"
+                />
+    <serverAction name="save"
+                  description="All rows are to be sent back, not just the modified rows. Server expects data that way."
+                  serviceId="internal.saveMessages"
+                  submitForm="true"
+                  resetFormModifiedState="true"
+                  toRefreshPage="none"
+                  callBackActionName="getMessages"
+                      />
+    <localAction name="deleteThisRow" functionName="deleteThisRow"/>
+     <closeAction name="close"/>
+    <resetAction name="reload"/>
+  </actions>
+
+  <panels>
+    <buttonPanel name="topButtons"
+                 cssClassName="topButtons"
+                     >
+      <elements>
+        <buttonElement name="reload"
+                       hoverText="Reload"
+                       imageName="reloadIcon.png"
+                       onClickActionName="reload"
+                               />
+        <buttonElement name="close"
+                       hoverText="Close"
+                       imageName="closeIcon.png"
+                       onClickActionName="close"
+                               />
+        <buttonElement name="save"
+                       hoverText="Save"
+                       imageName="saveIcon.png"
+                       onClickActionName="save"
+                               />
+      </elements>
+    </buttonPanel>
+
+    <displayPanel name="search"
+                      >
+      <elements>
+        <assistedInputField name="fileName"
+                            description="Populated by the onload action getFiles. Hence setting noAutoLoad is important."
+                            isRequired="true"
+                            listServiceId="files"
+                            noAutoLoad="true"
+                            onChangeActionName="getMessages"
+                            selectFirstOption="true"
+                            donotTrackChanges="true"
+                            />
+        <hiddenField name="resourceType"
+                     defaultValue="message"/>
+       </elements>
+    </displayPanel>
+    <gridPanel name="edit"
+               description="All messages in the file are edited in this grid. All rows are sent back for ease of save."
+               tableName="messages"
+               idFieldName="name"
+               rowsCanBeAdded="true"
+               rowsCanBeDeleted="true"
+               actionFieldName="bulkAction"
+               keyFieldName="bulkAction"
+               labelForAddRowButton="New Message"
+               minRows="1"
+               uniqueColumns="name"
+               functionAfterAddRow="resetName"
+               autoSaveServiceName="autaSave"
+               functionBeforeAutoSave="beforeAutoSave"
+               functionAfterAutoSave="afterAutoSave"
+               >
+      <elements>
+        <styleField name="bulkAction"
+                    label=" "
+                    labelPosition="hide"
+                    defaultCss="noAction"
+                    toBeSentToServer="true"
+                    />
+
+        <outputField name="name"
+                        description="isProtected is genersting readonly, hence I am putting an html attribute here"
+                        toBeSentToServer="true"
+                        />
+        <hiddenField name="severity" />
+        <hiddenField name="text" />
+        <hiddenField name="forClient" />
+        <hiddenField name="_type"
+                     defaultValue="Message"
+                             />
+      </elements>
+    </gridPanel>
+    <displayPanel name="editDisplay"
+               tableName="dummy"
+                  linkedTableName="messages"
+               >
+      <elements>
+        <styleField name="bulkAction"
+                    description="This is m"
+                    label=" "
+                    labelPosition="hide"
+                    defaultCss="noAction"
+                    toBeSentToServer="true"
+                    />
+
+        <textInputField name="name"
+                        description="isProtected is genersting readonly, hence I am putting an html attribute here"
+                        isRequired="true"
+                        size="25"
+                        htmlAttributes="disabled=disabled"
+                        />
+        <assistedInputField name="severity"
+                            valueList="IGNORE,ignore;INFO,info;WARNING,warning;ERROR,error"
+                            isRequired="true"
+                            selectFirstOption="true"
+                            size="10"
+                       />
+        <textInputField name="text"
+                        isRequired="true"
+                        numberOfUnitsToUse="2"
+                        size="130"
+                                />
+        <assistedInputField name="forClient"
+                            label="Used By CLient"
+                            valueList="true,Yes;false,No"
+                        />
+        <hiddenField name="_type"
+                     description="internally required field to be returned as it is"
+                     defaultValue="Message"
+                             />
+      </elements>
+    </displayPanel>
+  </panels>
+</page>
+

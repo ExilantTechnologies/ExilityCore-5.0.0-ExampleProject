@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="exilityClient" default="minify">
+	<property name="api" value="exility.js" />
+	<property name="miniApi" value="exility.min.js" />
+	<property name="jscompjar" location="../../../../WEB-INF/lib/google-closure-compiler.jar" />
+	<echo>"${jscompjar}"</echo> 
+	<taskdef name="jscomp" 
+	 		  classname="com.google.javascript.jscomp.ant.CompileTask"
+	 		  classpath="${jscompjar}"
+           />
+	
+	<target name="minify" >
+	    <description>Create a single api.js file and a minified file </description>
+	    <echo>Concatenating javascript...</echo>
+	    <concat destfile="../${api}">
+	        <filelist dir=".">
+	        	<file name="_license.js"/>
+	            <file name="version.js" />
+	            <file name="backgroundJobs.js" />
+	            <file name="exilityParameters.js" />
+	            <file name="clientConstants.js" />
+	            <file name="pageManager.js" />
+	            <file name="utils.js" />
+	            <file name="utilsDate.js" />
+	            <file name="dataCollection.js" />
+	            <file name="formatter.js" />
+	            <file name="messages.js" />
+	            <file name="serverAgent.js" />
+	            <file name="field.js" />
+	            <file name="fieldSelection.js" />
+	            <file name="fieldAssisted.js" />
+	            <file name="fieldAssistantBase.js" />
+	            <file name="fieldAssistantDate.js" />
+	            <file name="fieldAssistantList.js" />
+	            <file name="fieldAssistantSuggest.js" />
+	            <file name="fieldChart.js" />
+	            <file name="fieldExotic.js" />
+	            <file name="fieldXml.js" />
+	            <file name="action.js" />
+	            <file name="actionExtended.js" />
+	            <file name="table.js" />
+	            <file name="tableButton.js" />
+	            <file name="tableDisplay.js" />
+	            <file name="tableGrid.js" />
+	            <file name="tableQuickSearch.js" />
+	            <file name="tableRepeatingDisplay.js" />
+	            <file name="tableSortFilter.js" />
+	            <file name="tableAggregateAndRepeat.js" />
+	            <file name="tableTreeView.js" />
+	            <file name="tableChart.js" />
+	        	<file name="page1Create.js" />
+	        	<file name="page2Init.js" />
+	        	<file name="page3ActionRelated.js" />
+	        	<file name="page4FieldRelated.js" />
+	        	<file name="page5PickerRelated.js" />
+	        	<file name="page6TableRelated.js" />
+	        	<file name="page7Misc.js" />
+	        	<file name="pageSlider.js" />
+	            <file name="validation.js" />
+	            <file name="animator.js" />
+	            <file name="eMenu.js" />
+	        	<!-- one of highChartDriver.js or flotrDriver.js is to be included for a project that uses that charting library -->
+	        </filelist>
+	    </concat>
+	 
+	    <echo>Concatenating using the Closure Compiler...</echo>
+	    <jscomp compilationLevel="simple" 
+	    		warning="quiet" 
+	    		debug="false" 
+	    		output="../${miniApi}">
+	        <sources dir="../">
+	            <file name="${api}" />
+	        </sources>
+	    </jscomp>
+		
+	    <echo>Finished</echo>
+	
+	</target>
+</project>

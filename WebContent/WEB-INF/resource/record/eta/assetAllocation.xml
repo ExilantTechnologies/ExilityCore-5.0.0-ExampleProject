@@ -1,0 +1,198 @@
+<?xml version="1.0" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<record xmlns="http://com.exilant.exility/schema" 
+       name="assetAllocation"
+       recordType="storage"
+       keyToBeGenerated="true"
+       tableName="eta_assetallocation"
+       description="tracks allocation of assets to individuals"
+       >
+       <fields>
+       	<field 
+       		name="id"
+       		label="Id" 
+       		columnType="primaryKey" 
+       		dataType="id" 
+       		description="internal id"
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		 
+       		/>
+
+       	<field 
+       		name="companyId"
+       		label="Company"
+       		columnName="companyid" 
+       		columnType="foreignKey" 
+       		referredField="id"
+       		referredRecord="etm.companyMaster"
+       		dataType="id" 
+       		description="Companyr" 
+       		defaultInputType="hiddenField"
+       		dataSource="companyId"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="personCode"
+       		label="Person"
+       		columnName="personcode" 
+       		columnType="foreignKey" 
+       		dataType="number" 
+       		description="Person code" 
+       		defaultInputType="assistedInputField"
+       		>
+       		<pageFieldAttributes listServiceId="etp.personList" sameListForAllRows="true"/>
+       		<!-- 
+       		<pageFieldAttributes suggestionServiceId="etp.suggestPersons" suggestAfterMinChars="1" columnIndexesToShow="0,1"/>
+       		 -->
+       		</field>
+
+       	<field 
+       		name="identificationNumber"
+       		label="Id Number"
+       		columnName="identificationnumber" 
+       		columnType="data" 
+       		dataType="text" 
+       		description="Identification number" 
+       		defaultInputType="assistedInputField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="assetId"
+       		label="asset Id"
+       		columnName="assetid" 
+       		columnType="parentKey" 
+       		referredField="id"
+       		referredRecord="eta.assetMaster"
+       		dataType="number" 
+       		description="Asset being allocated" 
+       		defaultInputType="hiddenField"
+       		dataSource="id"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="fromDate"
+       		label="Allocate From"
+       		columnName="fromdate" 
+       		columnType="data" 
+       		dataType="date" 
+       		description="Allocated from date" 
+       		defaultInputType="assistedInputField"
+       		toField="toDate"
+       		/>
+
+       	<field 
+       		name="toDate"
+       		label="Allcoated Till"
+       		columnName="todate" 
+       		columnType="data" 
+       		dataType="date" 
+       		description="Allocated till date" 
+       		defaultInputType="assistedInputField"
+       		/>
+
+       	<field 
+       		name="isDeallocated"
+       		label="Deallocated ?"
+       		columnName="isdeallocated" 
+       		columnType="data" 
+       		dataType="yn" 
+       		defaultValue="0"
+       		description="Is it deallocated?" 
+       		defaultInputType="assistedInputField"
+       		valueList="0,No;1,Yes"
+       		/>
+
+       	<field 
+       		name="deallocationDate"
+       		label="Deallocated On"
+       		columnName="deallocationdate" 
+       		columnType="data" 
+       		dataType="date" 
+       		description="Deallocated on" 
+       		defaultInputType="assistedInputField"
+       		isNullable="true"
+       		basedOnField="isDeallocated"
+       		basedOnFieldValue="1"
+       		/>
+       	<field 
+       		name="createdBy"
+       		label="Created By"
+       		columnName="createdby" 
+       		columnType="createdByUser" 
+       		dataType="text" 
+       		description="" 
+       		defaultInputType="hiddenField"
+       		isOptional="true"
+       		/>
+
+       	<field 
+       		name="createdOn"
+       		label="Created On"
+       		columnName="createdon" 
+       		columnType="createdTimeStamp" 
+       		dataType="timeStamp" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		/>
+
+
+       	<field 
+       		name="modifiedBy"
+       		label="Modified By"
+       		columnName="modifiedby" 
+       		columnType="modifiedByUser" 
+       		dataType="text" 
+       		description="" 
+       		isOptional="true"
+       		defaultInputType="hiddenField"
+       		/>
+
+       	<field 
+       		name="modifiedOn"
+       		columnName="modifiedon"
+       		label="Modified On" 
+       		columnType="modifiedTimeStamp" 
+       		dataType="timeStamp" 
+       		description="last modified time stamp"
+       		defaultInputType="hiddenField"
+       		isOptional="true" 
+       		/>
+
+       	<field 
+       		name="oldId"
+       		label="Old Id"
+       		columnName="oldid" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="primary key from the data base that this is migrated"
+       		defaultInputType="hiddenField" 
+       		defaultValue="1"
+       		isOptional="false"
+       		/>
+       </fields>
+ </record>

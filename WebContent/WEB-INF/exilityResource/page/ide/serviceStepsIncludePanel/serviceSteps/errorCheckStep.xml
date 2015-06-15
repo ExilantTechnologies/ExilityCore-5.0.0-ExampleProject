@@ -1,0 +1,19 @@
+
+<displayPanel name="errorCheckStep" description=""
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="errorCheckStepSeverity"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Severity:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+		<assistedInputField name="errorCheckStepGoToStep"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Go To Step:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+	</elements>
+</displayPanel>

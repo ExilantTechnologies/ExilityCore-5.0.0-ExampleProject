@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link rel="stylesheet" href="../../css/home/default.css" type="text/css" />
+    <script type="text/javascript" src="../../exilityClient/js/api/exilityLoader.js"></script>
+    @script@
+</head>
+<body onload="exilPageLoad();" style="display: none;" onunload="exilPageUnload();"
+    onscroll="adjustFrameHeightToBodyHeight();">
+    <form id="form1" onsubmit="if(event.preventDefault) event.preventDefault(); else event.returnValue= false; return false;" action="" accept-charset="UTF-8">
+    <div class="page">
+        <div id="pageTitle">@title@</div>
+        @panels@
+    </div>
+    </form>
+</body>
+</html>

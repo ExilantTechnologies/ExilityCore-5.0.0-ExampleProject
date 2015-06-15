@@ -1,0 +1,2837 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<xs:schema
+  targetNamespace="http://com.exilant.exility/schema"
+  elementFormDefault="qualified"
+  xmlns="http://com.exilant.exility/schema"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dt="http://com.exilant.exility/dataTypes"
+>
+	<xs:import namespace="http://com.exilant.exility/dataTypes"></xs:import>
+  <xs:element name="businessLogic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="inputParameters"
+                    type="parametersType"
+                    minOccurs="0"
+                    maxOccurs="1" />
+        <xs:element name="outputParameters"
+                    type="parametersType"
+                    minOccurs="1"
+                    maxOccurs="1" />
+        <xs:element name="statements"
+                    type="statementsType"
+                    minOccurs="1"
+                    maxOccurs="1" />
+      </xs:sequence>
+      <xs:attribute name="name"
+                    type="xs:ID"
+                    use="required"/>
+      <xs:attribute name="module"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="description"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="techNotes"
+                    type="xs:string"
+                    use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="dataDictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name ="groups"
+                    minOccurs="1"
+                    maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence minOccurs="1"
+                         maxOccurs="unbounded">
+              <xs:element name="dataGroup"
+                          type="dataGroupType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="dataGroupType">
+    <xs:sequence minOccurs="1"
+                 maxOccurs="1">
+      <xs:element name="elements"
+                  maxOccurs="1"
+                  minOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="1"
+                       maxOccurs="unbounded">
+            <xs:element name="dataElement"
+                        type="dataElementType">
+              <xs:annotation>
+                <xs:documentation>
+                  Changed the Data Element Type to hold the custom labels //Jun 22 2009 : Bug 508 -  Page Customisation - WeaveIT : Aravinda
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="businessDescription"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="technicalDescription"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:element name="dataTypes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element  maxOccurs="1"
+                     minOccurs="1"
+                     name="dataTypes">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element  maxOccurs="unbounded"
+                           name="textDataType"
+                           type="textDataTypeType"/>
+              <xs:element  maxOccurs="unbounded"
+                           name="integralDataType"
+                           type="integralDataTypeType"/>
+              <xs:element  maxOccurs="unbounded"
+                           name="decimalDataType"
+                           type="decimalDataTypeType"/>
+              <xs:element  maxOccurs="unbounded"
+                           name="dateDataType"
+                           type="dateDataTypeType"/>
+              <xs:element  maxOccurs="unbounded"
+                           name="booleanDataType"
+                           type="booleanDataTypeType"/>
+              <xs:element  maxOccurs="unbounded"
+                           name="timeStampDataType"
+                           type="timeStampDataTypeType"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version"
+                    type="xs:string"
+                    use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="messages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="messages" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="message"
+                          maxOccurs="unbounded"
+                          type="messageType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version"
+                    type="xs:string"
+                    use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="service">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element name="inputRecords" minOccurs="0" maxOccurs="1">
+      		<xs:complexType>
+				<xs:sequence>
+					<xs:element name="inputRecord"  minOccurs="1" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="recordName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>fully qualified name of record that this refers to</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="fieldNames" type="xs:string" use="optional"><xs:annotation><xs:documentation>If you are expecting a subset of the fields, provide them as comma separated list.</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="purpose" type="purposeType" use="required"><xs:annotation><xs:documentation>How is the input being used, or why do we input this</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="gridName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>Name of the grid in which data is expected. If not specified, we expect field values, and not grid</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="minRows" type="xs:int" use="optional"><xs:annotation><xs:documentation>if this data is is expected in a grid/table, do we expect a min number of rows?</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="maxRows" type="xs:int" use="optional"><xs:annotation><xs:documentation>It is definitely safe to set some practical upper limit to protect the server from client attacks. For example, you do not want to process hundred thousand rows from client in one transaction.</xs:documentation></xs:annotation></xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+      		</xs:complexType>
+      	</xs:element>
+     	<xs:element name="outputRecords" minOccurs="0" maxOccurs="1">
+     		<xs:complexType>
+				<xs:sequence>
+					<xs:element name="outputRecord"  minOccurs="1" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="recordName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>fully qualified name of record that this refers to</xs:documentation></xs:annotation></xs:attribute>
+							<xs:attribute name="gridName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>Are we expecting data in a grid?</xs:documentation></xs:annotation></xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+     	
+        <xs:element name="steps"
+                    maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded"
+                         minOccurs="1">
+              <xs:choice>
+                <xs:element name="dummyStep"
+                            maxOccurs="unbounded"
+                            type="dummyStepType"/>
+                <xs:element name="expressionAssignmentStep"
+                            maxOccurs="unbounded"
+                            type="expressionAssignmentStepType"/>
+                <xs:element name="functionAssignmentStep"
+                            maxOccurs="unbounded"
+                            type="functionAssignmentStepType"/>
+                <xs:element name="gridProcessorStep"
+                            maxOccurs="unbounded"
+                            type="gridProcessorStepType"/>
+                <xs:element name="validationStep"
+                            maxOccurs="unbounded"
+                            type="validationStepType"/>
+                <xs:element name="errorCheckStep"
+                            maxOccurs="unbounded"
+                            type="errorCheckStepType"/>
+                <xs:element name="switchStep"
+                            maxOccurs="unbounded"
+                            type="switchStepType"/>
+                <xs:element name="taskStep"
+                            maxOccurs="unbounded"
+                            type="taskStepType"/>
+                <xs:element name="serviceStep"
+                            maxOccurs="unbounded"
+                            type="serviceStepType"/>
+                <xs:element name="loopStep"
+                            maxOccurs="unbounded"
+                            type="loopStepType"/>
+                <!-- Bug 845 - Exility Local Service Verbs should work on server side also (Start) -->
+                <xs:element name="setValue"
+                            type="lsetValueType" />
+                <xs:element name="list"
+                            type="llistType" />
+                <xs:element name="appendToList"
+                            type="lappendToListType" />
+                <xs:element name="grid"
+                            type="lgridType" />
+                <xs:element name="addColumn"
+                            type="laddColumnType" />
+                <xs:element name="lookup"
+                            type="llookupType">
+                  <xs:annotation>
+                    <xs:documentation>Extract column values from a row of a table. If more than one rows match, only first row is used. If selection criterion is skipped, primary key is used for look-up</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="stop"
+                            type="lstopType" />
+                <xs:element name="save"
+                            type="lsaveType"/>
+                <xs:element name="saveGrid"
+                            type="lsaveGridType" />
+                <xs:element name="delete"
+                            type="ldeleteType" />
+                <xs:element name="massUpdate"
+                            type="lmassUpdateType"/>
+                <xs:element name="massDelete"
+                            type="lmassDeleteType"/>
+                <xs:element name="aggregate"
+                            type="laggregateType"/>
+                <!-- Bug 845 - Exility Local Service Verbs should work on server side also (End) -->
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name"
+                    type="xs:ID"
+                    use="required"/>
+      <xs:attribute name="module"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="description"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="techNotes"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="dataAccessType"
+                    type="accessType"
+                    use="required">
+                    <xs:annotation><xs:documentation>what kind of data base access this service uses</xs:documentation></xs:annotation></xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="columns">
+          <xs:complexType >
+            <xs:sequence>
+              <xs:element name="column"
+                          maxOccurs="unbounded"
+                          type="columnType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="referenceTables"
+                    minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="tableReference"
+                          maxOccurs="unbounded"
+                          type="tableReferenceType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name"
+                    type="xs:NCName"
+                    use="required"/>
+      <xs:attribute name="tableName"
+                    type="xs:NCName"
+                    use="required"/>
+      <xs:attribute name="module"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="description"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="okToDelete"
+                    type="booleanType"
+                    use="optional"/>
+      <xs:attribute name="keyToBeGenerated"
+                    type="booleanType"
+                    use="optional"/>
+      <xs:attribute name="keyPrefixFieldNames"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="keyColumnWidth"
+                    type="xs:byte"
+                    use="optional"/>
+      <xs:attribute name="createdTimestampName"
+                    type="xs:NCName"
+                    use="optional"/>
+      <xs:attribute name="modifiedTimestampName"
+                    type="xs:NCName"
+                    use="optional"/>
+      <xs:attribute name="createdUserName"
+                    type="xs:NCName"
+                    use="optional"/>
+      <xs:attribute name="modifiedUserName"
+                    type="xs:NCName"
+                    use="optional"/>
+      <xs:attribute name="parentTableName"
+                    type="xs:NCName"
+                    use="optional"/>
+      <xs:attribute name="activeField"
+                    type="xs:string"
+                    use="optional">
+        <xs:annotation>
+          <xs:documentation>Field to be marked as 'N' in case of delete operations.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="createdTimestampColumnName"
+                    type="xs:NCName"
+                    use="optional">
+                    <xs:annotation><xs:documentation>In case database column name is different from the field</xs:documentation></xs:annotation>
+                    
+      </xs:attribute>
+      <xs:attribute name="modifiedTimestampColumnName"
+                    type="xs:NCName"
+                    use="optional">
+                          <xs:annotation><xs:documentation>In case database column name is different from the field</xs:documentation></xs:annotation>
+                    
+      </xs:attribute>
+      <xs:attribute name="createdUserColumnName"
+                    type="xs:NCName"
+                    use="optional">
+                    <xs:annotation><xs:documentation>In case database column name is different from the field</xs:documentation></xs:annotation>
+                    
+      </xs:attribute>
+      <xs:attribute name="modifiedUserColumnName"
+                    type="xs:NCName"
+                    use="optional">
+                   <xs:annotation><xs:documentation>In case database column name is different from the field</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="isAudited"
+                    type="booleanType"
+                    use="optional" >
+        <xs:annotation>
+          <xs:documentation>Specifies whether the table is to be audited or not.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="serviceList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="serviceEntries">
+          <xs:complexType >
+            <xs:choice maxOccurs="unbounded">
+              <xs:element name="serviceEntry"
+                          type="serviceEntryType"
+                          maxOccurs="unbounded"/>
+              <xs:element name="taskEntry"
+                          type="taskEntryType"
+                          maxOccurs="unbounded"/>
+               <xs:element name="batchEntry"
+                          type="batchEntryType"
+                          maxOccurs="unbounded"/>
+               <xs:element name="groupEntry"
+                          type="groupEntryType"
+                          maxOccurs="unbounded"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="sql">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="sql"
+                    type="xs:string"
+                    minOccurs="0"
+                    maxOccurs="1"/>
+        <xs:element name="inputParameters"
+                    type="inputParametersType"
+                    minOccurs="0"
+                    maxOccurs="1"/>
+        <xs:element name="outputParameters"
+                    type="outputParametersType"
+                    minOccurs="0"
+                    maxOccurs="1"/>
+      </xs:all>
+      <xs:attribute name="name"
+                    type="xs:NCName"
+                    use="required" />
+      <xs:attribute name="toBeExecuted"
+                    type="booleanType"
+                    use="optional" >
+        <xs:annotation>
+          <xs:documentation>false, which the default if this sql slects rows. True implies that this sql is update/delete/insert type</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="minParameters"
+                    type="xs:byte"
+                    use="optional" />
+      <xs:attribute name="sql"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="module"
+                    type="xs:string"
+                    use="optional" />
+      <xs:attribute name="description"
+                    type="xs:string"
+                    use="optional" >
+        <xs:annotation>
+          <xs:documentation>Descriptions always help</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="storedProcedureName"
+                    type="xs:string"
+                    use="optional" >
+       	<xs:annotation>
+      		<xs:documentation>If this is a stored procedure. Note that you have to either provide sql, or this, and not both</xs:documentation>
+      	</xs:annotation>
+      </xs:attribute>
+                    
+      <xs:attribute name="sqlType"
+                    type="sqlTypes"
+                    default="dynamicSql"
+                    use="optional" >
+      	<xs:annotation>
+      		<xs:documentation>Sql may be a dynamic sql, or prepared statement or stored procedures</xs:documentation>
+      	</xs:annotation>
+      </xs:attribute>
+                    
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="serviceSpec" >
+    <xs:complexType>
+      <xs:all>
+        <xs:element minOccurs="0"
+                    name="inSpec"
+                    type="specType"/>
+        <xs:element minOccurs="0"
+                    name="outSpec"
+                    type="specType"/>
+      </xs:all>
+      <xs:attribute name="name"
+                    type="xs:NCName"
+                    use="required"/>
+      <xs:attribute name="techNotes"
+                    type="xs:string"
+                    use="optional"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="userCodes">
+    <xs:complexType>
+      <xs:sequence maxOccurs="1"
+                   minOccurs="1">
+        <xs:element name="codes">
+          <xs:complexType>
+            <xs:sequence minOccurs="0"
+                         maxOccurs="unbounded">
+              <xs:element name="userCodeEntry">
+                <xs:complexType>
+                  <xs:attribute name="name"
+                                type="xs:NCName"
+                                use="required"/>
+                  <xs:attribute name="nameSpace"
+                                type="xs:string"
+                                use="required"/>
+                  <xs:attribute name="assemblyName"
+                                type="xs:string"
+                                use="optional"/>
+                  <xs:attribute name="description"
+                                type="xs:string"
+                                use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="crafts">
+    <xs:complexType>
+      <xs:sequence maxOccurs="1"
+                   minOccurs="1">
+        <xs:element name="crafts">
+          <xs:complexType>
+            <xs:sequence minOccurs="0"
+                         maxOccurs="unbounded">
+              <xs:element name="craftEntry">
+                <xs:complexType>
+                  <xs:attribute name="name"
+                                type="xs:NCName"
+                                use="required"/>
+                  <xs:attribute name="assemblyName"
+                                type="xs:string"
+                                use="optional"/>
+                  <xs:attribute name="nameSpace"
+                                type="xs:string"
+                                use="required"/>
+                  <xs:attribute name="description"
+                                type="xs:string"
+                                use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- parameter is a commonly used type -->
+  <xs:attributeGroup name="parameterAttributes">
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isOptional"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="defaultValue"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="dataElementName"
+                  type="xs:NCName"
+                  use="optional"/>
+  </xs:attributeGroup>
+
+  <!-- business logic types -->
+  <xs:complexType name="parametersType">
+    <xs:sequence maxOccurs="unbounded">
+      <xs:element name="parameter"
+                  type="parameterType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="parameterType" >
+    <xs:attributeGroup ref="parameterAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="statementsType">
+    <xs:choice minOccurs="1"
+               maxOccurs="unbounded">
+      <xs:element name="expressionStatement"
+                  type="expressionType"
+                  minOccurs="0"/>
+      <xs:element name="validationStatement"
+                  type="validationType"
+                  minOccurs="0"/>
+      <xs:element name="functionStatement"
+                  type="functionType"
+                  minOccurs="0" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:attributeGroup name="statementAttributes">
+    <xs:attribute name="objective"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="condition"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional" />
+  </xs:attributeGroup>
+
+  <xs:complexType name="expressionType" >
+    <xs:attributeGroup ref="statementAttributes" />
+    <xs:attribute name="expression"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="expressionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="validationType" >
+    <xs:attributeGroup ref="statementAttributes" />
+    <xs:attribute name="messageName"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageParameters"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="functionType" >
+    <xs:attributeGroup ref="statementAttributes" />
+    <xs:attribute name="functionName"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="parameters"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:simpleType name="booleanType">
+    <xs:restriction base="xs:NCName">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- data dictinary types -->
+  <xs:complexType name="dataElementType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="customLabels">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="customLabel">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="value" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="businessDescription"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="technicalDescription"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isInternalElement"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="dataType"
+                  type="dt:declaredDataTypes"
+                  use="optional"/>
+    <xs:attribute name="listServiceName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="valueList"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="messageName"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Custom message that will over-ride teh one set at data type level</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="additionalMessageName"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Default additional message that will be shown in a page. Can be over-ridden at the field level in a page</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation>name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	<xs:attribute name="referenceGroup"
+				  use="optional"
+				  type="xs:NCName">
+				  <xs:annotation><xs:documentation>if this element is already defined in another group, and you want to mention it here because this group also has an element with the same name</xs:documentation></xs:annotation></xs:attribute>
+
+  </xs:complexType>
+
+  <!-- data dictinary types -->
+  <xs:complexType name="dataElementAttributes">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="businessDescription"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="technicalDescription"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isInternalElement"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="dataType"
+                  type="dt:declaredDataTypes"
+                  use="optional"/>
+  </xs:complexType>
+  <!-- types used by messages -->
+
+  <xs:complexType name="messageType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="severity"
+                  type="severityType"
+                  use="required"/>
+    <xs:attribute name="text"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="forClient"
+                  type="booleanType"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Is this message used by client engine? if set to true, you can use this message in your client side design</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:simpleType name="severityType" >
+    <xs:restriction base="xs:NCName">
+      <xs:enumeration value="ignore"/>
+      <xs:enumeration value="info"/>
+      <xs:enumeration value="warning"/>
+      <xs:enumeration value="error"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- types used by service -->
+  <!-- common attributes for a step -->
+  <xs:attributeGroup name="stepAttributes">
+    <xs:attribute name="label"
+                  type="xs:NCName"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="techNotes"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="skipOnMessageIds"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="executeOnMessageIds"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="executeOnCondition"
+                  type="xs:string"
+                  use="optional"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="taskAttributes">
+    <xs:attribute name="taskName"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="taskParameters"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="raiseExceptionIfNoWorkDone"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="ifNoWorkDoneMessageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="ifNoWorkDoneMessageParameters"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="repeatForRowsInGrid"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="prefix"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="gridName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="raiseExceptionIfWorkDone"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="ifWorkDoneMessageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="ifWorkDoneMessageParameters"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="recordName" 
+    			  type="xs:NCName"
+    			  use="optional">
+    			  <xs:annotation><xs:documentation>specify this in place of tableName to use a record instead of table for this task </xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:complexType name="dummyStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="goTo"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="expressionAssignmentStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="fieldName"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="expression"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="expressionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="functionAssignmentStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="functionName"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="parameters"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="gridProcessorStepType">
+    <xs:sequence minOccurs="1"
+                 maxOccurs="1">
+      <xs:element name="processor">
+        <xs:complexType>
+          <xs:choice maxOccurs="1"
+                     minOccurs="1">
+            <xs:element name="addColumn"
+                        type="addColumnType"/>
+            <xs:element name="cloneColumn"
+                        type="cloneColumnType"/>
+            <xs:element name="copyColumns"
+                        type="copyColumnsType"/>
+            <xs:element name="copyColumnsAcrossGrids"
+                        type="copyColumnsAcrossGridsType"/>
+            <xs:element name="copyGrid"
+                        type="copyGridType"/>
+            <xs:element name="copyRows"
+                        type="copyRowsType"/>
+            <xs:element name="filterRows"
+                        type="filterRowsType"/>
+            <xs:element name="gridToValues"
+                        type="gridToValuesType"/>
+            <xs:element name="mergeColumns"
+                        type="mergeColumnsType"/>
+
+            <xs:element name="mergeRows"
+                        type="mergeRowsType"/>
+            <xs:element name="renameColumn"
+                        type="renameColumnType"/>
+
+            <xs:element name="removeGrid"
+                        type="removeGridType"/>
+            <xs:element name="renameGrid"
+                        type="renameGridType"/>
+            <xs:element name="splitColumns"
+                        type="splitColumnsType"/>
+            <xs:element name="splitRows"
+                        type="splitRowsType"/>
+            <xs:element name="removeColumn"
+                        type="removeColumnType"/>
+            <xs:element name="purgeGrid"
+                        type="purgeGridType"/>                                    
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ifWorkDoneGoTo"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>If you want to skip the next step and jump to another step if the task succeded set this to the label of the step</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ifNoWorkDoneGoTo"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>If you want to skip the next step and jump to another step if the task failed set this to the label of the step</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="stepAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="errorCheckStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="severity"
+                  type="severityType"
+                  use="required" />
+    <xs:attribute name="goToStep"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="validationStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="messageParameters"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="continueOnError"
+                  type="booleanType"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="switchStepType">
+    <xs:sequence minOccurs="1"
+                 maxOccurs="1">
+      <xs:element name="switchActions">
+        <xs:complexType>
+          <xs:sequence minOccurs="1"
+                       maxOccurs="unbounded">
+            <xs:element name="switchAction">
+              <xs:complexType>
+                <xs:attribute name="value"
+                              type="xs:string"
+                              use="required" />
+                <xs:attribute name="labelToGoTo"
+                              type="xs:NCName"
+                              use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="fieldName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="switchActionType">
+
+  </xs:complexType>
+  <xs:complexType name="serviceStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="serviceName"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="loopStepType">
+    <xs:attributeGroup ref="stepAttributes" />
+    <xs:attribute name="tableToLoopOn"
+                  type="xs:NCName"
+                  use="required">
+      <xs:annotation>
+        <xs:documentation>Name of the table whose rows will be used for looping</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="lastStepOfTheBlock"
+                  type="xs:string"
+                  use="required">
+      <xs:annotation>
+        <xs:documentation>Label assigned to the last step of the block to be looped for</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="inputFields"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Fields from the grid to be used by the tasks. Skip this to use all columns from the grid</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="outputFields"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Fields to be copied back to the grid. Note that default is not to copy anything back.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+  </xs:complexType>
+
+  <xs:complexType name="taskStepType">
+    <xs:sequence minOccurs="1"
+                 maxOccurs="1">
+      <xs:element name="task" >
+        <xs:complexType>
+          <xs:choice maxOccurs="1"
+                     minOccurs="1">
+            <xs:element name="bulkTask"
+                        type="bulkType"/>
+            <xs:element name="tableDeleteTask"
+                        type="taskType"/>
+            <xs:element name="tableInsertTask"
+                        type="tableInsertTaskType"/>
+            <xs:element name="tableUpdateTask"
+                        type="taskType"/>
+            <xs:element name="storedProcedureTask"
+                        type="storedProcedureTaskType"/>
+            <xs:element name="tableSaveTask"
+                        type="tableSaveTaskType"/>
+            <xs:element name="tableFilterTask"
+                        type="tableFilterType"/>
+            <xs:element name="tableReadTask"
+                        type="tableTaskType"/>
+            <xs:element name="sqlTask"
+                        type="sqlTaskType"/>
+            <xs:element name="businessLogicTask"
+                        type="taskType"/>
+            <xs:element name="craftedLogicTask"
+                        type="taskType"/>
+            <xs:element name="userTask"
+                        type="taskType"/>
+
+            <xs:element name="actionTask"
+                        type="actionTaskType"/>
+            <xs:element name="debugTask"
+                        type="debugTaskType"/>
+            <xs:element name="customCodeTask"
+                          type="customCodeTaskType"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ifWorkDoneGoTo"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>If you want to skip the next step and jump to another step if the task succeded set this to the label of the step</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ifNoWorkDoneGoTo"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>If you want to skip the next step and jump to another step if the task failed set this to the label of the step</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="stepAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="taskType">
+    <xs:attributeGroup ref="taskAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="tableTaskType">
+    <xs:choice minOccurs="0" maxOccurs="1">
+    	<xs:element name="childTableTasks" type="childTableTasksType" />
+    </xs:choice>
+    <xs:attributeGroup ref="taskAttributes" />
+    <xs:attribute name="parentTableName"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Specify parent table if generated key from the parent key is to be used by this table based task</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="parentKeyColumnNameInThisGrid"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Column name in the grid that is used for for bulk action that refers to the primary key of the parent. (foreign key column name)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="storedProcedureTaskType">
+      <xs:attribute name="taskName"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="storedProcedureName"
+                    type ="xs:string"
+                    use="required"/>
+      <xs:attribute name="inParameters"
+                  type="xs:string"
+                  use="optional"/>
+      <xs:attribute name="inoutParameters"
+                  type="xs:string"
+                  use="optional"/>
+      <xs:attribute name="outParameters"
+                  type="xs:string"
+                  use="optional"/>
+      <xs:attribute name="raiseExceptionIfNoWorkDone"
+                    type="booleanType"
+                    use="optional"/>
+      <xs:attribute name="ifNoWorkDoneMessageName"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="ifNoWorkDoneMessageParameters"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="raiseExceptionIfWorkDone"
+                    type="booleanType"
+                    use="optional"/>
+      <xs:attribute name="ifWorkDoneMessageName"
+                    type="xs:string"
+                    use="optional"/>
+      <xs:attribute name="ifWorkDoneMessageParameters"
+                    type="xs:string"
+                    use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="actionTaskType">
+    <xs:all minOccurs="1"
+            maxOccurs="1">
+      <xs:element name="steps">
+        <xs:complexType >
+          <xs:choice minOccurs="1">
+            <xs:element name="actionStep">
+              <xs:complexType>
+                <xs:choice minOccurs="1"
+                           maxOccurs="1">
+                  <xs:element name="task">
+                    <xs:complexType>
+                      <xs:choice minOccurs="1"
+                                 maxOccurs="1">
+                        <xs:element name="sqlTask"
+                                    type="sqlTaskType"/>
+                        <xs:element name="storedProcedureTask"
+                                    type="storedProcedureTaskType"/>
+                        <xs:element name="businessLogicTask"
+                                    type="taskType"/>
+                        <xs:element name="craftedLogicTask"
+                                    type="taskType"/>
+                        <xs:element name="userTask"
+                                    type="taskType"/>
+                      </xs:choice>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:choice>
+                <xs:attribute name="actionsToEnable"
+                              type="xs:string"
+                              use="optional" />
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:all>
+    <xs:attributeGroup ref="taskAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="debugTaskType">
+    <xs:attribute name="valueName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="listName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attributeGroup ref="taskAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="customCodeTaskType">
+    <xs:attribute name="fullyQualifiedClassName"
+                  type="xs:string"
+                  use="required">
+      <xs:annotation>
+        <xs:documentation>class name including package name that implemnts this task</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup ref="taskAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="sqlTaskType">
+    <xs:attributeGroup ref="taskAttributes" />
+    <xs:attribute name="toDataTable"
+                  type="booleanType"
+                  use="optional" />
+  </xs:complexType>
+  <xs:complexType name="aggregaterType">
+    <xs:sequence maxOccurs="1"
+                 minOccurs="1">
+      <xs:element name="columns">
+        <xs:complexType>
+          <xs:sequence minOccurs="1"
+                       maxOccurs="unbounded">
+            <xs:element name="aggregaterColumn" >
+              <xs:complexType>
+                <xs:attribute name="outputColumnName"
+                              type="xs:NCName"
+                              use="required"/>
+                <xs:attribute name="inputColumnName"
+                              type="xs:NCName"
+                              use="required" />
+                <xs:attribute name="aggregationFunction"
+                              type="aggregateFunctionType"
+                              use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="inputGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="outputGridName"
+                  type="xs:NCName"
+                  use="optional" />
+    <xs:attribute name="actionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:simpleType name="aggregateFunctionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sum" />
+      <xs:enumeration value="key" />
+      <xs:enumeration value="average" />
+      <xs:enumeration value="min" />
+      <xs:enumeration value="max" />
+      <xs:enumeration value="first" />
+      <xs:enumeration value="last" />
+      <xs:enumeration value="count" />
+      <xs:enumeration value="list" />
+      <xs:enumeration value="append" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="copyColumnsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="keyColumnNameToMatch"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNamesToCopy"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="copyColumnsAcrossGridsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="keyColumnNameToMatchFrom"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="keyColumnNameToMatchTo"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNamesToCopyFrom"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="columnNamesToCopyTo"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+  <xs:complexType name="cloneColumnType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="newColumnName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="renameColumnType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="newColumnName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="copyRowsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="actionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="splitColumnsType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNameToSplit"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNamesToSplitInto"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="fieldSeparator"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mergeColumnsType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNamesToMerge"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="mergedColumnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="fieldSeparator"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="splitRowsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnNamesToCopy"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="columnNameToSplit"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="splitColumnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="rowSeparator"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="mergeRowsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="keyColumnNames"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="columnNameToBeMerged"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="mergedColumnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="rowSeparator"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="copyGridType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="fromColumns"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="toColumns"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="actionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+  </xs:complexType>
+  <xs:complexType name="removeColumnType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnName"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+  
+  <xs:complexType name="purgeGridType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="gridToValuesType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="removeGrid"
+                  type="booleanType"
+                  use="optional" />
+    <xs:attribute name="index"
+                  type="xs:byte"
+                  use="optional" />
+    <xs:attribute name="prefix"
+                  type="xs:NCName"
+                  use="optional" >
+      <xs:annotation>
+        <xs:documentation>This value is prefixed to the column name before putting it to values</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="removeGridType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="renameGridType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="addColumnType">
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnType"
+                  type="dataValueType"
+                  use="required" />
+    <xs:attribute name="expression"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:simpleType name="dataValueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="text" />
+      <xs:enumeration value="integral" />
+      <xs:enumeration value="decimal" />
+      <xs:enumeration value="boolean" />
+      <xs:enumeration value="date" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="filterRowsType">
+    <xs:attribute name="fromGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="toGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="columnName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="comparator"
+                  type="comparatorType"
+                  use="required" />
+    <xs:attribute name="value"
+                  type="xs:string"
+                  use="optional" />
+  </xs:complexType>
+
+  <xs:simpleType name="comparatorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="exists"/>
+      <xs:enumeration value="doesNotExist"/>
+      <xs:enumeration value="equalTo"/>
+      <xs:enumeration value="notEqualTo"/>
+      <xs:enumeration value="lessThan"/>
+      <xs:enumeration value="lessThanOrEqualTo"/>
+      <xs:enumeration value="greaterThan"/>
+      <xs:enumeration value="greaterThanOrEqualTo"/>
+      <xs:enumeration value="in"><xs:annotation><xs:documentation>for in operaiton, fieldName shoudl be specified as tableName.columnName</xs:documentation></xs:annotation></xs:enumeration>
+      <xs:enumeration value="notIn"><xs:annotation><xs:documentation>for notIn operaiton, fieldName shoudl be specified as tableName.columnName</xs:documentation></xs:annotation></xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="childTablesType">
+  	<xs:sequence>
+  		<xs:element name="childTable" minOccurs="1" maxOccurs="10">
+  			<xs:complexType>
+  				<xs:attribute name="childTableName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Name of child table</xs:documentation></xs:annotation></xs:attribute>
+  				<xs:attribute name="gridName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Grid to be used</xs:documentation></xs:annotation></xs:attribute>
+  				<xs:attribute name="parentKeyColumnNameInThisGrid" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Column name in this grid that is to have primary key of parent</xs:documentation></xs:annotation></xs:attribute>
+  			</xs:complexType>
+  		</xs:element>
+  	</xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bulkType">
+    <xs:attributeGroup ref="taskAttributes" />
+    <xs:attribute name="actionFieldName"
+                  type="xs:NCName"
+                  use="optional" />
+    <xs:attribute name="parentTableName"
+                  type="xs:NCName"
+                  use="optional" >
+    	<xs:annotation><xs:documentation>If you are to copy generated keys from a table that was inserted earlier from another grid, specify table.xml name</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="parentKeyColumnNameInThisGrid"
+                  type="xs:NCName"
+                  use="optional" >
+    	<xs:annotation><xs:documentation>Name of the column in this grid to which the generated keys from the parent table are to be copied.</xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="tableInsertTaskType">
+    <xs:attributeGroup ref="taskAttributes" />
+    <xs:attribute name="parentTableName"
+                  type="xs:NCName"
+                  use="optional" >
+    	<xs:annotation><xs:documentation>If you are to copy generated keys from a table that was inserted earlier from another grid, specify table.xml name</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="parentKeyColumnNameInThisGrid"
+                  type="xs:NCName"
+                  use="optional" >
+    	<xs:annotation><xs:documentation>Name of the column in this grid to which the generated keys from the parent table are to be copied.</xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+    <xs:complexType name="tableSaveTaskType">
+        <xs:attributeGroup ref="taskAttributes" />
+        <xs:attribute name="parentTableName"
+                      type="xs:NCName"
+                      use="optional" >
+            <xs:annotation>
+                <xs:documentation>If you are to copy generated keys from a table that was inserted earlier from another grid, specify table.xml name</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="parentKeyColumnNameInThisGrid"
+                      type="xs:NCName"
+                      use="optional" >
+            <xs:annotation>
+                <xs:documentation>Name of the column in this grid to which the generated keys from the parent table are to be copied.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="saveActionName"
+                      type="xs:NCName"
+                      use="optional" >
+            <xs:annotation>
+                <xs:documentation>If you have a field in which the save operation value, add, modify, delete, is supplied by the client, specify the field here, so that the corrresponding operation is carried out omn the table</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <!-- types used by Table -->
+  <xs:complexType name="columnType" >
+    <xs:attributeGroup ref="parameterAttributes" />
+    <xs:attribute name="dataSource"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="columnName"
+                  type="xs:NCName"
+                  use="optional"/>
+    <xs:attribute name="isKeyColumn"
+                  type="booleanType"
+                  use="optional"/>
+     <xs:attribute name="isClobColumn"
+                  type="booleanType"
+                  use="optional"/>
+	<xs:attribute name="basedOnColumnName"
+			  	  type="xs:NCName"
+			      use="optional">
+		<xs:annotation><xs:documentation>Is this column mandatory if another column has value?</xs:documentation></xs:annotation>
+	</xs:attribute>
+	<xs:attribute name="basedOnColumnValue"
+			  	  type="xs:NCName"
+			      use="optional">
+		<xs:annotation><xs:documentation>If this coulmn is mandatory only if another column has a specific value. for example if type is others, then others column is mandatory</xs:documentation></xs:annotation>
+	</xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="tableReferenceType" >
+    <xs:attribute name="referenceTableName"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="columns"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="referenceColumns"
+                  type="xs:string"
+                  use="required"/>
+  </xs:complexType>
+  <!-- types used by serviceList -->
+  <xs:complexType name="serviceEntryType">
+    <xs:attributeGroup ref="serviceEntryAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="taskEntryType">
+    <xs:sequence minOccurs="1"
+                 maxOccurs="1">
+      <xs:element name="task">
+        <xs:complexType>
+          <xs:choice maxOccurs="1"
+                     minOccurs="1">
+            <xs:element name="bulkTask"
+                        type="bulkType"/>
+            <xs:element name="tableDeleteTask"
+                        type="taskType"/>
+            <xs:element name="tableInsertTask"
+                        type="taskType"/>
+            <xs:element name="tableUpdateTask"
+                        type="taskType"/>
+            <xs:element name="storedProcedureTask"
+                        type="storedProcedureTaskType"/>
+            <xs:element name="tableSaveTask"
+                        type="tableSaveTaskType"/>
+            <xs:element name="tableFilterTask"
+                        type="tableFilterType"/>
+            <xs:element name="tableReadTask"
+                        type="tableTaskType"/>
+            <xs:element name="sqlTask"
+                        type="taskType"/>
+            <xs:element name="sqlExecutionTask"
+                        type="taskType"/>
+            <xs:element name="businessLogicTask"
+                        type="taskType"/>
+            <xs:element name="customLogicTask"
+                        type="taskType"/>
+            <xs:element name="handCodedTask"
+                        type="taskType"/>
+            <xs:element name="exilityTask"
+                        type="taskType"/>
+            <xs:element name="actionTask"
+                        type="taskType"/>
+            <xs:element name="debugTask"
+                        type="taskType"/>
+            <xs:element name="customCodeTask"
+                        type="customCodeTaskType"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="serviceEntryAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="groupEntryType">
+  	<xs:annotation><xs:documentation>several entries to be executed under one service request sharing common data</xs:documentation></xs:annotation>
+       <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element name="serviceEntries">
+          <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+              <xs:element name="serviceEntry"
+                          type="serviceEntryType"
+                          maxOccurs="unbounded"/>
+              <xs:element name="taskEntry"
+                          type="taskEntryType"
+                          maxOccurs="unbounded"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+ 	<xs:attributeGroup ref="serviceEntryAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="batchEntryType">
+  <xs:annotation><xs:documentation>Batch updates with commits after each execution</xs:documentation></xs:annotation>
+    <xs:attributeGroup ref="serviceEntryAttributes" />
+    <xs:attribute name="inputSqlName"
+    			  type="xs:NCName"
+    			  use="optional"
+    			  ><xs:annotation><xs:documentation>Sql template that generates rows for batch service. You can either use this, or combination of inputServiceName and inputGridName</xs:documentation></xs:annotation></xs:attribute>
+    <xs:attribute name="inputServiceName"
+                  type="xs:NCName"
+                  use="optional"><xs:annotation><xs:documentation>Service to be executed to get list of rows on which to execute batch service</xs:documentation></xs:annotation> </xs:attribute>
+    <xs:attribute name="inputGridName"
+                  type="xs:NCName"
+                  use="required"><xs:annotation><xs:documentation>Grid that is populated by inputService. batchService is executed for each row in this grid, with all its columns copied to dc.</xs:documentation></xs:annotation> </xs:attribute>
+    <xs:attribute name="batchServiceName"
+                  type="xs:NCName"
+                  use="required"><xs:annotation><xs:documentation>Service to be executed after running batch, for writing any log/remarks. </xs:documentation></xs:annotation> </xs:attribute>
+    <xs:attribute name="logServiceName"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Service to be executed for each row in inputGridName. Columns from inputGrid are avaialable in dc. Updates are committed after each execution.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
+  <xs:attributeGroup name="serviceEntryAttributes">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="allowAllInput"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="allowAllOutput"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="hasUserBasedSecurity"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="dataAccessType"
+                  type="accessType"
+                  use="required"/>
+    <xs:attribute name="serviceName"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Optinal. Defaults to name. If not qualified, and this entry is inside a folder structure, then service is also assumed to be in the same folder structure</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="submitAsBackgroundProcess"
+                  type="booleanType"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Should this service be executed in the background, and return to caller immediately?</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="fullyQualifiedClassName" type="xs:string" use="optional">
+    	<xs:annotation>
+    		<xs:documentation>If this is a service that is implemented as a java class, then specify the class name</xs:documentation>
+    	</xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="taskEntryAttributes">
+    <xs:attribute name="taskName"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="taskParameters"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="raiseExceptionIfNoWorkDone"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="repeatForRowsInGrid"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="messageParameters"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="prefix"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="gridName"
+                  type="xs:string"
+                  use="optional"/>
+  </xs:attributeGroup>
+
+  <xs:simpleType name="accessType">
+    <xs:restriction base="xs:NCName">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="readOnly"/>
+      <xs:enumeration value="readWrite"/>
+      <xs:enumeration value="autoCommit"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- types used by spec -->
+  <xs:complexType name="specType">
+    <xs:all>
+      <xs:element minOccurs="0"
+                  name="fields"
+                  type="fieldsType"/>
+      <xs:element minOccurs="0"
+                  name="lists"
+                  type="listsType"/>
+      <xs:element minOccurs="0"
+                  name="grids"
+                  type="gridsType"/>
+    </xs:all>
+  </xs:complexType>
+
+  <xs:complexType name="fieldsType">
+    <xs:sequence>
+      <xs:element name="fieldSpec"
+                  type="fieldType"
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="listsType">
+    <xs:sequence>
+      <xs:element name="listSpec"
+                  type="listType"
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gridsType">
+    <xs:sequence>
+      <xs:element name="gridSpec"
+                  type="gridType"
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- field describes a field required for a service -->
+  <xs:complexType name="fieldType">
+    <xs:attributeGroup ref="fieldAttributes"/>
+    <xs:attribute name="isFilterField"
+                  type="booleanType"
+                  use="optional"/>
+  </xs:complexType>
+
+  <!--  list describes an array of String. Note that lits actually extends field with few more fields -->
+  <xs:complexType name="listType">
+    <xs:attributeGroup ref="fieldAttributes"/>
+    <xs:attribute name="minCols"
+                  type="xs:byte"
+                  use="optional"/>
+    <xs:attribute name="maxCols"
+                  type="xs:byte"
+                  use="optional"/>
+  </xs:complexType>
+
+  <!-- service element is a simple element that has only attributes-->
+  <xs:complexType name="gridType">
+    <xs:sequence>
+      <xs:element name="columns"
+                  maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="fieldSpec"
+                        maxOccurs="unbounded"
+                        type="specColumnType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="isOptional"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="minRows"
+                  type="xs:byte"
+                  use="optional"/>
+    <xs:attribute name="maxRows"
+                  type="xs:byte"
+                  use="optional"/>
+  </xs:complexType>
+  <!-- column describes a column inside a grid -->
+  <xs:complexType name="specColumnType">
+    <xs:attributeGroup ref="fieldAttributes"/>
+  </xs:complexType>
+
+  <xs:attributeGroup name="fieldAttributes">
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isOptional"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="defaultValue"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="dataElementName"
+                  type="xs:NCName"
+                  use="optional"/>
+    <xs:attribute name="fromField"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="toField"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="basedOnField"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="basedOnFieldValue"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="descServiceId"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="descFields"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isUniqueField"
+                  type="xs:string"
+                  use="optional" />
+    <xs:attribute name="validValues"
+                  type="xs:string"
+                  use="optional" />
+  </xs:attributeGroup>
+
+  <!-- Types used by sql -->
+  <xs:complexType name="inputParametersType">
+    <xs:sequence>
+      <xs:element name="sqlParameter"
+                  type="sqlParameterType"
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="outputParametersType">
+    <xs:sequence>
+      <xs:element name="parameter"
+                  type="parameterType"
+                  maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sqlParameterType">
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="label"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="isOptional"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="defaultValue"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="dataElementName"
+                  type="xs:NCName"
+                  use="optional"/>
+    <xs:attribute name="parameterType"
+                  type="sqlParameterTypeType"
+                  use="optional" />
+    <xs:attribute name="index"
+                  type="xs:byte"
+                  use="optional" />
+    <xs:attribute name="toUpper"
+                  type="booleanType"
+                  use="optional" />
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Table name is used for lists if the list is a colun in a grid</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="basedOnColumnName"
+                  type="xs:NCName"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>If table name is used, and you want to filter the column based on value in another column specify column name, and value(another attribute)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="basedOnColumnValue"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Goes along with basedOnColumnName</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="doNotFormat"
+                  type="booleanType"
+                  use="optional" >
+      <xs:annotation>
+        <xs:documentation>Normal parameters are formatted based on the data type. For example string is enclosed in quotes. If you do not want this, use this attribute. However, single quotes are still replaced with two single quotes (escaped)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="justLeaveMeAlone"
+                  type="booleanType"
+                  use="optional" >
+      <xs:annotation>
+        <xs:documentation>Not recommended at all. Keeps the value as it is. You have to ensure that any possibel presence of single quote is by design.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="dataType"
+                  type="dt:declaredDataTypes"
+                  use="optional" >
+      <xs:annotation>
+        <xs:documentation>Use data type if you do not have a data dictionary entry for this parameter. This is the preferred method if you use records in your project. </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- possible values for basic data type  -->
+  <xs:simpleType name="sqlParameterTypeType">
+    <xs:restriction base="xs:NCName">
+      <xs:enumeration value="normal" />
+      <xs:enumeration value="list" />
+      <xs:enumeration value="filter" />
+      <xs:enumeration value="combined" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- possible sql types  -->
+  <xs:simpleType name="sqlTypes">
+    <xs:restriction base="xs:NCName">
+      <xs:enumeration value="dynamicSql" />
+      <xs:enumeration value="preparedStatement" />
+      <xs:enumeration value="storedProcedure" />
+    </xs:restriction>
+  </xs:simpleType>
+
+
+  <!-- types used by dataTypes element -->
+  <xs:complexType name="textDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"><xs:annotation><xs:documentation>What is the message to be used to inform the user that the field is in error. While defining this message in message.xml note that @1 is for field name, while @2 is for value.</xs:documentation></xs:annotation></xs:attribute>
+    <xs:attribute name="regex"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="minLength"
+                  type="xs:integer"
+                  use="optional"/>
+    <xs:attribute name="maxLength"
+                  type="xs:integer"
+                  use="required"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation></xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="integralDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="minValue"
+                  type="xs:float"
+                  use="optional"/>
+    <xs:attribute name="maxValue"
+                  type="xs:float"
+                  use="optional"/>
+    <xs:attribute name="allowNegativeValue"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="decimalDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="minValue"
+                  type="xs:float"
+                  use="optional"/>
+    <xs:attribute name="maxValue"
+                  type="xs:float"
+                  use="optional"/>
+    <xs:attribute name="allowNegativeValue"
+                  type="booleanType"
+                  use="optional"/>
+    <xs:attribute name="numberOfDecimals"
+                  type="xs:integer"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="dateDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="maxDaysBeforeToday"
+                  type="xs:integer"
+                  use="optional"/>
+    <xs:attribute name="maxDaysAfterToday"
+                  type="xs:integer"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="includesTime"
+                  type="booleanType"
+                  use="optional" />
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="timeStampDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="booleanDataTypeType">
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required"/>
+    <xs:attribute name="messageName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="trueValue"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="falseValue"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="description"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="formatter"
+                  use="optional"
+                  type="xs:NCName">
+      <xs:annotation>
+        <xs:documentation> name  of javascript funciton that is used by the client fir dormatting this value</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="cachedLists">
+    <xs:complexType>
+      <xs:sequence minOccurs="1">
+        <xs:element name="grids">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+              <xs:element name="grd"
+                          type="cachedGridType" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="sqls"
+                    type="xs:string"
+                    use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="cachedGridType">
+    <xs:sequence>
+      <xs:element name="row"
+                  maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="value"
+                        type="xs:string" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:element name="cachedDcs">
+    <xs:complexType>
+      <xs:sequence maxOccurs="1"
+                   minOccurs="1">
+        <xs:element name="dcs">
+          <xs:complexType>
+            <xs:sequence minOccurs="1"
+                         maxOccurs="unbounded">
+              <xs:element name="dataCollection"
+                          type="dcType"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="dcType">
+    <xs:sequence>
+      <xs:element name="values"
+                  minOccurs="0"
+                  maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="1">
+            <xs:element name="value">
+              <xs:complexType>
+                <xs:attribute name="name"
+                              type="xs:NCName"
+                              use="required" />
+                <xs:attribute name="value"
+                              type="xs:string"
+                              use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="lists"
+                  minOccurs="0"
+                  maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="1">
+            <xs:element name="list">
+              <xs:complexType>
+                <xs:attribute name="name"
+                              type="xs:NCName"
+                              use="required" />
+                <xs:attribute name="values"
+                              type="xs:string"
+                              use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="grids"
+                  minOccurs="0"
+                  maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence minOccurs="1">
+            <xs:element name="grid"
+                        type="cachedGridType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name"
+                  type="xs:NCName"
+                  use="required" />
+  </xs:complexType>
+
+  <!-- Bug 845 - Exility Local Service Verbs should work on server side also (End) -->
+  <xs:complexType name="lsetValueType">
+    <xs:annotation>
+      <xs:documentation>Set value to a variable.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="condition"
+                  type="lcondition"/>
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="expression"
+                  type="lexpression"/>
+  </xs:complexType>
+
+  <xs:simpleType name="lcondition">
+    <xs:annotation>
+      <xs:documentation>onSuccess, onFailure to condition this step based on previous step, or a logical expression to be evaluated true for this steo to be executed.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string" >
+      <xs:maxLength value="200" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="lexpression">
+    <xs:annotation>
+      <xs:documentation>Make sure to enclose string constants in quotes.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="llistType">
+    <xs:annotation>
+      <xs:documentation>Set constant values to a list.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="condition"
+                  type="lcondition"/>
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="values"
+                  type="xs:string">
+      <xs:annotation>
+        <xs:documentation>provide comma separated values. Quotes SHOULD NOT be put for text.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="lappendToListType">
+    <xs:annotation>
+      <xs:documentation>Append value of an expression to a list. List is cretaed if required.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="condition"
+                  type="lcondition"/>
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="expression"
+                  type="lexpression">
+      <xs:annotation>
+        <xs:documentation>provide comma separated values. Quotes SHOULD NOT be put for text.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="lgridType">
+    <xs:annotation>
+      <xs:documentation>Create a grid from lists. You should create lists before using this.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="condition"
+                  type="lcondition"/>
+    <xs:attribute name="name"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="columns"
+                  type="xs:string">
+      <xs:annotation>
+        <xs:documentation>provide comma separated names of lists that you have already created. Each list becomes a column in the grid.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="laddColumnType">
+    <xs:annotation>
+      <xs:documentation>Add a column to an existing grid. Similar to adding a variable to dc.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="gridName"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="columnName"
+                  type="xs:string"
+                  use="required"/>
+    <xs:attribute name="expression"
+                  type="lexpression"
+                  use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="llookupType">
+    <xs:annotation>
+      <xs:documentation>Get values form a table for the supplied primary key value</xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0">
+      <xs:element name="selectionCriterion"
+                  type="lselectionCriterion" />
+    </xs:choice>
+    <xs:attribute name="condition"
+                  type="lcondition"
+                  use="optional" />
+    <xs:attribute name="source"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="prefix"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>optional prefix to be attached to the column names</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="lselectionCriterion">
+    <xs:annotation>
+      <xs:documentation>conditions on columns based on which rows are selected</xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0"
+               maxOccurs="unbounded">
+      <xs:element name="condition">
+        <xs:complexType>
+          <xs:attribute name="columnName"
+                        type="xs:string"
+                        use="required" />
+          <xs:attribute name="comparator"
+                        type="lcomparator"
+                        use="required" />
+          <xs:attribute name="fieldName"
+                        type="xs:string"
+                        use="optional" >
+                        <xs:annotation>
+                        		<xs:documentation>Field name in dc that has the value to be used for comparison. For in and notIn, use tableName.columnName as field name to get list of values to be checked for in/notIn</xs:documentation>
+                        	</xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="value" 
+          				type="xs:string"
+          				use="optional">
+          				<xs:annotation><xs:documentation>If value to be compared is a constant, use this and not field</xs:documentation></xs:annotation>
+          				
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  <xs:simpleType name="lcomparator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="equalTo" />
+      <xs:enumeration value="lessThan" />
+      <xs:enumeration value="greaterThan" />
+      <xs:enumeration value="lessThanOrEqualTo" />
+      <xs:enumeration value="greaterThanOrEqualTo" />
+      <xs:enumeration value="notEqualTo" />
+      <xs:enumeration value="contains" />
+      <xs:enumeration value="startsWith" />
+      <xs:enumeration value="filter" >
+        <xs:annotation>
+          <xs:documentation>This is a filter field on the screen. Comparator and value decided based automatically.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="tableFilterType">
+    <xs:choice minOccurs="0">
+      <xs:element name="selectionCriterion"
+                  type="lselectionCriterion" />
+    </xs:choice>
+    <xs:attribute name="condition"
+                  type="lcondition"
+                  use="optional" />
+    <xs:attribute name="taskName"
+                  type="xs:string"
+                  use="required">
+    </xs:attribute>
+    <xs:attribute name="gridName"
+                  type="xs:string"
+                  use="optional"/>
+    <xs:attribute name="columnNames"
+                  type="xs:string"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Defaults to all columns. Use this only if you can not live with all columns.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sortByColumns"
+                  use="optional"
+                  type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Comma separated names of existing columns to be sorted by order specified by sortOrder</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="sortOrder"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>Relevant only if sortByColumns is specified. Defaults to ascending.</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="asc"/>
+          <xs:enumeration value="desc" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="eliminateDuplicates"
+                  use="optional">
+      <xs:annotation>
+        <xs:documentation>After sorting, should the duplicates (as per fields being sorted) be eliminated?</xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="true"/>
+          <xs:enumeration value="false" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+      <xs:attribute name="migratedFromLookUp" type="booleanType" use="optional">
+          <xs:annotation>
+              <xs:documentation>LookupStep was not selecting special fields, and it was not adding as clause if columnNAme was different from name. If you migrated from a lookup step, and if you want filter to behave the same way.</xs:documentation>
+          </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="recordName"
+      				type="xs:NCName"
+      				use="optional"
+      	><xs:annotation><xs:documentation>If this is record based, and not table based</xs:documentation></xs:annotation>
+      </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="lstopType">
+    <xs:attribute name="condition"
+                  type="lcondition"/>
+  </xs:complexType>
+  <xs:complexType name="lsaveType">
+    <xs:attributeGroup ref="ltableAttributes" />
+  </xs:complexType>
+  <xs:attributeGroup name="ltableAttributes">
+    <xs:attribute  name="condition"
+                   type="lcondition"
+                   use="optional" />
+    <xs:attribute name="table"
+                  type="xs:string"
+                  use="required" />
+  </xs:attributeGroup>
+
+  <xs:complexType name="lsaveGridType">
+    <xs:attribute name="condition"
+                  type="lcondition"
+                  use="optional" />
+    <xs:attribute name="table"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="grid"
+                  type="xs:string"
+                  use="required">
+    </xs:attribute>
+    <xs:attribute name="saveOption">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="save">
+            <xs:annotation>
+              <xs:documentation>Save each row. This is the default if bulkAction is not found in grid</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="delete">
+            <xs:annotation>
+              <xs:documentation>delete corresponding rows</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="bulkAction">
+            <xs:annotation>
+              <xs:documentation>"This is the default if the a field called bulkAction is supplied by client</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="ldeleteType">
+    <xs:attributeGroup ref="ltableAttributes" />
+  </xs:complexType>
+
+  <xs:complexType name="lmassUpdateType">
+    <xs:all>
+      <xs:element name="selectionCriterion"
+                  type="lselectionCriterion" />
+    </xs:all>
+    <xs:attribute name="condition"
+                  type="lcondition"
+                  use="optional" />
+    <xs:attribute name="table"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="columnsToUpdate"
+                  type="xs:string"
+                  use="required" />
+    <xs:attribute name="valuesToUpdate"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="lmassDeleteType">
+    <xs:all>
+      <xs:element name="selectionCriterion"
+                  type="lselectionCriterion" />
+    </xs:all>
+    <xs:attribute name="condition"
+                  type="lcondition"
+                  use="optional" />
+    <xs:attribute name="table"
+                  type="xs:string"
+                  use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="laggregateType">
+    <xs:choice minOccurs="1" maxOccurs="1">
+      <xs:element name="aggregatorColumns">
+        <xs:complexType>
+          <xs:choice minOccurs="1"
+                     maxOccurs="unbounded">
+            <xs:element name="aggregatorColumn">
+              <xs:complexType>
+                <xs:attribute name="name"
+                              type="xs:string"
+                              use="required" />
+                <xs:attribute name="aggregator"
+                              use="required">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="sum"/>
+                      <xs:enumeration value="average"/>
+                      <xs:enumeration value="concat">
+                        <xs:annotation>
+                          <xs:documentation>Comma is the default separator. You can change this usiing separator attribute</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                      <xs:enumeration value="first"/>
+                      <xs:enumeration value="last"/>
+                      <xs:enumeration value="min"/>
+                      <xs:enumeration value="max"/>
+                      <xs:enumeration value="append">
+                        <xs:annotation>
+                          <xs:documentation>Two columns will be appended to each other. Both columns must have append as aggregator. separator of first on is used as separator between the columns, and that of second column is to separate such pairs.</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="separator"
+                              type="xs:string"
+                              use="optional" >
+                  <xs:annotation>
+                    <xs:documentation>Used if aggregator function is concat or append. Default is comma for concat and hiphen and semicolon for append</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="gridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="newGridName"
+                  type="xs:NCName"
+                  use="required" />
+    <xs:attribute name="groupByColumns"
+                  type="xs:string"
+                  use="required">
+      <xs:annotation>
+        <xs:documentation>Comma separated colum names to be used for grouping.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
+  <xs:element name="record">
+  	<xs:complexType>
+  		<xs:sequence>
+  			<xs:element name="fields" minOccurs="0" maxOccurs="1">
+  				<xs:complexType>
+  					<xs:sequence minOccurs="1" maxOccurs="unbounded">
+  						<xs:element name="field">
+  						<xs:complexType>
+  							<xs:sequence>
+  								<xs:element name="pageFieldAttributes" minOccurs="0" maxOccurs="1">
+  									<xs:complexType>
+		  								<xs:attribute name="listServiceId" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>list service if this a drop-down</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="listServiceFields" type="xs:string" use="optional"><xs:annotation><xs:documentation>field values to be sent along with list service request</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="nbrCharsToShowSuggestions" type="xs:int" use="optional"><xs:annotation><xs:documentation>If suggestions are to be shown for this fields, specify the number of characters user has to type before fetching suggestions from server. Note that 0 does not make sense, because, in that case, you should be able to make it a listService</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="descriptionServiceName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>description service name to be triggered on this field</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="descriptionServiceFields" type="xs:string" use="optional"><xs:annotation><xs:documentation>field values to be sent along with description service request</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="formatter" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>name of formatter to be used when this field value is to be output on a page/report. Like amt,usd,inr2 etc.. that you woudl have defined in your project</xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="blankOption" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="basedOnFieldValue" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="codePickerSrc" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="columnAverage" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="columnSum" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="doNotValidate" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="descServiceId" type="xs:NCName" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="descQueryFields" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="doNotMatchDescNames" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="isUniqueField" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="keyValue" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="onChangeActionName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="onFocusActionName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="onBlurActionName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="noAutoLoad" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="repeat" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="rowSum" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="rowAverage" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="selectFirstOption" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="toBeSentToServer" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="uncheckedValue" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="checkedValue" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="selectionValueType" type="xs:string" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="multipleSelection" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="sameListForAllRows" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="allowHtmlFormattedText" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="matchStartingChars" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="validateOnlyOnUserChange" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="minSelections" type="xs:int" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="maxSelections" type="xs:int" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+		  								<xs:attribute name="supressDescOnLoad" type="booleanType" use="optional"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:attribute>
+  									</xs:complexType>
+  								</xs:element>
+  							</xs:sequence>
+  								<xs:attribute name="name" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Name is to be unique within a record. Matching name across records should be of same value type to avoid possible data type confusion when teh field may be used outside the context of this record.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="columnType" type="fieldColumnType" use="required"><xs:annotation><xs:documentation>what type of a column is this on the server side.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="label" type="xs:string" use="required"><xs:annotation><xs:documentation>Label</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="columnName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>If this is a table or view, provide its name in rdbms. This feature allows you to have table names in an rdbms according to naming convention there, and continue to use camelCase naming convention in your application</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="referredRecord" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>record that this field refers to, either as parent or a related record</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="referredField" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>name of the field being referred in the referred record.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="description" type="xs:string" use="required"><xs:annotation><xs:documentation>description</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="dataType" type="dt:declaredDataTypes" use="optional"><xs:annotation><xs:documentation>select a declared data type for this field. </xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="valueList" type="xs:string" use="optional"><xs:annotation><xs:documentation>if valid values is a small list and is known at design time, specify them in the form internalvalue,displayValue;val2,dispval2.....</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="isOptional" type="booleanType" use="optional"><xs:annotation><xs:documentation>set it to true if this field is optional.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="defaultValue" type="xs:string" use="optional"><xs:annotation><xs:documentation>Default value to be used if this is mandatory, and value is not specified.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="basedOnField" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>If this field value is required if a companion field has value.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="basedOnFieldValue" type="xs:string" use="optional"><xs:annotation><xs:documentation>if the basedOn field further depends on the actual value of the field, specify it here. Example if shape="polinomial" then numberOfSides is mandatory.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="otherField" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>You may have a pair of fields such that one and only one of them should have value.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="fromField" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>In case this field to-field of a from-to pair, specify the name of from field. For a pair, you should specify only once. That is, once you have provided fromField, you should not specify this field as toField on teh other field. We haev provided both fromField and toField to allow a field to participate in two pairs.</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="toField" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>In case this field is a from-field of a from-to pair, specify the to-field</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="messageName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>message name to be used in case this field fails validation. Do you want Exility to generate key while inserting rows into this table?</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="defaultInputType" type="inputFieldType" use="optional" ><xs:annotation><xs:documentation>select a field type to be used for this field to be input from a page</xs:documentation></xs:annotation></xs:attribute>
+  								<xs:attribute name="isNullable" type="booleanType" use="optional"><xs:annotation><xs:documentation>Is this nullable on rdbms? We discourage nullable columns</xs:documentation></xs:annotation></xs:attribute>
+								<xs:attribute name="dataSource" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>If value of this field is to be copied from another field, specify that other field in this attribute. Specifically, if data for this record is in a grid, and the value for this field is to be copied from a field in values collection.</xs:documentation></xs:annotation></xs:attribute>
+  						</xs:complexType>
+  					</xs:element>
+  					</xs:sequence>
+  				</xs:complexType>
+  			</xs:element>
+  		</xs:sequence>
+		<xs:attribute name="name" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Name is to be unique within a record. Matching name across records should be of same value type to avoid possible data type confusion when teh field may be used outside the context of this record.</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="aliasName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>name of record for which this is an alias. Once you specify this attribute, you shoudl nto specify any fields for this row. This feature is required if you want to use the same record for more than one table in a page.</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="recordType" type="recordTypeType" use="required"><xs:annotation><xs:documentation>If this is a table or view, provide its name in rdbms. This feature allows you to have table names in an rdbms according to naming convention there, and continue to use camelCase naming convention in your application</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="tableName" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>Description</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="description" type="xs:string" use="required"><xs:annotation><xs:documentation>type of record</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="parentRecord" type="xs:NCName" use="optional"><xs:annotation><xs:documentation>Parent table, in case this is a table. If this is a view, then the base table/view that this view is based on.</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="relatedRecords" type="xs:string" use="optional"><xs:annotation><xs:documentation>comma separated list of records that are used to create this view</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="isAudited" type="booleanType" use="optional"><xs:annotation><xs:documentation>Do you want Exility to write audit logs automatically for this table?</xs:documentation></xs:annotation></xs:attribute>
+		<xs:attribute name="keyToBeGenerated" type="booleanType" use="optional"><xs:annotation><xs:documentation>Do you want Exility to generate key while inserting rows into this table?</xs:documentation></xs:annotation></xs:attribute>
+  	
+  	</xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="recordTypeType">
+  	<xs:restriction base="xs:NCName">
+  		<xs:enumeration value="storage"><xs:annotation><xs:documentation>an rdbms table</xs:documentation></xs:annotation></xs:enumeration>
+  		<xs:enumeration value="view"><xs:annotation><xs:documentation>a view that has data from one or more tables and views</xs:documentation></xs:annotation></xs:enumeration>
+  		<xs:enumeration value="structure"><xs:annotation><xs:documentation>Not present in rdbms. Set of fields used in the service, but not persisted in rdbms</xs:documentation></xs:annotation></xs:enumeration>
+  	</xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="inputFieldType">
+  	<xs:restriction base="xs:NCName">
+  		<xs:enumeration value="assistedInputField"/>
+  		<xs:enumeration value="textInputField"/>
+  		<xs:enumeration value="radioButtonField"/>
+  		<xs:enumeration value="checkBoxField"/>
+  		<xs:enumeration value="checkBoxGroupField"/>
+  		<xs:enumeration value="hiddenField"/>
+  		<xs:enumeration value="passwordField"/>
+  		<xs:enumeration value="selectionField"/>
+  		<xs:enumeration value="textAreaField"/>
+  		<xs:enumeration value="outputField"/>
+  	</xs:restriction>
+  </xs:simpleType>
+
+	<xs:simpleType name="fieldColumnType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="data"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="primaryKey"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="parentKey"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="foreignKey"><xs:annotation><xs:documentation></xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="logicalPrimaryKey"><xs:annotation><xs:documentation>Rows in the table would have unique value for this field, but this is not designated as primaary like. Like loginId</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="createdTimeStamp"><xs:annotation><xs:documentation>Special field in table that exility knows how to handle.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="modifiedTimeStamp"><xs:annotation><xs:documentation>Special field in table that exility knows how to handle.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="createdByUser"><xs:annotation><xs:documentation>Special field in table that exility knows how to handle.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="modifiedByUser"><xs:annotation><xs:documentation>Special field in table that exility knows how to handle.</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="view"><xs:annotation><xs:documentation>field in a view</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="temp"><xs:annotation><xs:documentation>not persisted in data base.Example, a calcuated field</xs:documentation></xs:annotation></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="purposeType">
+		<xs:restriction base="xs:NCName">
+			<xs:enumeration value="primaryKeyBasedRead"/>
+			<xs:enumeration value="save"/>
+			<xs:enumeration value="selectiveUpdate"/>
+			<xs:enumeration value="filter"/>
+			<xs:enumeration value="primaryKeyBasedaread"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="childTableTasksType">
+		<xs:choice >
+			<xs:element name="childTableTask">
+				<xs:complexType>
+					<xs:attribute name="recordName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>Name of record that represents the table</xs:documentation></xs:annotation></xs:attribute>
+					<xs:attribute name="gridName" type="xs:NCName" use="required"><xs:annotation><xs:documentation>grid name of rdata Name of record</xs:documentation></xs:annotation></xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

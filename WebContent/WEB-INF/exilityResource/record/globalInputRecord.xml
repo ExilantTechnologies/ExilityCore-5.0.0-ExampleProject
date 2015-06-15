@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<record xmlns="http://com.exilant.exility/schema" 
+       name="globalInputRecord"
+       recordType="structure"
+       description="fields that are used as input in all services"
+       >
+       <fields>
+       	<field 
+       		name="useId"
+       		label="User Id" 
+       		columnType="data" 
+       		dataType="number" 
+       		description="logged in user id that is used as modifiedBy and creartedBy field in all table" 
+       		/>
+       		<!-- 
+       			add any other fields you may be using in your project as global fields. 
+       			Global fields are typically extracted on login process, 
+       			and kept in the session and added to input data 
+       		 -->
+       </fields>
+ </record>

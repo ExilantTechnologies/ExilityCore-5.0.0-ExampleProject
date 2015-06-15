@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page"
+      name="chartPanel"
+      module="demo"
+      onLoadActionNames="drawCharts"
+      scriptsToInclude="../../css/demo/chartPanel.css,
+      					../../js/demo/chartPanel.js,
+      					../../js/api/flotr/lib/prototype-1.6.0.2.js,
+      					../../js/api/flotr/flotr-0.1.0alpha.js"
+      >
+      
+      <actions>
+      <localAction name="drawCharts" functionName="drawCharts"/>
+      </actions>
+        
+      <panels>
+      
+      <tabPanel name="charts">
+ 	     <elements>
+
+      <chartPanel name="bar" 
+				label="BAR CHART"
+      			tabLabel="bar"
+
+      			chartType="bar" 
+      			tableName="barData"
+	           	yAxisColumn="districtCount"  
+	            xAxisColumn="state" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="2"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+   <!--    
+      <chartPanel name="multipleBar" 
+      			tabLabel="multiBar"
+				label="Multiple Bar"
+				
+      			chartType="multipleBar" 
+      			tableName="multipleBarData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="stacked" 
+      			label="STACKED BAR"
+      			tabLabel="stackBar"
+      			
+      			chartType="stacked" 
+      			tableName="stackedData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="horizontalBar" 
+      			label="HORIZONTAL BAR"
+      			tabLabel="horBar"
+      			
+      			chartType="horizontalBar" 
+      			tableName="horizontalBarData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+
+      <chartPanel name="horizontalStacked" 
+      			label="HORIZONTAL STACKED BAR"
+      			tabLabel="horStackBar"
+      			
+      			chartType="horizontalStacked" 
+      			tableName="horizontalStackedData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="line" 
+      			label="LINE"
+      			tabLabel="line"
+      			
+      			chartType="line" 
+      			tableName="lineData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="multipleLine" 
+      			label="MULTIPLE LINE"
+      			tabLabel="multiLine"
+      			
+      			chartType="multipleLine" 
+      			tableName="multipleLineData"
+
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="lineAndBar" 
+      			label="LINE AND BAR"
+      			tabLabel="line &amp; Bar"
+      			
+      			chartType="lineAndBar" 
+      			tableName="lineAndBarData"
+      			
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="scatter" 
+      			label="SCATTER CHART"
+      			tabLabel="scatter"
+      			
+      			chartType="scatter" 
+      			tableName="scatterData"
+	           	
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      -->
+      <chartPanel name="pie" 
+      			label="PIE CHART"
+      			tabLabel="pie"
+      			
+      			chartType="pie" 
+      			tableName="pieData"
+	           	
+	           	yAxisColumn="department"  
+	            xAxisColumn="count" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+   <!--              
+      <chartPanel name="speedometer" 
+      			label="SPEEDOMETER"
+      			tabLabel="speedo"
+      			
+      			chartType="speedometer" 
+      			tableName="speedometerData"
+	           	
+	           	yAxisColumn="department"  
+	            xAxisColumn="count" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+
+      <chartPanel name="radar" 
+      			label="RADAR CHART"
+      			tabLabel="radar"
+      			
+      			chartType="radar" 
+      			tableName="radarData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="bubble" 
+      			label="BUBBLE CHART"
+      			tabLabel="bubble"
+      			
+      			chartType="bubble" 
+      			tableName="bubbleData"
+	           	
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="run" 
+      			label="RUN CHART"
+      			tabLabel="run"
+      			chartType="run" 
+      			tableName="runData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="bullet" 
+      			label="BULLET CHART"
+      			tabLabel="bullet"
+      			chartType="bullet" 
+      			tableName="bulletData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="sunBurst" 
+      			label="SUN BURST CHART"
+      			tabLabel="sunBurst"
+      			chartType="sunBurst" 
+      			tableName="sunBurstData"
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+      
+      <chartPanel name="sankey" 
+      			label="SANKEY CHART"
+      			tabLabel="sankey"
+      			
+      			chartType="sankey" 
+      			tableName="sankeyData"
+	           	
+	           	yAxisColumn="state"  
+	            xAxisColumn="districtCount" 
+	            helpTextColumn="helpText"
+	            
+	          	rawDataDisplay="value"
+	      		colors="red,black,#aabbcc, #cc2211,blue"
+	            hideLegend="false"
+	            legendNbrColumns="1"
+				legendLabelFormatter ="legendFormatter"
+	            legendLabelBoxBorderColor="red"
+	            legendPosition="se"
+	            legendMargin="1"
+	            legendBackgroundColor="white" 
+	            legendBackgroundOpacity="0.5"
+	        	
+				marginLeft="10"
+				marginBottom="11"
+	            barLabelLeftMargin="5" 
+	            barLabelBottomMargin="6"
+				yLabelMaxWidth="26"
+	            
+	            lineWidth="5"
+	            barWidth="0.5"
+	            
+	            gridColor="green"
+	            tickColor="blue"
+	            	
+	            showFilledPoints="true"
+	            pointsRadius="5"
+	            pointsFillColor="yellow"                
+	            
+	            onClickFunctionName="pieClicked"
+	          	onMoveFunctionName="movedOnPie"
+	          	xLabelFormatterFunction="xLabelFormatter"
+	          	yLabelFormatterFunction="yLabelFormatter"
+	          	labelColor="blue"
+	          	shadowSize="6"
+	            labelLeftMargin="12" 
+	            labelBottomMargin="3" 
+                />
+-->
+      	</elements>
+      </tabPanel>
+      
+      </panels>
+</page>
+

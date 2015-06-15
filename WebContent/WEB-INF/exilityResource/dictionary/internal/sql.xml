@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema">
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+  <groups>
+    <dataGroup name="sql"
+               label="Sql"  >
+      <elements>
+      
+        <dataElement  name="toBeExecuted"
+                      dataType="boolean"
+                      label="To be Executed?"
+                              />
+        <dataElement name="sqlType"
+                     dataType="entityName"
+                     label="Sql type"
+                             />
+        <dataElement name="sql"
+                     dataType="text"
+                     label="SQL"
+                             />
+        <dataElement name="storedProcedureName"
+                     dataType="entityName"
+                     label="Stored prodedure name"
+                             />
+        <dataElement name="minParameters"
+                     dataType="number"
+                     label="Min parameters"
+                     />
+        <dataElement name="parameterType"
+                     dataType="entityName"
+                     label="Parameter type"
+                     />
+        <dataElement name="index"
+                     dataType="number"
+                     label="Row number"
+                     />
+        <dataElement name="toUpper"
+                     dataType="boolean"
+                     label="Convert to UPPER CASE"
+                     />
+        <dataElement name="gridName"
+                     dataType="entityName"
+                     label="Grid name"
+                     />
+        <dataElement name="basedOnColumnName"
+                     dataType="entityName"
+                     label="Filter column name"
+                     />
+        <dataElement name="basedOnColumnValue"
+                     dataType="text"
+                     label="Value to match"
+                     />
+        <dataElement name="doNotFormat"
+                     dataType="boolean"
+                     label="Format for SQL"
+                     />
+        <dataElement name="justLeaveMeAlone"
+                     dataType="boolean"
+                     label="Escape single quotes"
+                     />
+      </elements>
+    </dataGroup>
+  </groups>
+</dataDictionary>

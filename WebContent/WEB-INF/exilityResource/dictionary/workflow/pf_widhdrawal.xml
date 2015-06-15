@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataDictionary xmlns="http://com.exilant.exility/schema" >
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+    <groups>
+        <dataGroup name="workflow"
+                   label="Workflow"
+                   businessDescription="Used for workflow project.">
+            <elements>
+                <dataElement name="employeeName"
+                             dataType="text"                            
+                             label="Employee Name"
+                             />
+                <dataElement name="designation"
+                             dataType="text"                           
+                             label="Designation"
+                             businessDescription="Designation of an employee in the org"
+                             />
+                <dataElement name="department"
+                             dataType="text"                            
+                             label="Department Name"
+                             businessDescription="Commonly used for various attributes"
+                             />
+                <dataElement name="employeeId"
+                             dataType="id"
+                             label="Employee Id"
+                             />
+                <dataElement  name="purposeOfPFWithdrawal"
+                              dataType="description"
+                              label="Purpose of PF Withdrawal" />   
+                              
+                <dataElement  name="appliedAmount"
+                              dataType="number"
+                              label="Applied Amount for PF Widhdrawal" />                        
+           
+            </elements>
+        </dataGroup>
+    </groups>
+</dataDictionary>

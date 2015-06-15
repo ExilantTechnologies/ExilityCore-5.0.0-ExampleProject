@@ -1,0 +1,106 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*//* tab labels use -ve margin. Hence have extra margin at this level */
+#editingArea
+{
+    margin-top: 15px;
+}
+/* tabs centered by fixing left of the first one */
+#tableAttributesTab
+{
+    margin-left:370px; /* so that tabs are centered */
+}
+
+/* contents inside the panel should mind their top for the tab labels */
+#editingAreaTabs
+{
+    padding-top:20px;
+    height:680px;
+}
+
+
+/* column widths for table attributes panel */
+#tableAttributesCol1, #tableAttributesCol2, #tableAttributesCol3
+{
+    width:150px;
+}
+
+#tableAttributesCol4
+{
+    width:550px;
+}
+/* thin white row separator because of large amount of text, except for the last row */
+#colAttributes td, #tableAttributes td
+{
+    padding-top:6px;
+    padding-bottom:6px;
+    border-bottom:solid 1px #FBFBFB;
+}
+
+#colAttributes tr:last-child td, #tableAttributes tr:last-child td
+{
+    border-bottom:none;
+}
+
+/* grid of columns and the attributes are tds in a table. Ensure that the grid aligns to top*/ 
+div#columnArea>table>tbody>tr>td
+{
+    vertical-align:top;
+}
+
+#columnAreaCol1, #columnAreaCol2
+{
+    width:87px; //* together 174px */
+}
+#columnAreaCol3, #columnAreaCol4
+{
+    width:413px; //* together 826 */
+}
+/* columns widths in col attriubutes. */
+#columnsCol1
+{
+    width:171px;
+}
+#colAttributesCol1, #colAttributesCol2, #colAttributesCol3
+{
+    width:150px;
+}
+#colAttributesCol4
+{
+    width:375px;
+}
+
+#columnsMoveFirst, #columnsNewRow, #tableNameLabel
+{
+    margin-left:150px; /* so that it stands apart from navigation buttons */
+}
+
+/* highlight selected row */
+.selectedListRow
+{
+    cursor:default;
+    background: url("../../images/tabBgBlue.png") repeat scroll 0px 0px transparent;
+}
+
+.btnPanel
+{
+    margin-left:805px;
+}

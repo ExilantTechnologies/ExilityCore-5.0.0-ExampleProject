@@ -1,0 +1,36 @@
+
+ var ele;
+var P2 = new PM.ExilityPage(window, 'testChart');
+P2.onLoadActionNames = [ 'foo'];
+P2.pageWidth = 1028;
+P2.pageHeight = 700;
+P2.breadCrumpTitle = 'testChart';
+P2.hasChartFields = true;
+ele = new PM.PieChart();
+ele.dataType = 'text';
+ele.noAutoLoad = true;
+ele.reportServiceId = 'pieData';
+ele.xaxiscolumn = 'x';
+ele.yaxiscolumn = 'y';
+ele.showLegend = true;
+ele.bubbleradiusdenominator = '1.0';
+ele.legendNbrColumns = 3;
+ele.legendLabelFormatter = 'myLabelFormatter';
+ele.legendLabelBoxBorderColor = 'red';
+ele.legendContainer = 'pieLegend';
+ele.legendBackgroundColor = 'grey';
+ele.legendBackgroundOpacity = '0.5';
+ele.rawDataDisplay = 'value';
+ele.colors = 'black,blue,yellow,red';
+ele.helpTextColumn = 'h';
+ele.onClickFunctionName = 'pieClicked';
+ele.onMoveFunctionName = 'pieMoved';
+ele.name = 'pie';
+ele.label = '';
+ele.value = '';
+P2.addField(ele);
+/***** action field = foo  ********/
+ele = new PM.LocalAction();
+ele.name = 'foo';
+ele.functionName = 'foo';
+P2.addAction(ele);

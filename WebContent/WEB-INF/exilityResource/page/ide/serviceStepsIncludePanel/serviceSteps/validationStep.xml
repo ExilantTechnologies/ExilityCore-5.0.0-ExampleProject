@@ -1,0 +1,25 @@
+<displayPanel name="validationStep" description=""
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="validationStepMessageName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Message Name:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+		<assistedInputField name="validationStepMessageParameters"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Msg Params:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+		<assistedInputField name="validationStepContinueOnError"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Continue on error?" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+	</elements>
+</displayPanel>

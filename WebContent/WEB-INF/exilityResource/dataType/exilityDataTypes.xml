@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataTypes xmlns="http://com.exilant.exility/schema">
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+  <dataTypes >
+  <!--  Text Data Types  -->
+    <textDataType name="text"
+                  description="Three thousand characters are more than enough to describe pretty much anything. Well almost."
+                  maxLength="3000"
+                  messageName="invalidText"
+                  />
+                  
+    <textDataType name="description"
+    			  description="Three thousand characters are more than enough to describe pretty much anything. Well almost."
+                  maxLength="3000"
+                  messageName="invalidDescription"
+                  />
+                  
+    <textDataType name="entityName"
+    			  description="Entity name starts with an alpha character and can follow with any alpha-numeric characters. Dot, hiphen and underscore are also allowed. 200 chars is considered enough."
+                  maxLength="250"
+                  messageName="invalidEntityName"
+                  regex="^[a-zA-Z.][a-zA-Z0-9.-_]*$"
+                  />
+  
+  <!-- boolean types -->
+      <booleanDataType name="yesNo"
+      				 description="yes or no please"
+                     falseValue="No"
+                     messageName="invalidYesNo"
+                     trueValue="Yes"/>
+                     
+    <booleanDataType name="trueFalse"
+    			     description="true and false are the only valid values"
+                     trueValue="True"
+                     falseValue="False"
+                     messageName="invalidTrueFalse"
+                     />
+                     
+    <booleanDataType name="boolean"
+    				 description="0 for false and 1 for true"
+                     falseValue="0"
+                     messageName="invalidBoolean"
+                     trueValue="1"/>
+<!-- _______________________________ decimal __________________________________________  -->                     
+    <decimalDataType name="signedDecimal"
+    				 allowNegativeValue="true"
+                     description="Number with an optional negative sign, and an optional decimal point."
+                     maxValue="99999999999999.0"
+                     messageName="invalidSignedDecimal"
+                     minValue="-99999999999999.0"
+                     numberOfDecimals="6"/>
+                     
+    <decimalDataType name="decimal"
+    				 description="Number with an optional decimal point, but not negative."
+                     maxValue="9.9999999E14"
+                     messageName="invalidDecimal"
+                     minValue="0.0"
+                     numberOfDecimals="6"/>
+                     
+    <decimalDataType name="amt2"
+    				 description="Amount with two decimal places"
+                     maxValue="9999999999999999.99"
+                     messageName="invalidAmt2"
+                     minValue="0.0"
+                     numberOfDecimals="2"/>
+<!-- __________________________________ integers  ___________________________________________ -->                     
+    <integralDataType name="signedNumber"
+    				  allowNegativeValue="true"
+                      description="Whole number, possibly signed with a max of 14 digits."
+                      maxValue="99999999999999"
+                      messageName="invalidSignedNumber"
+                      minValue="-99999999999999"
+                      />
+                      
+    <integralDataType name="number"
+    				  allowNegativeValue="false"
+    				  description="Non-negative whole number with a max of 14 digits is accepted."
+                      maxValue="99999999999999"
+                      messageName="invalidNumber"
+                     />
+                      
+    <integralDataType name="maxValue"
+    				  allowNegativeValue="true"
+                      description="maximum of 15 digits allowed"
+                      maxValue="99999999999999"
+                      messageName="invalidMaxValue"
+                      minValue="-9999999999999"
+                      />
+
+    <integralDataType name="id"
+    				  allowNegativeValue="true"
+                      description="Internally generated number by the system as primary key for table"
+                      maxValue="99999999999999"
+                      messageName="invalidId"
+                      minValue="-9999999999999"
+                      />
+
+	<!-- - - - - - - - -  - - - - - -  Dates    - - - - - - - - - - -        -->
+    <dateDataType  name="date"
+    			  description="Date"
+                  maxDaysAfterToday="730000"
+                  maxDaysBeforeToday="3650000"
+                  messageName="invalidDate"
+                 />
+    <dateDataType  name="futureDate"
+    			  description="date in the future"
+                  maxDaysAfterToday="730000"
+                  maxDaysBeforeToday="0"
+                  messageName="invalidFutureDate"
+                 />
+    <dateDataType  name="pastDate"
+    			  description="Date in the past"
+                  maxDaysAfterToday="0"
+                  maxDaysBeforeToday="3650000"
+                  messageName="invalidPastDate"
+                 />
+    <dateDataType name="dateTime"
+    			  description="Date with time"
+                  maxDaysAfterToday="730000"
+                  maxDaysBeforeToday="3650000"
+                  messageName="invalidDateTime"
+                  includesTime="true"
+                  />
+    <dateDataType name="timeStamp"
+    			  description="Date with time used as time stamp"
+                  maxDaysAfterToday="730000"
+                  maxDaysBeforeToday="3650000"
+                  messageName="invalidDateTime"
+                  includesTime="true"
+                  />
+  </dataTypes>
+</dataTypes>

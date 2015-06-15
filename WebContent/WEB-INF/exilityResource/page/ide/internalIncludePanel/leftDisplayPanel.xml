@@ -1,0 +1,82 @@
+<displayPanel name="leftDisplayPanel">
+	<elements>
+	
+		<gridPanel  name="dts"
+					description="Left side grid that lists all data types. Since this is linked to the right side panel, we have all fields except name as hidden field."
+					tableName="steps"	
+					label="Service step(s)"				
+					rowsCanBeAdded="false"
+					rowsCanBeDeleted="false" 
+					rowHelpText="click to edit this Data Type."								
+					isFixedHeight="true" 
+					height="500px" 
+					rowHeight="16" 
+					headerHeight="16"	
+					cssClassName="listPanel"
+					simulateClickOnFirstRow="true"	
+					onClickActionName="rowClicked" 	
+	 
+					><!-- actionFieldName="bulkAction" 
+					keyFieldName="bulkAction"	 -->
+			<elements>
+			
+				<imageField 
+				    name="bulkAction"
+					description="bulk action is used as image field to show appropriate image for a row to indicate action on this row like delete/modify/add"
+					labelPosition="hide" 
+					baseSrc="../../images/rowmodify"
+					imageExtension=".png" width="15px" height="16px"
+					/>
+					
+				<outputField 
+					name="_type"
+					description="Defiend as output because this is linked to rigth panel. Hence toBeSentToServer set to true"
+					maxCharacters="25" 
+					toBeSentToServer="true" 
+					label="Step Name"  width="99px"
+					/>
+					
+				<hiddenField name="id" />
+				
+			</elements>
+		</gridPanel>
+
+		<displayPanel name="leftHiddenDispPanel" hidden="true">
+			<elements>
+				<!-- Hidden Grid to get all the attributes of a step it's like a master 
+					detail relationship' -->
+				<gridPanel 
+					name="serviceStepAttribs"
+					description="Left side grid that lists all data types. Since this is linked to the right side panel, we have all fields except name as hidden field."
+					tableName="stepAttributes" 
+					cssClassName="listPanel" 
+				
+					><!-- 	rowsCanBeAdded="false"
+					rowsCanBeDeleted="false" 
+					actionFieldName="bulkAction"
+					keyFieldName="bulkAction"  -->
+					<elements>
+						<outputField name="bulkAction"
+							description="bulk action is used as image field to show appropriate image for a row to indicate action on this row like delete/modify/add"
+							label=" " labelPosition="hide" />
+						<outputField name="key"
+							description="Defiend as output because this is linked to rigth panel. Hence toBeSentToServer set to true"
+							maxCharacters="25" toBeSentToServer="true" label="Step Name"
+							dataElementName="name" />
+
+						<assistedInputField name="fieldName"
+							description="Defiend as output because this is linked to rigth panel. Hence toBeSentToServer set to true"
+							label="Field Name:" dataElementName="name" />
+
+						<assistedInputField name="value"
+							description="Defiend as output because this is linked to rigth panel. Hence toBeSentToServer set to true"
+							label="Value:" dataElementName="description" />
+
+					</elements>
+				</gridPanel>
+
+			</elements>
+		</displayPanel><!-- End of Left Hidden Display Panel -->
+
+	</elements>
+</displayPanel><!-- End of Left Display Panel -->

@@ -1,0 +1,28 @@
+
+<displayPanel name="functionAssignmentStep" description=""
+	elementsPerRow="2" hidden="true">
+	<elements>
+		<assistedInputField name="functionAssignmentStepFieldName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Field Name:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+		<assistedInputField name="functionAssignmentStepFunctionName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Function Name:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+		<assistedInputField name="functionAssignmentStepInputParameters"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="nput Params:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+	</elements>
+</displayPanel>

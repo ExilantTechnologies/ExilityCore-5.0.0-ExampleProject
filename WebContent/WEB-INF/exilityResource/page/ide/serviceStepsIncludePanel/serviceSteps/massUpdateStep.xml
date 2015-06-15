@@ -1,0 +1,34 @@
+<displayPanel name="massUpdateStep" description=""
+	elementsPerRow="2"  hidden="true">
+	<elements>
+		<assistedInputField name="massUpdateStepSelectionCriterion"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Sel Criterion:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+		<assistedInputField name="massUpdateStepTable"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Table:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+		<assistedInputField name="massUpdateStepColumnsToUpdate"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Cols to update:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+
+		<assistedInputField name="massUpdateStepValuesToUpdate"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Vals to update:" />
+
+		<textElement cssClassName="note"
+			label="Where should the control go? this will be another step in the service. The label name comes here" />
+
+	</elements>
+</displayPanel>

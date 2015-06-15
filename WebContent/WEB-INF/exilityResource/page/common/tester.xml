@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page" name="tester" title="Tester"
+      scriptsToInclude="testutils.js" module="common" 
+      height="800" width="835" onLoadActionNames="initButtons">
+  
+  <actions>
+    <dummyAction name="initButtons" disableFields="clearDC, addElement"/>
+    <localAction name="clearDC" functionName="clearDC"/>
+    <localAction name="displayFields" functionName="displayFields"/>
+    <localAction name="addValue" functionName="addValue"/>
+    <localAction name="addList" functionName="addList"/>
+    <localAction name="addGrid" functionName="addGrid"/>
+    <localAction name="testServiceStub" functionName="testServiceStub"/>
+    <closeAction name="closeTesterActn"/>
+  </actions>
+
+  <panels>
+    <displayPanel name="Tester"  requiresGroupOutline="true" align="center" width="800px" height="750px">
+      <elements>
+        <displayPanel name="firstPanel" requiresGroupOutline="true" align="center" width="745px">
+          <elements>
+            <textInputField name="serviceId" label="Service ID" isRequired="true"/>
+          </elements>
+        </displayPanel>
+        <spacerPanel/>
+        <displayPanel  name="seconfPanel" elementsPerRow="3" requiresGroupOutline="true"  align="center" width="775px">
+          <elements>
+            <displayPanel name="dcTreewithControls" requiresGroupOutline="true" align="center" width="235px" height="380px">
+              <elements>
+                <htmlPanel name="dcTreePanel" fileName="common/dcTree.htm"/>
+                <displayPanel name="thirdPanel" elementsPerRow="2" requiresGroupOutline="true" align="center" width="210px">
+                  <elements>
+                    <buttonElement name="addElement" label="Add" onClickActionName="displayFields" imageName="default" align="center"/>
+                    <buttonElement name="clearDC" label="Clear DC" onClickActionName="clearDC" imageName="default" align="center"/>
+                  </elements>
+                </displayPanel>
+              </elements>
+            </displayPanel>
+            <displayPanel name="dcElementDisplay" requiresGroupOutline="true" align="center" numberOfUnitsToUse="2" width="485px" height="380px">
+              <elements>
+                <htmlPanel name="dcElementDisplayPanel" fileName="common/dcElementDisplay.htm"/>
+              </elements>
+            </displayPanel>
+            <spacerElement numberOfUnitsToUse="3"/>
+            <displayPanel name="resultDisplayPnl" numberOfUnitsToUse="3" requiresGroupOutline="true"  align="center" width="750px">
+              <elements>
+                <textElement label="Result"/>
+                <textAreaField name="resultDisplayFld" dataElementName="description" label="" numberOfRows="10" numberOfCharactersPerRow="140"/>
+              </elements>
+            </displayPanel>
+          </elements>
+        </displayPanel>
+        <spacerPanel/>
+        <buttonPanel name="btnPanel" requiresGroupOutline="true"  align="center" width="745px">
+          <elements>
+            <buttonElement name="testServiceBtn" label="Test Service" onClickActionName="testServiceStub" imageName="default"/>
+            <buttonElement name="closeTesterBtn" label="Close" onClickActionName="closeTesterActn" imageName="default"/>
+          </elements>
+        </buttonPanel>
+      </elements>
+    </displayPanel>
+  </panels>
+</page>
+
+

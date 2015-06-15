@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page   xmlns="http://com.exilant.exility/page" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		name="addNewStep" 
+		module="ide"
+		description="Allow user to pick a service step."		
+		trackFieldChanges="true" 
+		popupHeight="300"
+		popupWidth="500"
+		popupLeft="300"
+		popupTop="150"
+		scriptsToInclude="../../js/ide/addNewStep.js,../../css/ide/addNewStep.css"
+		onLoadActionNames="fixCss"				
+		> 	
+	<actions>
+	<localAction name="getSubSteps" functionName="getSubSteps"/>
+	<closeAction name="addStep" />
+	
+	<localAction name="fixCss" functionName="fixCss"/>
+	<localAction name="disableOrEnableStepNum" functionName="disableOrEnableStepNum"/>
+	
+	<dummyAction name="enableStepNum"  enableFields="stepNum" fieldToFocusAfterExecution="stepNum" /><!-- fieldToFocusAfterExecution not working. -->
+	
+	<dummyAction name="disableStepNum"  disableFields="stepNum"/>
+	<dummyAction name="showSubStepPanel" showPanels="subStepPanel" />
+	<dummyAction name="hideSubStepPanel" hidePanels="subStepPanel"/>
+	</actions>
+	<panels>
+
+    
+	<displayPanel name="newStepPanel" width="400px" label="Service Step">
+	 <elements>
+	 
+	   <selectionField name="steps" label="Choose Step"
+	   				   valueList="1,Expression Assignment;2,Dummy;gridProcessors,Grid Processor;taskSteps,Task Step"
+	   				   dataElementName="step"
+	   				   isRequired="true"
+	   				   width="200px"
+	   				   height="25px"
+	   				   onUserChangeActionName="getSubSteps"
+	   				   /><!-- onUserChangeActionName="getSubSteps" -->	   				   
+	   				   
+	   <displayPanel name="subStepPanel" hidden="true">
+	    <elements>
+	    
+	      <selectionField name="subSteps" label="Type"	   				   
+	   				   dataElementName="step" 
+	   				   isRequired="true"
+	   				   width="200px"
+	   				   height="25px"
+	   				   />
+	   				   <!-- valueList="1,Add Column ;2,rename grid;3,sql task;4,bulk task;" -->
+	    </elements>
+	   </displayPanel>	  
+	   
+	   
+	   <displayPanel name="stepOrderPanel" elementsPerRow="2">
+	   <elements>
+	   
+		   <selectionField name="placeOrder" label="Place This Step"
+		   				   valueList="1,Before;2,After;3,At Begining;4,At Last"
+		   				   dataElementName="step" isRequired="true"
+		   				   width="100px"	   				  
+		   				   height="25px"
+		   				   onUserChangeActionName="disableOrEnableStepNum"/> 
+		   			   
+		   	<assistedInputField name="stepNum" label="To Step:" height="23px" width="35px" />
+	   	
+	   </elements>
+	   </displayPanel>				   
+	   			   	   				   				   				   
+	   		
+	<displayPanel name="btnPanel" elementsPerRow="3">
+	<elements>
+	
+	 <buttonElement name="add" label="Add" onClickActionName="addStep" width="50px"/>
+	 <spacerElement width="284px"/>
+	 <buttonElement name="cancel" label="Cancel" onClickActionName="addStep" width="50px" />
+	 
+	</elements>
+	</displayPanel>
+				   
+	 </elements>
+	</displayPanel>
+	
+	
+	
+	</panels>
+</page>
+

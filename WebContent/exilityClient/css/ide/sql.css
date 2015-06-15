@@ -1,0 +1,163 @@
+/*
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*//* white bottom border as row separators except the last row*/
+table.fieldsTable tr td
+{
+    padding-top:6px;
+    padding-bottom:6px;
+    padding-left:6px;
+    border-bottom:solid 1px #FBFBFB;
+}
+table.fieldsTable tr:last-child td
+{
+    border-bottom:none;
+}
+
+/* tab panel requires gap on the top to accomodate tabs */
+#sqlDetails
+{
+    margin-top:20px;
+}
+
+/* center the tabs by giving left margin to the first tab */
+#sqlAttributesTab
+{
+    margin-left:285px;
+}
+
+/* because of tabs, we need some extra padding for content of tabs */
+#sqlDetailsTabs
+{
+    padding-top:20px;
+}
+
+/* column widths of sql attributes panel */
+#sqlAttributesCol1
+{
+    width:125px;
+}
+#sqlAttributesCol2
+{
+    width:150px;
+}
+#sqlAttributesCol3
+{
+    width:125px;
+}
+#sqlAttributesCol4
+{
+    width:600px;
+}
+
+/* sql is shown with no label, but notes as if it is a label. reduce the gap between notes and text area field with -ve top margin */
+#sql
+{
+    //margin-top:-26px;
+}
+
+/* input parameters tab start here  */
+#minParamsAeasCol1
+{
+    width:125px;
+}
+
+#minParamsAeaCol2
+{
+    width:50px;
+}
+
+#minParamsAeaCol3
+{
+    width:125px;
+}
+
+#minParamsAeaCol4
+{
+    width:700px;
+}
+
+/* col width for left/right panel */
+#inLeftAndRightCol1
+{
+    width:125px;
+}
+
+#inLeftAndRightCol2
+{
+    width:50px;
+}
+
+#inLeftAndRightCol3
+{
+    width:125px;
+}
+
+#inLeftAndRightCol4
+{
+    width:700px;
+}
+
+/* col width for left panel */
+#inputParametersCol1
+{
+    width:171px;
+}
+/* co widths for right panel */
+
+#inputEditPanelCol1, #inputEditPanelCol2, #inputEditPanelCol3
+{
+    width:125px;
+}
+
+#inputEditPanelCol4
+{
+    width:450px;
+}
+#inLeftAndRightFieldsTable > tbody > tr > td
+{
+    vertical-align:top;
+}
+
+/* let us format output parameters */
+#outputParametersCol1
+{
+    width:172px;
+}
+
+/* left and right pamels are in the second tr, and they have to be top-aligned*/
+#outputParamsFieldsTable > tbody > tr + tr > td
+{
+    vertical-align:top;
+}
+
+#outputEditPanelCol1, #outputEditPanelCol2, #outputEditPanelCol3
+{
+    width:125px;
+}
+#outputEditPanelCol4
+{
+    width:450px;
+}
+
+.btnPanel
+{
+    margin-left:805px;
+}

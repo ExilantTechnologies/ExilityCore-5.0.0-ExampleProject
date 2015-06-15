@@ -1,0 +1,33 @@
+
+<displayPanel name="addColumn"
+	description="fields that are relevant only for addColumn step"
+	elementsPerRow="2" hidden="true">
+	<elements>
+	
+		<assistedInputField name="addColumnGridName"
+			isRequired="false" dataElementName="gridName" label="Grid Name:" />
+		<textElement cssClassName="note"
+			label="The name of the grid to which the column is to be added" />
+
+		<!--<textElement cssClassName="note"
+			label="Of course, the name of the column to be added" />-->
+		
+		<assistedInputField name="addColumnColumnName" label="Column Name" 
+			isRequired="false" dataElementName="gridName" />
+		<textElement cssClassName="note"
+			label="The name of the column is to be added into the grid" />	
+			
+		<assistedInputField name="addColumnColumnType" label="Column Data Type" 
+			isRequired="false" dataElementName="gridName" 
+			valueList="boolean,boolean;date,date;decimal,decimal;integral,integral;text,text;"			
+			/>				
+		<textElement cssClassName="note"
+			label="The Data Type of the column is to be added into the grid" />			
+			
+		<assistedInputField name="addColumnExpression"
+			dataElementName="expression" label="Expression:" />			
+		<textElement cssClassName="note"
+			label="Some expression which evaluates to a value! This will be added in the grid as a column" />
+			
+	</elements>
+</displayPanel>

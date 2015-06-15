@@ -1,0 +1,27 @@
+
+<displayPanel name="setValueStep" description=""
+	elementsPerRow="2"   hidden="true">
+	<elements>
+		<assistedInputField name="setValueStepName"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="name" label="Name:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+		<assistedInputField name="setValueStepCondition"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Condition:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+		<assistedInputField name="setValueStepExpression"
+			description="This is must enter for numeric. But we wil not be able to use basedOnField because it is for two values. Hence we use a validation function"
+			isRequired="false" dataElementName="subType" label="Expression:" />
+
+		<textElement cssClassName="note" label="How severe is the error??" />
+
+
+	</elements>
+</displayPanel>

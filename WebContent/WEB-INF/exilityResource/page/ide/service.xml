@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 
+Copyright (c) 2015 EXILANT Technologies Private Limited
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+ -->
+<page xmlns="http://com.exilant.exility/page" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="service" 
+	module="ide"
+	description="Allow user to pick a service.xml file and see steps within that. New one can be created. Existing one can be edited/saved"
+	title="Service" 
+	trackFieldChanges="true" 
+	onLoadActionNames="getFolders"
+	scriptsToInclude="../../js/ide/service.js,../../css/ide/service.css">
+
+	<pageParameters>
+
+		<pageParameter name="fileName" />
+
+	</pageParameters>
+
+	<actions>
+
+		<serverAction name="getFiles" 
+			description="get all files inthe selected folder"
+			serviceId="ide.getFiles" 
+			queryFieldNames="resourceType,folderName"
+			disableForm="true" />
+
+		<serverAction name="getService"
+			description="dataType uses message as an attribute. Get all possible messages and use it as set of possible values for this attribute"
+			serviceId="ide.getService" 
+			queryFieldNames="fileName,folderName"
+			callBackActionName="doServiceInit" 
+			/>
+
+		<serverAction name="saveService"
+			description="dataType uses message as an attribute. Get all possible messages and use it as set of possible values for this attribute"
+			serviceId="ide.saveService" 
+			submitForm="true" 
+			disableForm="true" 
+			/>
+
+		<localAction name="setDcBeforeSave" functionName="setDcBeforeSave" />
+		<closeAction name="close" />
+		<resetAction name="reload" />
+
+		<localAction name="doServiceInit" functionName="doServiceInit"
+			description="This will create a modelMapObject from step and stepAttributes tables/grids.called after loading the data in it" />
+
+		<localAction name="onAttrChange" functionName="onAttrChange"
+			description="When focout from any right display panel fields" />
+
+		<localAction name="rowClicked" functionName="rowClicked"
+			description="when step grid row is clicked" />
+
+		<localAction name="showSubStep" functionName="Util.hideOrShowPanels" />
+
+
+		<dummyAction name="showProcessorPanel" showPanels="addColumn" />
+
+	</actions>
+
+	<panels>
+		<buttonPanel name="topButtons" cssClassName="topButtons">
+			<elements>
+				<buttonElement name="Save" hoverText="Save" imageName="saveIcon.png"
+				   onClickActionName="setDcBeforeSave"
+					 /><!-- onClickActionName="setTableDataBeforeSave" -->
+				<buttonElement name="reload" hoverText="Reload"
+					imageName="reloadIcon.png" onClickActionName="reload" />
+				<buttonElement name="close" hoverText="Close" imageName="closeIcon.png"
+					onClickActionName="close" />
+			</elements>
+		</buttonPanel>
+
+		<displayPanel name="searchPanel" elementsPerRow="1">
+			<elements>
+				<assistedInputField name="folderName" isRequired="true"
+					onChangeActionName="getService" defaultValue="test"
+					onBlurActionName="getService" listServiceId="getFolders" />
+
+				<assistedInputField name="fileName" isRequired="true"
+					listServiceId="files" noAutoLoad="true" selectFirstOption="true"
+					donotTrackChanges="true" defaultValue="testService" />
+
+				<!-- onChangeActionName="getService" -->
+				<hiddenField name="resourceType" description="used as parameter for getFiles"
+					defaultValue="service" />
+
+			</elements>
+		</displayPanel>
+		<displayPanel name="data"
+			description="container that houses list of data types and the details of the current data type.This is the main panel"
+			elementsPerRow="2">
+			<elements>
+
+				<includePanel panelNameToBeIncluded="ide.internalIncludePanel.actionBtnPanel"
+					name="actionBtnPanel" />
+
+				<spacerElement numberOfUnitsToUse="2" />
+				<spacerElement numberOfUnitsToUse="2" />
+
+				<includePanel panelNameToBeIncluded="ide.internalIncludePanel.leftDisplayPanel"
+					name="leftDisplayPanel" />
+
+				<!--<includePanel panelNameToBeIncluded="ide.internalIncludePanel.rightDispPanel" 
+					name="rightDispPanel"/> -->
+
+				<displayPanel name="rightDispPanel"
+					description="This panel containing all the step of a service as a display panel">
+					<elements>
+
+						<displayPanel name="editPanel"
+							description="The actual content of a task begins here.This includes all service steps as an include panel">
+							<elements>
+
+								<includePanel panelNameToBeIncluded="ide.serviceStepsIncludePanel.commonFields"
+									name="commonFields" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.expressionAssignmentStep"
+									name="expressionAssignmentStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.dummyStep"
+									name="dummyStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.gridProcessorStep"
+									name="gridProcessorStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.processors.addColumn"
+									name="addColumn" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.appendToList"
+									name="appendToList" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.errorCheckStep"
+									name="errorCheckStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.functionAssignmentStep"
+									name="functionAssignmentStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.gridStep"
+									name="gridStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.listStep"
+									name="listStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.lookUpStep"
+									name="lookUpStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.loopStep"
+									name="loopStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.massDeleteStep"
+									name="massDeleteStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.massUpdateStep"
+									name="massUpdateStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.serviceStep"
+									name="serviceStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.setValueStep"
+									name="setValueStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.stopStep"
+									name="stopStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.switchStep"
+									name="switchStep" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.taskStep"
+									name="taskStep" />
+								<includePanel panelNameToBeIncluded="ide.serviceStepsIncludePanel.tasks.sqlTask"
+									name="sqlTask" />
+								<includePanel panelNameToBeIncluded="ide.serviceStepsIncludePanel.tasks.bulkTask"
+									name="bulkTask" />
+
+								<includePanel
+									panelNameToBeIncluded="ide.serviceStepsIncludePanel.serviceSteps.validationStep"
+									name="validationStep" />
+
+							</elements>
+						</displayPanel>
+
+
+					</elements>
+				</displayPanel>
+
+			</elements>
+		</displayPanel>
+
+	</panels>
+</page>
+
